@@ -1,12 +1,9 @@
 import React from 'react';
-import { ProjectCard, AIAssistant } from '@pxy/ui';
-import { portfolioData } from '@pxy/core';
+import { AIAssistant } from '@pxy/ui';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Home: React.FC = () => {
-  // Hanya ambil 4 proyek unggulan
-  const featuredProjects = portfolioData.filter(p => p.featured).slice(0, 4);
 
   return (
     <div className="w-full">
@@ -75,19 +72,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="py-32 px-4 md:px-12 max-w-[1440px] mx-auto z-10 relative">
-        <div className="mb-16">
-          <h2 className="font-body font-bold text-4xl text-black">Featured Projects</h2>
-          <div className="w-24 h-1 bg-primary mt-4 rounded-full"></div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredProjects.map(project => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
+
       
       {/* AI Assistant Floating Component */}
       <AIAssistant />
