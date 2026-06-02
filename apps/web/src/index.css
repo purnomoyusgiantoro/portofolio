@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #006574;
+  --secondary: #006875;
+  --background: #f7f9fc;
+  --surface-variant: #e0e3e6;
+  --outline-variant: #bcc9cc;
+}
+
+body {
+  background-color: var(--background);
+  color: #000;
+  font-family: 'Hanken Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(0, 101, 116, 0.3);
+  color: #000;
+}
+
+.glass-pane {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.glass-pane-active {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 101, 116, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.glowing-beam {
+  background: linear-gradient(90deg, transparent, #006574, transparent);
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+/* Material Symbols */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v173/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1n-q_4MrImHCIJIZrDCvHOej.woff2) format('woff2');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
