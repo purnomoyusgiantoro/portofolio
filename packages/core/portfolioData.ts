@@ -16,7 +16,7 @@ export const portfolioData: Project[] = [
     title: 'Crypto Archer',
     description: 'Aplikasi platform tracking dan analisis aset kripto yang interaktif dan dinamis.',
     category: 'Web Development',
-    image: '/src/assets/portfolio-category/web-development/cryptoarcher.png',
+    image: '/portfolio-category/web-development/cryptoarcher.png',
     tags: ['React', 'TypeScript', 'Tailwind'],
     demoUrl: '#',
     featured: true
@@ -26,7 +26,7 @@ export const portfolioData: Project[] = [
     title: 'My Franchise',
     description: 'Sistem manajemen franchise komprehensif untuk mengelola cabang dan inventaris.',
     category: 'Web Development',
-    image: '/src/assets/portfolio-category/web-development/myfranchise.png',
+    image: '/portfolio-category/web-development/myfranchise.png',
     tags: ['React', 'Node.js', 'PostgreSQL'],
     featured: true
   },
@@ -35,7 +35,7 @@ export const portfolioData: Project[] = [
     title: 'Web Cliper',
     description: 'Ekstensi browser dan platform web untuk menyimpan cuplikan konten dari internet.',
     category: 'Web Development',
-    image: '/src/assets/portfolio-category/web-development/wcliper.png',
+    image: '/portfolio-category/web-development/wcliper.png',
     tags: ['Browser Extension', 'React'],
     featured: false
   },
@@ -44,7 +44,7 @@ export const portfolioData: Project[] = [
     title: 'Sistem Pakar Buah',
     description: 'Sistem pakar berbasis machine learning untuk mendeteksi penyakit dan kualitas buah.',
     category: 'Machine Learning',
-    image: '/src/assets/portfolio-category/machine-learning/buahpakar.png',
+    image: '/portfolio-category/machine-learning/buahpakar.png',
     tags: ['Python', 'TensorFlow', 'Computer Vision'],
     featured: true
   },
@@ -53,7 +53,7 @@ export const portfolioData: Project[] = [
     title: 'Melodia',
     description: 'Platform streaming musik terdesentralisasi berbasis Web3.',
     category: 'Web3',
-    image: '/src/assets/portfolio-category/web3/melodia.png',
+    image: '/portfolio-category/web3/melodia.png',
     tags: ['Solidity', 'Web3.js', 'React'],
     featured: true
   },
@@ -62,7 +62,7 @@ export const portfolioData: Project[] = [
     title: 'Qrisol',
     description: 'Solusi pembayaran berbasis QR Code yang terintegrasi dengan jaringan blockchain.',
     category: 'Web3',
-    image: '/src/assets/portfolio-category/web3/qrisol.png',
+    image: '/portfolio-category/web3/qrisol.png',
     tags: ['Solidity', 'Smart Contract'],
     featured: false
   },
@@ -71,7 +71,7 @@ export const portfolioData: Project[] = [
     title: 'Smart Wallet',
     description: 'Dompet digital multi-chain dengan fitur keamanan tingkat tinggi dan DeFi terintegrasi.',
     category: 'Web3',
-    image: '/src/assets/portfolio-category/web3/smartwallet.png',
+    image: '/portfolio-category/web3/smartwallet.png',
     tags: ['Ethers.js', 'React Native'],
     featured: true
   }
