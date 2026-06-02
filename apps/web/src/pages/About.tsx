@@ -14,7 +14,7 @@ export const About: React.FC = () => {
         <div className="md:col-span-1">
           <div className="aspect-square rounded-3xl overflow-hidden glass-pane relative">
             <div className="absolute inset-0 bg-primary/10 flex items-center justify-center font-code text-primary overflow-hidden">
-              <img src="/avatar.png" alt="Profile" className="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500 hover:scale-105" />
+              <img src="/avatar.png" alt="Profile" className="w-full h-full object-cover transition-all duration-500 hover:scale-105" />
             </div>
           </div>
           
