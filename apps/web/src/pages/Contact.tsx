@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, ExternalLink, Globe } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 export const Contact: React.FC = () => {
