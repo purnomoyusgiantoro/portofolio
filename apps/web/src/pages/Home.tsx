@@ -60,15 +60,7 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay pointer-events-none"></div>
 
-          {/* Text Content */}
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-10 pointer-events-none">
-            <h3 className="text-white font-body font-bold text-2xl md:text-4xl tracking-tight drop-shadow-lg">
-              Digital Experience
-            </h3>
-            <p className="text-white/80 font-code text-sm mt-2 max-w-md drop-shadow-md">
-              A glimpse into the seamless interactions we build.
-            </p>
-          </div>
+
         </div>
       </section>
 
