@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const galleryDir = 'apps/web/src/assets/gallery';
+const galleryDir = 'apps/web/public/gallery';
 const files = fs.readdirSync(galleryDir).filter(f => f.endsWith('.jpeg') || f.endsWith('.jpg') || f.endsWith('.png'));
 
 const items = files.map((f, i) => {
@@ -8,7 +8,7 @@ const items = files.map((f, i) => {
     id: 'g' + (i + 1),
     title: 'Galeri ' + (i + 1),
     date: '2026-05-30',
-    image: '/src/assets/gallery/' + f,
+    image: '/gallery/' + f,
     description: 'Dokumentasi kegiatan.'
   };
 });
