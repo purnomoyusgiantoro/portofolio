@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink, GitFork } from 'lucide-react';
-import type { Project } from '../../core/portfolioData';
+import type { Project } from '@pxy/core';
 
 interface ProjectCardProps {
   project: Project;
