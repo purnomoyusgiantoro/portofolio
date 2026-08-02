@@ -26,13 +26,13 @@ export const Navbar: React.FC = () => {
             to="/about" 
             className={`text-black font-semibold font-body text-sm transition-all ${isActive('/about') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
           >
-            About Me / CV
+            About Me
           </Link>
           
           {/* Portfolio Dropdown */}
           <div className="relative group">
             <button className="flex items-center gap-1 text-black font-semibold hover:text-primary transition-colors duration-300 font-body text-sm">
-              Portfolio / Projects
+              Portofolio
               <ChevronDown size={18} />
             </button>
             <div className="hidden group-hover:block absolute top-100 left-0 pt-4 w-64 z-10">
