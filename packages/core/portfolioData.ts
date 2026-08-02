@@ -1,14 +1,4 @@
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  category: 'Web Development' | 'Machine Learning' | 'AI Agent' | 'Web3' | 'Others';
-  image: string;
-  tags: string[];
-  githubUrl?: string;
-  demoUrl?: string;
-  featured?: boolean;
-}
+import type { Project } from './types';
 
 export const portfolioData: Project[] = [
   {

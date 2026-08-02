@@ -1,7 +1,10 @@
 import React from 'react';
-import { galleryData } from '@pxy/core';
+import { useGallery } from '@pxy/core';
+import { SkeletonCard } from '@pxy/ui';
 
 export const Gallery: React.FC = () => {
+  const { gallery, loading, error } = useGallery();
+
   return (
     <div className="w-full pt-32 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       <div className="mb-16">
@@ -14,29 +17,45 @@ export const Gallery: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
-        {galleryData.map((item, index) => (
-          <div 
-            key={item.id} 
-            className={`group relative rounded-3xl overflow-hidden glass-pane cursor-pointer ${index % 5 === 0 ? 'md:col-span-2' : ''}`}
-          >
-            <img 
-              src={item.image} 
-              alt={item.title} 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-              <span className="text-white/70 font-code text-xs mb-1">{new Date(item.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-              <h3 className="text-white font-body font-bold text-xl mb-2">{item.title}</h3>
-              {item.description && (
-                <p className="text-white/80 font-body text-sm line-clamp-2">{item.description}</p>
-              )}
+      {/* Error notification */}
+      {error && (
+        <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-2xl text-center">
+          <p className="text-red-600 font-body text-sm">⚠️ Gagal memuat dari server. Menampilkan data lokal.</p>
+        </div>
+      )}
+
+      {/* Loading state */}
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <SkeletonCard key={i} wide={i % 5 === 0} />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+          {gallery.map((item, index) => (
+            <div 
+              key={item.id} 
+              className={`group relative rounded-3xl overflow-hidden glass-pane cursor-pointer ${index % 5 === 0 ? 'md:col-span-2' : ''}`}
+            >
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <span className="text-white/70 font-code text-xs mb-1">{new Date(item.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <h3 className="text-white font-body font-bold text-xl mb-2">{item.title}</h3>
+                {item.description && (
+                  <p className="text-white/80 font-body text-sm line-clamp-2">{item.description}</p>
+                )}
+              </div>
+              {/* Glow border on hover */}
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-3xl pointer-events-none transition-colors" />
             </div>
-            {/* Glow border on hover */}
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-3xl pointer-events-none transition-colors" />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

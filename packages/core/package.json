@@ -3,5 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "main": "./index.ts",
-  "types": "./index.ts"
+  "types": "./index.ts",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.111.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  }
 }

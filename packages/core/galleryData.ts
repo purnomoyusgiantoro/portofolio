@@ -1,10 +1,4 @@
-export interface GalleryItem {
-  id: string;
-  title: string;
-  date: string;
-  image: string;
-  description?: string;
-}
+import type { GalleryItem } from './types';
 
 export const galleryData: GalleryItem[] = [
   {
