@@ -33,7 +33,6 @@ export const Navbar: React.FC = () => {
           <div className="relative group">
             <button className="flex items-center gap-1 text-black font-semibold hover:text-primary transition-colors duration-300 font-body text-sm">
               Portofolio
-              <ChevronDown size={18} />
             </button>
             <div className="hidden group-hover:block absolute top-100 left-0 pt-4 w-64 z-10">
               <div className="bg-white/90 backdrop-blur-3xl border border-outline-variant p-4 rounded-xl space-y-3 shadow-lg">
