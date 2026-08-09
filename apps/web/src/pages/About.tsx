@@ -13,8 +13,11 @@ export const About: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="md:col-span-1">
           <div className="aspect-square rounded-3xl overflow-hidden glass-pane relative">
-            <div className="absolute inset-0 bg-primary/10 flex items-center justify-center font-code text-primary overflow-hidden">
-              <img src="/profile.jpeg" alt="Profile" className="w-full h-full object-cover transition-all duration-500 hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-primary/5 flex items-center justify-center">
+              {/* Profile placeholder — upload via admin panel */}
+              <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30">
+                <span className="text-5xl font-bold text-primary">P</span>
+              </div>
             </div>
           </div>
           

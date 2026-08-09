@@ -7,6 +7,7 @@ interface UseAuthResult {
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<string | null>;
+  signUp: (email: string, password: string) => Promise<string | null>;
   signOut: () => Promise<void>;
 }
 
@@ -41,9 +42,15 @@ export function useAuth(): UseAuthResult {
     return null;
   };
 
+  const signUp = async (email: string, password: string): Promise<string | null> => {
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) return error.message;
+    return null;
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
-  return { user, session, loading, signIn, signOut };
+  return { user, session, loading, signIn, signUp, signOut };
 }

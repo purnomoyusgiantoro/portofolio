@@ -82,6 +82,7 @@ CREATE POLICY "Allow authenticated read on messages" ON messages
 
 -- ============================================
 -- 3. SEED DATA — Projects
+-- (Images use placeholders — upload real images via Admin panel)
 -- ============================================
 
 INSERT INTO projects (title, description, category, image_url, tags, demo_url, featured) VALUES
@@ -89,7 +90,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Crypto Archer',
   'Aplikasi platform tracking dan analisis aset kripto yang interaktif dan dinamis.',
   'Web Development',
-  '/portfolio-category/web-development/cryptoarcher.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Crypto+Archer',
   ARRAY['React', 'TypeScript', 'Tailwind'],
   '#',
   true
@@ -98,7 +99,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'My Franchise',
   'Sistem manajemen franchise komprehensif untuk mengelola cabang dan inventaris.',
   'Web Development',
-  '/portfolio-category/web-development/myfranchise.png',
+  'https://placehold.co/600x400/006574/ffffff?text=My+Franchise',
   ARRAY['React', 'Node.js', 'PostgreSQL'],
   NULL,
   true
@@ -107,7 +108,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Web Cliper',
   'Ekstensi browser dan platform web untuk menyimpan cuplikan konten dari internet.',
   'Web Development',
-  '/portfolio-category/web-development/wcliper.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Web+Cliper',
   ARRAY['Browser Extension', 'React'],
   NULL,
   false
@@ -116,7 +117,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Sistem Pakar Buah',
   'Sistem pakar berbasis machine learning untuk mendeteksi penyakit dan kualitas buah.',
   'Machine Learning',
-  '/portfolio-category/machine-learning/buahpakar.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Sistem+Pakar',
   ARRAY['Python', 'TensorFlow', 'Computer Vision'],
   NULL,
   true
@@ -125,7 +126,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Melodia',
   'Platform streaming musik terdesentralisasi berbasis Web3.',
   'Web3',
-  '/portfolio-category/web3/melodia.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Melodia',
   ARRAY['Solidity', 'Web3.js', 'React'],
   NULL,
   true
@@ -134,7 +135,7 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Qrisol',
   'Solusi pembayaran berbasis QR Code yang terintegrasi dengan jaringan blockchain.',
   'Web3',
-  '/portfolio-category/web3/qrisol.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Qrisol',
   ARRAY['Solidity', 'Smart Contract'],
   NULL,
   false
@@ -143,76 +144,36 @@ INSERT INTO projects (title, description, category, image_url, tags, demo_url, f
   'Smart Wallet',
   'Dompet digital multi-chain dengan fitur keamanan tingkat tinggi dan DeFi terintegrasi.',
   'Web3',
-  '/portfolio-category/web3/smartwallet.png',
+  'https://placehold.co/600x400/006574/ffffff?text=Smart+Wallet',
   ARRAY['Ethers.js', 'React Native'],
   NULL,
   true
 );
 
 -- ============================================
--- 4. SEED DATA — Gallery
+-- 4. SEED DATA — Gallery (minimal placeholders)
 -- ============================================
 
 INSERT INTO gallery (title, date, image_url, description) VALUES
-('Galeri 1', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.40 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 2', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.41 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 3', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.43 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 4', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.43 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 5', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.44 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 6', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.45 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 7', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.48 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 8', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.48 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 9', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.48 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 10', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.49 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 11', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.49 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 12', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.49 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 13', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.50 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 14', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.51 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 15', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.51 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 16', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.52 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 17', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.53 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 18', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.53 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 19', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.53 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 20', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.54 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 21', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.31.54 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 22', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.34.16 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 23', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.34.16 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 24', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.36.09 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 25', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.36.09 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 26', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.36.10 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 27', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.36.10 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 28', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.36.10 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 29', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.38.20 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 30', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.38.20 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 31', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.03 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 32', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.03 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 33', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.03 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 34', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.04 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 35', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.04 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 36', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.04 AM (3).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 37', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.04 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 38', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.05 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 39', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.05 AM (2).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 40', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.05 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 41', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.06 AM (1).jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 42', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.06 AM.jpeg', 'Dokumentasi kegiatan.'),
-('Galeri 43', '2026-05-30', '/gallery/WhatsApp Image 2026-05-30 at 3.40.07 AM.jpeg', 'Dokumentasi kegiatan.');
+('Galeri 1', '2026-05-30', 'https://placehold.co/600x400/1a1a23/e4e4e7?text=Galeri+1', 'Dokumentasi kegiatan.'),
+('Galeri 2', '2026-05-30', 'https://placehold.co/600x400/1a1a23/e4e4e7?text=Galeri+2', 'Dokumentasi kegiatan.'),
+('Galeri 3', '2026-05-30', 'https://placehold.co/600x400/1a1a23/e4e4e7?text=Galeri+3', 'Dokumentasi kegiatan.');
 
 -- ============================================
--- 5. SEED DATA — Certificates
+-- 5. SEED DATA — Certificates (placeholders)
 -- ============================================
 
 INSERT INTO certificates (title, image_url, date, issuer) VALUES
-('Belajar Dasar Pemrograman Web', '/sertifikat/sertifikat_course_123_4822862_190226205754-1.jpg', '2026-02-19', 'Dicoding'),
-('Belajar Fundamental Front-End Web Development', '/sertifikat/sertifikat_course_237_4822862_190226205207-1.jpg', '2026-02-19', 'Dicoding'),
-('Menjadi Front-End Web Developer Expert', '/sertifikat/sertifikat_course_251_4822862_190226205646-1.jpg', '2026-02-19', 'Dicoding'),
-('Belajar Membuat Aplikasi Back-End untuk Pemula', '/sertifikat/sertifikat_course_256_4822862_110326133715-1.jpg', '2026-03-11', 'Dicoding'),
-('Belajar Fundamental Aplikasi Back-End', '/sertifikat/sertifikat_course_261_4822862_300426205417-1.jpg', '2026-04-30', 'Dicoding'),
-('Belajar Dasar UX Design', '/sertifikat/sertifikat_course_271_4822862_150526202450-1.jpg', '2026-05-15', 'Dicoding'),
-('Belajar Prinsip Pemrograman SOLID', '/sertifikat/sertifikat_course_302_4822862_190226205537-1.jpg', '2026-02-19', 'Dicoding'),
-('Belajar Dasar Git dengan GitHub', '/sertifikat/sertifikat_course_315_4822862_270326185640-1.jpg', '2026-03-27', 'Dicoding'),
-('Belajar Jaringan Komputer untuk Pemula', '/sertifikat/sertifikat_course_403_4822862_040426213319-1.jpg', '2026-04-04', 'Dicoding'),
-('Belajar Dasar AWS Cloud', '/sertifikat/sertifikat_course_413_4822862_240426142518-1.jpg', '2026-04-24', 'Dicoding');
+('Belajar Dasar Pemrograman Web', 'https://placehold.co/600x400/006574/ffffff?text=Pemrograman+Web', '2026-02-19', 'Dicoding'),
+('Belajar Fundamental Front-End Web Development', 'https://placehold.co/600x400/006574/ffffff?text=Front-End', '2026-02-19', 'Dicoding'),
+('Menjadi Front-End Web Developer Expert', 'https://placehold.co/600x400/006574/ffffff?text=FE+Expert', '2026-02-19', 'Dicoding'),
+('Belajar Membuat Aplikasi Back-End untuk Pemula', 'https://placehold.co/600x400/006574/ffffff?text=Back-End+Pemula', '2026-03-11', 'Dicoding'),
+('Belajar Fundamental Aplikasi Back-End', 'https://placehold.co/600x400/006574/ffffff?text=Back-End', '2026-04-30', 'Dicoding'),
+('Belajar Dasar UX Design', 'https://placehold.co/600x400/006574/ffffff?text=UX+Design', '2026-05-15', 'Dicoding'),
+('Belajar Prinsip Pemrograman SOLID', 'https://placehold.co/600x400/006574/ffffff?text=SOLID', '2026-02-19', 'Dicoding'),
+('Belajar Dasar Git dengan GitHub', 'https://placehold.co/600x400/006574/ffffff?text=Git+GitHub', '2026-03-27', 'Dicoding'),
+('Belajar Jaringan Komputer untuk Pemula', 'https://placehold.co/600x400/006574/ffffff?text=Jaringan', '2026-04-04', 'Dicoding'),
+('Belajar Dasar AWS Cloud', 'https://placehold.co/600x400/006574/ffffff?text=AWS+Cloud', '2026-04-24', 'Dicoding');
 
 -- ============================================
 -- 6. CREATE INDEXES for performance
