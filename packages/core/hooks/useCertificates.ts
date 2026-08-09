@@ -5,13 +5,9 @@ import { mapCertificateRow } from '../types';
 
 /**
  * Static certificate data as fallback.
- * Uses placeholder URLs since local images have been removed.
+ * Data is empty so the portfolio starts clean.
  */
-const staticCertificateData: Certificate[] = [
-  { id: '1', title: 'Belajar Dasar Pemrograman Web', image: 'https://placehold.co/600x400/006574/ffffff?text=Pemrograman+Web', date: '2026-02-19', issuer: 'Dicoding' },
-  { id: '2', title: 'Belajar Fundamental Front-End Web Development', image: 'https://placehold.co/600x400/006574/ffffff?text=Front-End', date: '2026-02-19', issuer: 'Dicoding' },
-  { id: '3', title: 'Menjadi Front-End Web Developer Expert', image: 'https://placehold.co/600x400/006574/ffffff?text=FE+Expert', date: '2026-02-19', issuer: 'Dicoding' },
-];
+const staticCertificateData: Certificate[] = [];
 
 interface UseCertificatesResult {
   certificates: Certificate[];

@@ -12,23 +12,32 @@ ON CONFLICT (id) DO NOTHING;
 
 -- 2. Storage Policies (Public Read, Authenticated Write)
 
--- Portfolio Images
-CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'portfolio-images');
-CREATE POLICY "Auth Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'portfolio-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING (bucket_id = 'portfolio-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Delete" ON storage.objects FOR DELETE USING (bucket_id = 'portfolio-images' AND auth.role() = 'authenticated');
+-- Clean up any old duplicate policies if they exist from previous errors
+DROP POLICY IF EXISTS "Public Access" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Insert" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Update" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Delete" ON storage.objects;
+DROP POLICY IF EXISTS "Public Access All Buckets" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Insert All Buckets" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Update All Buckets" ON storage.objects;
+DROP POLICY IF EXISTS "Auth Delete All Buckets" ON storage.objects;
 
--- Gallery Images
-CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'gallery-images');
-CREATE POLICY "Auth Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'gallery-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING (bucket_id = 'gallery-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Delete" ON storage.objects FOR DELETE USING (bucket_id = 'gallery-images' AND auth.role() = 'authenticated');
+-- Allow public read access to all our public buckets
+CREATE POLICY "Public Access All Buckets" ON storage.objects 
+FOR SELECT USING (bucket_id IN ('portfolio-images', 'gallery-images', 'certificate-images'));
 
--- Certificate Images
-CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'certificate-images');
-CREATE POLICY "Auth Insert" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'certificate-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING (bucket_id = 'certificate-images' AND auth.role() = 'authenticated');
-CREATE POLICY "Auth Delete" ON storage.objects FOR DELETE USING (bucket_id = 'certificate-images' AND auth.role() = 'authenticated');
+-- Allow authenticated users (Admin) to insert images
+CREATE POLICY "Auth Insert All Buckets" ON storage.objects 
+FOR INSERT WITH CHECK (bucket_id IN ('portfolio-images', 'gallery-images', 'certificate-images') AND auth.role() = 'authenticated');
+
+-- Allow authenticated users (Admin) to update images
+CREATE POLICY "Auth Update All Buckets" ON storage.objects 
+FOR UPDATE USING (bucket_id IN ('portfolio-images', 'gallery-images', 'certificate-images') AND auth.role() = 'authenticated');
+
+-- Allow authenticated users (Admin) to delete images
+CREATE POLICY "Auth Delete All Buckets" ON storage.objects 
+FOR DELETE USING (bucket_id IN ('portfolio-images', 'gallery-images', 'certificate-images') AND auth.role() = 'authenticated');
+
 
 -- 3. Database RLS Updates for Admin (Insert, Update, Delete)
 
@@ -47,6 +56,6 @@ CREATE POLICY "Auth Insert Certificates" ON certificates FOR INSERT WITH CHECK (
 CREATE POLICY "Auth Update Certificates" ON certificates FOR UPDATE USING (auth.role() = 'authenticated');
 CREATE POLICY "Auth Delete Certificates" ON certificates FOR DELETE USING (auth.role() = 'authenticated');
 
--- Messages (Admin can read and delete, public can only insert)
+-- Messages (Admin can delete/update messages)
 CREATE POLICY "Auth Update Messages" ON messages FOR UPDATE USING (auth.role() = 'authenticated');
 CREATE POLICY "Auth Delete Messages" ON messages FOR DELETE USING (auth.role() = 'authenticated');
