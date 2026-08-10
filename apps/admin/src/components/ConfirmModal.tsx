@@ -22,9 +22,9 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, title, messa
               <div className="p-2 bg-admin-danger/10 rounded-full">
                 <AlertTriangle size={24} />
               </div>
-              <h3 className="text-lg font-bold text-white">{title}</h3>
+              <h3 className="text-lg font-bold text-admin-text">{title}</h3>
             </div>
-            <button onClick={onCancel} className="text-admin-text-muted hover:text-white transition-colors">
+            <button onClick={onCancel} className="text-admin-text-muted hover:text-admin-text transition-colors">
               <X size={20} />
             </button>
           </div>

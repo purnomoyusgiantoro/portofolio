@@ -116,7 +116,7 @@ export const ProjectsManager: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1">Projects</h1>
+          <h1 className="text-2xl font-bold text-admin-text mb-1">Projects</h1>
           <p className="text-sm text-admin-text-muted">Kelola portofolio proyek Anda</p>
         </div>
         <button 
@@ -155,7 +155,7 @@ export const ProjectsManager: React.FC = () => {
                       <div className="flex items-center gap-4">
                         <img src={p.image_url} alt={p.title} className="w-12 h-12 rounded object-cover border border-admin-border" />
                         <div>
-                          <p className="font-medium text-white">{p.title}</p>
+                          <p className="font-medium text-admin-text">{p.title}</p>
                           <div className="flex gap-1 mt-1 flex-wrap">
                             {p.tags?.slice(0, 3).map(tag => (
                               <span key={tag} className="text-[10px] px-1.5 py-0.5 bg-admin-bg border border-admin-border rounded text-admin-text-muted">{tag}</span>
@@ -180,7 +180,7 @@ export const ProjectsManager: React.FC = () => {
                             <ExternalLink size={16} />
                           </a>
                         )}
-                        <button onClick={() => handleOpenEdit(p)} className="p-1.5 text-admin-text-muted hover:text-white hover:bg-admin-border rounded transition-colors">
+                        <button onClick={() => handleOpenEdit(p)} className="p-1.5 text-admin-text-muted hover:text-admin-text hover:bg-admin-border rounded transition-colors">
                           <Edit2 size={16} />
                         </button>
                         <button onClick={() => setDeleteId(p.id)} className="p-1.5 text-admin-text-muted hover:text-admin-danger hover:bg-admin-danger/10 rounded transition-colors">
@@ -201,8 +201,8 @@ export const ProjectsManager: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-admin-surface border border-admin-border rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl my-8">
             <div className="px-6 py-4 border-b border-admin-border flex justify-between items-center bg-admin-bg/50">
-              <h2 className="text-lg font-bold text-white">{editingId ? 'Edit Project' : 'Add Project'}</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-admin-text">{editingId ? 'Edit Project' : 'Add Project'}</h2>
+              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-admin-text transition-colors">
                 <X size={20} />
               </button>
             </div>
@@ -218,7 +218,7 @@ export const ProjectsManager: React.FC = () => {
                   
                   <label className="flex items-center gap-3 cursor-pointer mt-4 p-3 border border-admin-border rounded-lg bg-admin-bg">
                     <input type="checkbox" checked={featured} onChange={e => setFeatured(e.target.checked)} className="w-4 h-4 rounded border-admin-border text-admin-primary focus:ring-admin-primary/50 bg-admin-surface" />
-                    <span className="text-sm font-medium text-white">Featured Project</span>
+                    <span className="text-sm font-medium text-admin-text">Featured Project</span>
                   </label>
                 </div>
                 

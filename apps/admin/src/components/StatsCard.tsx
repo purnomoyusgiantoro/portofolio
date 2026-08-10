@@ -19,7 +19,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon: Icon, 
           {loading ? (
             <div className="h-8 w-16 bg-admin-border rounded animate-pulse mt-1" />
           ) : (
-            <h3 className="text-3xl font-bold text-white">{value}</h3>
+            <h3 className="text-3xl font-bold text-admin-text">{value}</h3>
           )}
         </div>
         <div className="p-3 bg-admin-primary/10 rounded-lg text-admin-primary">

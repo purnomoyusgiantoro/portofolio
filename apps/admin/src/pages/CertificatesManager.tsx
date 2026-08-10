@@ -64,7 +64,7 @@ export const CertificatesManager: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1">Certificates</h1>
+          <h1 className="text-2xl font-bold text-admin-text mb-1">Certificates</h1>
           <p className="text-sm text-admin-text-muted">Kelola sertifikat dan penghargaan</p>
         </div>
         <button onClick={() => setIsModalOpen(true)} className="bg-admin-primary hover:bg-admin-primary-light text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors">
@@ -94,7 +94,7 @@ export const CertificatesManager: React.FC = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
                         <img src={item.image_url} alt={item.title} className="w-16 h-12 rounded object-cover border border-admin-border" />
-                        <p className="font-medium text-white">{item.title}</p>
+                        <p className="font-medium text-admin-text">{item.title}</p>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-admin-text-muted">{item.issuer}</td>
@@ -116,8 +116,8 @@ export const CertificatesManager: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-admin-surface border border-admin-border rounded-2xl w-full max-w-md overflow-hidden shadow-2xl my-8">
             <div className="px-6 py-4 border-b border-admin-border flex justify-between items-center bg-admin-bg/50">
-              <h2 className="text-lg font-bold text-white">Add Certificate</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-admin-text">Add Certificate</h2>
+              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-admin-text transition-colors">
                 <X size={20} />
               </button>
             </div>

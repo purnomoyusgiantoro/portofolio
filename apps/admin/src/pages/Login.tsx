@@ -58,14 +58,14 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f13] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-admin-bg flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-admin-primary/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-admin-accent/5 rounded-full blur-[100px] pointer-events-none" />
       
       <div className="w-full max-w-md bg-admin-surface/80 backdrop-blur-xl border border-admin-border rounded-2xl shadow-2xl p-8 relative z-10 animate-fade-in">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-bold text-admin-text mb-2">
             pxy <span className="text-admin-primary">admin</span>
           </h1>
           <p className="text-sm text-admin-text-muted">
@@ -81,7 +81,7 @@ export const Login: React.FC = () => {
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
               mode === 'login' 
                 ? 'bg-admin-primary text-white shadow-sm' 
-                : 'text-admin-text-muted hover:text-white'
+                : 'text-admin-text-muted hover:text-admin-text'
             }`}
           >
             <LogIn size={16} />
@@ -93,7 +93,7 @@ export const Login: React.FC = () => {
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
               mode === 'signup' 
                 ? 'bg-admin-primary text-white shadow-sm' 
-                : 'text-admin-text-muted hover:text-white'
+                : 'text-admin-text-muted hover:text-admin-text'
             }`}
           >
             <UserPlus size={16} />
@@ -131,7 +131,7 @@ export const Login: React.FC = () => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
+                className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
                 placeholder="admin@domain.com"
               />
             </div>
@@ -149,7 +149,7 @@ export const Login: React.FC = () => {
                 onChange={e => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
+                className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
                 placeholder="••••••••"
               />
             </div>
@@ -168,7 +168,7 @@ export const Login: React.FC = () => {
                   onChange={e => setConfirmPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
+                  className="w-full bg-admin-bg border border-admin-border rounded-lg pl-10 pr-4 py-3 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors placeholder:text-admin-text-muted/40"
                   placeholder="••••••••"
                 />
               </div>

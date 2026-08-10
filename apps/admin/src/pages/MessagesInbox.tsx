@@ -47,7 +47,7 @@ export const MessagesInbox: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-white mb-1">Messages</h1>
+        <h1 className="text-2xl font-bold text-admin-text mb-1">Messages</h1>
         <p className="text-sm text-admin-text-muted">Inbox pesan dari Contact Form</p>
       </div>
 
@@ -79,10 +79,10 @@ export const MessagesInbox: React.FC = () => {
                       {msg.is_read ? <MailOpen size={18} className="text-admin-text-muted" /> : <Mail size={18} />}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-white">{msg.name}</div>
+                      <div className="text-admin-text">{msg.name}</div>
                       <div className="text-xs text-admin-text-muted mt-0.5">{msg.email}</div>
                     </td>
-                    <td className="px-6 py-4 text-white truncate max-w-xs">{msg.subject || '(Tidak ada subjek)'}</td>
+                    <td className="px-6 py-4 text-admin-text truncate max-w-xs">{msg.subject || '(Tidak ada subjek)'}</td>
                     <td className="px-6 py-4 text-admin-text-muted whitespace-nowrap">
                       {new Date(msg.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </td>
@@ -107,15 +107,15 @@ export const MessagesInbox: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-admin-surface border border-admin-border rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl my-8">
             <div className="px-6 py-4 border-b border-admin-border flex justify-between items-center bg-admin-bg/50">
-              <h2 className="text-lg font-bold text-white">Message Detail</h2>
-              <button onClick={() => setSelectedMsg(null)} className="text-admin-text-muted hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-admin-text">Message Detail</h2>
+              <button onClick={() => setSelectedMsg(null)} className="text-admin-text-muted hover:text-admin-text transition-colors">
                 <X size={20} />
               </button>
             </div>
             
             <div className="p-6">
               <div className="flex flex-col gap-1 mb-6 pb-6 border-b border-admin-border">
-                <h3 className="text-xl font-bold text-white">{selectedMsg.subject || '(Tidak ada subjek)'}</h3>
+                <h3 className="text-xl font-bold text-admin-text">{selectedMsg.subject || '(Tidak ada subjek)'}</h3>
                 <div className="flex items-center gap-2 text-sm text-admin-text-muted mt-2">
                   <span className="font-medium text-admin-text">{selectedMsg.name}</span>
                   <span>&lt;{selectedMsg.email}&gt;</span>

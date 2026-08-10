@@ -8,7 +8,7 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HT
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ label, error, as = 'input', options, className = '', ...props }) => {
-  const baseClasses = "w-full bg-admin-bg border border-admin-border rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-admin-primary focus:ring-1 focus:ring-admin-primary/50 transition-all placeholder:text-admin-text-muted/50 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseClasses = "w-full bg-admin-bg border border-admin-border rounded-lg px-4 py-2.5 text-sm text-admin-text focus:outline-none focus:border-admin-primary focus:ring-1 focus:ring-admin-primary/50 transition-all placeholder:text-admin-text-muted/50 disabled:opacity-50 disabled:cursor-not-allowed";
   
   return (
     <div className={`flex flex-col gap-1.5 ${className}`}>

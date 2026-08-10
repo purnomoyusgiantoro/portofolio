@@ -64,7 +64,7 @@ export const GalleryManager: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1">Gallery</h1>
+          <h1 className="text-2xl font-bold text-admin-text mb-1">Gallery</h1>
           <p className="text-sm text-admin-text-muted">Kelola foto kegiatan</p>
         </div>
         <button onClick={() => setIsModalOpen(true)} className="bg-admin-primary hover:bg-admin-primary-light text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors">
@@ -86,7 +86,7 @@ export const GalleryManager: React.FC = () => {
                   <button onClick={() => setDeleteId(item.id)} className="absolute top-3 right-3 p-2 bg-admin-danger/90 text-white rounded-lg hover:bg-admin-danger transition-colors">
                     <Trash2 size={16} />
                   </button>
-                  <p className="text-white font-medium text-sm truncate">{item.title}</p>
+                  <p className="text-admin-text font-medium text-sm truncate">{item.title}</p>
                   <p className="text-admin-text-muted text-xs">{item.date}</p>
                 </div>
               </div>
@@ -99,8 +99,8 @@ export const GalleryManager: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-admin-surface border border-admin-border rounded-2xl w-full max-w-md overflow-hidden shadow-2xl my-8">
             <div className="px-6 py-4 border-b border-admin-border flex justify-between items-center bg-admin-bg/50">
-              <h2 className="text-lg font-bold text-white">Add Photo</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-white transition-colors">
+              <h2 className="text-lg font-bold text-admin-text">Add Photo</h2>
+              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-admin-text transition-colors">
                 <X size={20} />
               </button>
             </div>

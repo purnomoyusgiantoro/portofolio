@@ -62,7 +62,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ bucket, folder, onUplo
           {uploading && (
             <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center">
               <Loader2 className="animate-spin text-admin-primary mb-2" size={24} />
-              <span className="text-xs text-white">Mengupload...</span>
+              <span className="text-xs text-admin-text">Mengupload...</span>
             </div>
           )}
         </div>

@@ -23,7 +23,7 @@ export const Sidebar: React.FC = () => {
   return (
     <aside className="w-64 bg-admin-sidebar border-r border-admin-border flex flex-col h-screen fixed left-0 top-0">
       <div className="h-16 flex items-center px-6 border-b border-admin-border">
-        <span className="font-bold text-xl text-white tracking-tight">pxy <span className="text-admin-primary">admin</span></span>
+        <span className="font-bold text-xl text-admin-text tracking-tight">pxy <span className="text-admin-primary">admin</span></span>
       </div>
 
       <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
@@ -36,7 +36,7 @@ export const Sidebar: React.FC = () => {
               `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-sm font-medium ${
                 isActive
                   ? 'bg-admin-primary/10 text-admin-primary'
-                  : 'text-admin-text hover:bg-admin-surface-hover hover:text-white'
+                  : 'text-admin-text hover:bg-admin-surface-hover hover:text-admin-text'
               }`
             }
           >

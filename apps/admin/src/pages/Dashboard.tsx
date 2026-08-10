@@ -58,7 +58,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-white mb-2">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-admin-text mb-2">Dashboard</h1>
         <p className="text-admin-text-muted">Selamat datang di panel admin pxy portofolio.</p>
       </div>
 
@@ -67,7 +67,7 @@ export const Dashboard: React.FC = () => {
         <div className="bg-admin-surface border border-admin-border rounded-xl p-5">
           <div className="flex items-center gap-3 mb-4">
             <Database size={20} className="text-admin-primary" />
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Supabase Status</h3>
+            <h3 className="text-sm font-semibold text-admin-text uppercase tracking-wider">Supabase Status</h3>
           </div>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -102,7 +102,7 @@ export const Dashboard: React.FC = () => {
               {user?.email?.charAt(0).toUpperCase() || 'A'}
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Admin User</h3>
+              <h3 className="text-sm font-semibold text-admin-text">Admin User</h3>
               <p className="text-xs text-admin-text-muted">{user?.email || 'Tidak diketahui'}</p>
             </div>
           </div>
@@ -130,26 +130,26 @@ export const Dashboard: React.FC = () => {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-admin-surface border border-admin-border rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
+          <h3 className="text-lg font-semibold text-admin-text mb-4">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-4">
             <a href="/projects" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <Briefcase size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-white">Manage Projects</div>
+              <div className="text-sm font-medium text-admin-text">Manage Projects</div>
             </a>
             <a href="/gallery" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <ImageIcon size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-white">Upload Gallery</div>
+              <div className="text-sm font-medium text-admin-text">Upload Gallery</div>
             </a>
             <a href="/certificates" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <Award size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-white">Add Certificate</div>
+              <div className="text-sm font-medium text-admin-text">Add Certificate</div>
             </a>
             <a href="/messages" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group relative">
               {stats.unreadMessages > 0 && (
                 <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-admin-danger rounded-full animate-pulse" />
               )}
               <Mail size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-white">Check Inbox</div>
+              <div className="text-sm font-medium text-admin-text">Check Inbox</div>
             </a>
           </div>
         </div>

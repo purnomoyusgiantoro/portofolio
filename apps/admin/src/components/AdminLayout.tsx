@@ -11,7 +11,7 @@ export const AdminLayout: React.FC = () => {
       <Sidebar />
       <div className="flex-1 ml-64 flex flex-col">
         <header className="h-16 bg-admin-bg/80 backdrop-blur-md border-b border-admin-border flex items-center justify-between px-8 sticky top-0 z-10">
-          <h2 className="text-lg font-semibold text-white capitalize">
+          <h2 className="text-lg font-semibold text-admin-text capitalize">
             {/* Dynamically show route name here if needed, or leave blank */}
           </h2>
           <div className="flex items-center gap-4">
