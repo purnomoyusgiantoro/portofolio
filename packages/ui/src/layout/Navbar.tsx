@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, ChevronDown } from 'lucide-react';
+import { Sun } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
