@@ -12,6 +12,7 @@ interface SiteSettings {
   cv_url: string | null;
   logo_url: string | null;
   favicon_url: string | null;
+  contact_email: string | null;
   github_url: string | null;
   linkedin_url: string | null;
   twitter_url: string | null;
@@ -30,6 +31,7 @@ const defaultSettings: SiteSettings = {
   cv_url: null,
   logo_url: null,
   favicon_url: null,
+  contact_email: null,
   github_url: null,
   linkedin_url: null,
   twitter_url: null,
@@ -387,6 +389,16 @@ export const SiteSettingsPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="md:col-span-2">
+            <label className="block text-xs font-semibold text-admin-text-muted uppercase tracking-wider mb-2">Email Kontak</label>
+            <input
+              type="email"
+              value={settings.contact_email || ''}
+              onChange={e => updateField('contact_email', e.target.value || null)}
+              className="w-full bg-admin-bg border border-admin-border rounded-lg px-4 py-2.5 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors"
+              placeholder="email@domain.com"
+            />
+          </div>
           <div>
             <label className="block text-xs font-semibold text-admin-text-muted uppercase tracking-wider mb-2">GitHub</label>
             <input

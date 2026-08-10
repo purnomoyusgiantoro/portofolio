@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar, Footer } from '@pxy/ui';
+import { useSiteSettings } from '@pxy/core';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { PortfolioCategory } from './pages/PortfolioCategory';
@@ -9,10 +10,12 @@ import { Contact } from './pages/Contact';
 import { Sertifikat } from './pages/Sertifikat';
 
 export const App: React.FC = () => {
+  const { settings } = useSiteSettings();
+
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar />
+        <Navbar brandName={settings.profileName + ' portofolio'} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -23,7 +26,14 @@ export const App: React.FC = () => {
             <Route path="/sertifikat" element={<Sertifikat />} />
           </Routes>
         </main>
-        <Footer />
+        <Footer 
+          brandName={settings.profileName + ' portofolio'}
+          description={settings.heroSubtitle || undefined}
+          githubUrl={settings.githubUrl}
+          linkedinUrl={settings.linkedinUrl}
+          instagramUrl={settings.instagramUrl}
+          contactEmail={settings.contactEmail}
+        />
       </div>
     </Router>
   );

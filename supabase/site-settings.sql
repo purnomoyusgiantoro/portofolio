@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS site_settings (
   -- Branding
   logo_url TEXT,
   favicon_url TEXT,
+  -- Contact
+  contact_email TEXT,
   -- Social links
   github_url TEXT,
   linkedin_url TEXT,

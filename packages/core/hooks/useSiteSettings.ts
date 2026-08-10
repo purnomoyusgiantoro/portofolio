@@ -8,6 +8,7 @@ export interface SiteSettings {
   profileImageUrl: string | null;
   cvUrl: string | null;
   logoUrl: string | null;
+  contactEmail: string | null;
   githubUrl: string | null;
   linkedinUrl: string | null;
   twitterUrl: string | null;
@@ -24,6 +25,7 @@ const defaultSettings: SiteSettings = {
   profileImageUrl: null,
   cvUrl: null,
   logoUrl: null,
+  contactEmail: null,
   githubUrl: null,
   linkedinUrl: null,
   twitterUrl: null,
@@ -69,6 +71,7 @@ export function useSiteSettings(): UseSiteSettingsResult {
             profileImageUrl: data.profile_image_url || null,
             cvUrl: data.cv_url || null,
             logoUrl: data.logo_url || null,
+            contactEmail: data.contact_email || null,
             githubUrl: data.github_url || null,
             linkedinUrl: data.linkedin_url || null,
             twitterUrl: data.twitter_url || null,

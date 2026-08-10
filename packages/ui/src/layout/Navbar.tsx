@@ -2,7 +2,11 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Sun } from 'lucide-react';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  brandName?: string;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy portofolio' }) => {
   const location = useLocation();
 
   const isActive = (path: string) => {
@@ -12,7 +16,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 border-b border-outline-variant bg-surface/80 backdrop-blur-xl">
       <div className="flex justify-between items-center px-4 md:px-12 py-4 max-w-[1440px] mx-auto">
-        <Link to="/" className="font-body font-bold text-2xl tracking-tighter text-black">pxy portofolio</Link>
+        <Link to="/" className="font-body font-bold text-2xl tracking-tighter text-black">{brandName}</Link>
         
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
