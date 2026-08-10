@@ -41,31 +41,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Showcase Section — replaced video with animated gradient */}
-      <section className="relative w-full max-w-[1440px] mx-auto px-4 md:px-12 z-10 -mt-10 mb-20">
-        <div className="relative w-full aspect-video md:aspect-[21/9] rounded-[2.5rem] overflow-hidden glass-pane shadow-2xl border border-white/40 group">
-          {/* Animated gradient background replacing video */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/20 to-primary/10 animate-pulse"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(0,101,116,0.3),transparent_60%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(0,197,167,0.2),transparent_50%)]"></div>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-
-          {/* Content overlay */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <div className="w-20 h-20 mx-auto rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <p className="text-white/70 font-code text-sm tracking-wider uppercase">Portfolio Showcase</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* AI Assistant Floating Component */}
       <AIAssistant />
