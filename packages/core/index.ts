@@ -13,3 +13,5 @@ export { useProjects } from './hooks/useProjects';
 export { useGallery } from './hooks/useGallery';
 export { useCertificates } from './hooks/useCertificates';
 export { useContactForm } from './hooks/useContactForm';
+export { useSiteSettings } from './hooks/useSiteSettings';
+export type { SiteSettings } from './hooks/useSiteSettings';

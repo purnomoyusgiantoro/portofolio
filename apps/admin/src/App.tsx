@@ -7,6 +7,7 @@ import { ProjectsManager } from './pages/ProjectsManager';
 import { GalleryManager } from './pages/GalleryManager';
 import { CertificatesManager } from './pages/CertificatesManager';
 import { MessagesInbox } from './pages/MessagesInbox';
+import { SiteSettingsPage } from './pages/SiteSettings';
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
           <Route path="/gallery" element={<GalleryManager />} />
           <Route path="/certificates" element={<CertificatesManager />} />
           <Route path="/messages" element={<MessagesInbox />} />
+          <Route path="/settings" element={<SiteSettingsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

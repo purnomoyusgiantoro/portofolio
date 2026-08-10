@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { UploadCloud, X, Loader2 } from 'lucide-react';
+import imageCompression from 'browser-image-compression';
 import { uploadFile } from '../lib/storage';
 
 interface ImageUploadProps {
@@ -19,21 +20,31 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ bucket, folder, onUplo
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (max 5MB)
+    // Validate size (max 5MB original)
     if (file.size > 5 * 1024 * 1024) {
-      setError('Ukuran file maksimal 5MB');
+      setError('Ukuran file awal maksimal 5MB');
       return;
     }
 
     setUploading(true);
     setError(null);
 
-    // Show local preview immediately
+    // Show local preview immediately (using original for instant feedback)
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
 
     try {
-      const url = await uploadFile(bucket, file, folder);
+      // Compress the image before uploading
+      const options = {
+        maxSizeMB: 1, // Target size ~1MB max
+        maxWidthOrHeight: 1920, // Max dimension
+        useWebWorker: true,
+      };
+      
+      const compressedFile = await imageCompression(file, options);
+
+      // Upload the compressed file
+      const url = await uploadFile(bucket, compressedFile, folder);
       if (url) {
         onUploadSuccess(url);
       } else {
@@ -41,7 +52,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ bucket, folder, onUplo
         setPreview(currentImage || null);
       }
     } catch (err: any) {
-      setError(err.message || 'Gagal mengupload gambar');
+      console.error("Compression/Upload error:", err);
+      setError(err.message || 'Gagal memproses dan mengupload gambar');
       setPreview(currentImage || null);
     } finally {
       setUploading(false);

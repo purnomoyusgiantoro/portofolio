@@ -2,8 +2,10 @@ import React from 'react';
 import { AIAssistant } from '@pxy/ui';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSiteSettings } from '@pxy/core';
 
 export const Home: React.FC = () => {
+  const { settings } = useSiteSettings();
 
   return (
     <div className="w-full">
@@ -22,11 +24,11 @@ export const Home: React.FC = () => {
           </div>
 
           <h1 className="font-body font-extrabold text-[40px] md:text-[72px] leading-[1.1] tracking-tighter text-black">
-            ENGINEERING THE <br /> FUTURE OF THE WEB
+            {settings.heroTitle || 'ENGINEERING THE FUTURE OF THE WEB'}
           </h1>
 
           <p className="font-body text-lg md:text-xl text-black/80 max-w-2xl mx-auto leading-relaxed">
-            Membangun pengalaman digital masa depan melalui perpaduan teknologi AI, Web3, dan antarmuka web modern yang premium.
+            {settings.heroSubtitle || 'Membangun pengalaman digital masa depan melalui perpaduan teknologi AI, Web3, dan antarmuka web modern yang premium.'}
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-10">
@@ -40,8 +42,6 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-
 
       {/* AI Assistant Floating Component */}
       <AIAssistant />
