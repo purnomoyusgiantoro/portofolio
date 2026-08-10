@@ -9,6 +9,8 @@ export const Login: React.FC = () => {
   const { user, signIn, signUp, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   
+  const enableSignup = import.meta.env.VITE_ENABLE_SIGNUP !== 'false';
+  
   const [mode, setMode] = useState<AuthMode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,6 +29,11 @@ export const Login: React.FC = () => {
     setSuccess(null);
 
     if (mode === 'signup') {
+      if (!enableSignup) {
+        setError('Pendaftaran akun baru saat ini dinonaktifkan.');
+        setLoading(false);
+        return;
+      }
       if (password !== confirmPassword) {
         setError('Password tidak cocok.');
         setLoading(false);
@@ -74,32 +81,34 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Mode Toggle */}
-        <div className="flex bg-admin-bg rounded-lg p-1 mb-6 border border-admin-border">
-          <button
-            type="button"
-            onClick={() => { setMode('login'); setError(null); setSuccess(null); }}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
-              mode === 'login' 
-                ? 'bg-admin-primary text-white shadow-sm' 
-                : 'text-admin-text-muted hover:text-admin-text'
-            }`}
-          >
-            <LogIn size={16} />
-            Login
-          </button>
-          <button
-            type="button"
-            onClick={() => { setMode('signup'); setError(null); setSuccess(null); }}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
-              mode === 'signup' 
-                ? 'bg-admin-primary text-white shadow-sm' 
-                : 'text-admin-text-muted hover:text-admin-text'
-            }`}
-          >
-            <UserPlus size={16} />
-            Sign Up
-          </button>
-        </div>
+        {enableSignup && (
+          <div className="flex bg-admin-bg rounded-lg p-1 mb-6 border border-admin-border">
+            <button
+              type="button"
+              onClick={() => { setMode('login'); setError(null); setSuccess(null); }}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                mode === 'login' 
+                  ? 'bg-admin-primary text-white shadow-sm' 
+                  : 'text-admin-text-muted hover:text-admin-text'
+              }`}
+            >
+              <LogIn size={16} />
+              Login
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('signup'); setError(null); setSuccess(null); }}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                mode === 'signup' 
+                  ? 'bg-admin-primary text-white shadow-sm' 
+                  : 'text-admin-text-muted hover:text-admin-text'
+              }`}
+            >
+              <UserPlus size={16} />
+              Sign Up
+            </button>
+          </div>
+        )}
 
         {/* Success message */}
         {success && (
