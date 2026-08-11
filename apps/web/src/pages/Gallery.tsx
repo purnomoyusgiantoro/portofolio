@@ -37,15 +37,15 @@ export const Gallery: React.FC = () => {
   return (
     <div className="w-full pt-32 pb-20 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       {/* Header */}
-      <div className="mb-16 text-center">
+      <div className="mb-16">
         <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-4">
           Dokumentasi
         </span>
         <h1 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-black">
           Galeri Kegiatan
         </h1>
-        <div className="w-24 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full mx-auto"></div>
-        <p className="mt-6 font-body text-black/60 max-w-2xl mx-auto text-lg">
+        <div className="w-24 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full"></div>
+        <p className="mt-6 font-body text-black/60 max-w-2xl text-lg">
           Dokumentasi perjalanan, workshop, kompetisi, dan momen penting lainnya.
         </p>
       </div>
