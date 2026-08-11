@@ -15,7 +15,7 @@ export const App: React.FC = () => {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar brandName={settings.profileName + ' portofolio'} />
+        <Navbar brandName={settings.profileName} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
