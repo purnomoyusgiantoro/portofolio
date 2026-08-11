@@ -148,8 +148,7 @@ export const ProjectsManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('projects').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    await Promise.all(updates);
-    fetchProjects();
+    Promise.all(updates);
   };
 
   return (

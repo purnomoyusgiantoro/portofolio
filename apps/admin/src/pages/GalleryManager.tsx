@@ -128,12 +128,11 @@ export const GalleryManager: React.FC = () => {
     reordered.splice(to, 0, movedItem);
     setItems(reordered);
 
-    // Update all sort_order values in DB
+    // Update all sort_order values in DB (no refetch needed, UI already updated)
     const updates = reordered.map((item, idx) =>
       supabase.from('gallery').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    await Promise.all(updates);
-    fetchItems();
+    Promise.all(updates);
   };
 
   const isEditing = !!editId;
