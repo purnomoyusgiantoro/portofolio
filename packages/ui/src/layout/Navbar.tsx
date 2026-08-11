@@ -6,7 +6,7 @@ interface NavbarProps {
   brandName?: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy portofolio' }) => {
+export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
   const location = useLocation();
 
   const isActive = (path: string) => {
