@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
             <span className="font-code text-xs text-black tracking-widest uppercase font-semibold">Available for Innovation</span>
           </div>
 
-          <h1 className="font-body font-extrabold text-[40px] md:text-[72px] leading-[1.1] tracking-tighter text-black">
+          <h1 className="font-body font-extrabold text-4xl md:text-[72px] leading-[1.1] tracking-tighter text-black">
             {settings.heroTitle || 'ENGINEERING THE FUTURE OF THE WEB'}
           </h1>
 
@@ -81,7 +81,7 @@ export const Home: React.FC = () => {
             <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-2">
               Tentang Saya
             </span>
-            <h2 className="font-body font-bold text-[36px] md:text-[48px] leading-[1.1] text-black">
+            <h2 className="font-body font-bold text-3xl md:text-[48px] leading-[1.1] text-black">
               Hello, I'm {settings.profileName}
             </h2>
             <p className="font-code text-lg text-primary font-medium">
@@ -130,7 +130,7 @@ export const Home: React.FC = () => {
             <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-4">
               Karya Unggulan
             </span>
-            <h2 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-black">
+            <h2 className="font-body font-bold text-3xl md:text-[56px] leading-[1.1] text-black">
               Featured Projects
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full mx-auto"></div>
@@ -186,7 +186,7 @@ export const Home: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-[#004a57]/60 blur-[80px] rounded-full -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto relative z-10 text-center py-12">
-          <h2 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-white mb-6">
+          <h2 className="font-body font-bold text-3xl md:text-[56px] leading-[1.1] text-white mb-6">
             Punya Ide Menarik?
           </h2>
           <p className="font-body text-white/90 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">

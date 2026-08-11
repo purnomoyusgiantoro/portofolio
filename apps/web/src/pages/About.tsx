@@ -15,13 +15,13 @@ export const About: React.FC = () => {
         <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-4">
           Profil Profesional
         </span>
-        <h1 className="font-body font-bold text-[40px] md:text-[56px] leading-[1.1] text-black">
+        <h1 className="font-body font-bold text-4xl md:text-[56px] leading-[1.1] text-black">
           About Me
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full"></div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
         
         {/* Kolom Kiri: Profil */}
         <div className="lg:col-span-4 space-y-12">

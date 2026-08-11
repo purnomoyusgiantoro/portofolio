@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun } from 'lucide-react';
+import { Sun, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   brandName?: string;
@@ -8,6 +8,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -76,11 +77,84 @@ export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
             {/* Always light mode as requested */}
             <Sun size={20} className="text-primary cursor-default" />
           </div>
-          <Link to="/contact" className="px-6 py-2 bg-primary-container text-on-primary-container font-body font-semibold text-sm rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95">
+          <Link to="/contact" className="hidden md:flex px-6 py-2 bg-primary-container text-on-primary-container font-body font-semibold text-sm rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95">
             Hire Me
           </Link>
+          
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden flex items-center text-black"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu Drawer */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-[73px] left-0 w-full h-[calc(100vh-73px)] bg-white/95 backdrop-blur-xl border-t border-outline-variant overflow-y-auto">
+          <div className="flex flex-col py-8 px-6 gap-6">
+            <Link 
+              to="/" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-black font-semibold font-body text-xl ${isActive('/') ? 'text-primary' : ''}`}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/about" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-black font-semibold font-body text-xl ${isActive('/about') ? 'text-primary' : ''}`}
+            >
+              About Me
+            </Link>
+            
+            <div className="space-y-4">
+              <span className="text-black/50 font-semibold font-body text-sm uppercase tracking-widest">Portofolio</span>
+              <div className="flex flex-col gap-4 pl-4 border-l-2 border-outline-variant">
+                <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Web Development</Link>
+                <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Machine Learning</Link>
+                <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">AI Agent</Link>
+                <Link to="/portfolio/web3" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Web3 / Smart Contracts</Link>
+                <Link to="/portfolio/others" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Others</Link>
+              </div>
+            </div>
+            
+            <Link 
+              to="/gallery" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-black font-semibold font-body text-xl ${isActive('/gallery') ? 'text-primary' : ''}`}
+            >
+              Galeri
+            </Link>
+            
+            <Link 
+              to="/sertifikat" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-black font-semibold font-body text-xl ${isActive('/sertifikat') ? 'text-primary' : ''}`}
+            >
+              Sertifikat
+            </Link>
+            
+            <Link 
+              to="/contact" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-black font-semibold font-body text-xl ${isActive('/contact') ? 'text-primary' : ''}`}
+            >
+              Contact
+            </Link>
+
+            <Link 
+              to="/contact" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-6 text-center px-6 py-4 bg-primary text-white font-body font-semibold text-lg rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95"
+            >
+              Hire Me
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
