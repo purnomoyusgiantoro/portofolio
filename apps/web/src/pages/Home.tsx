@@ -1,11 +1,22 @@
 import React from 'react';
 import { AIAssistant } from '@pxy/ui';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useSiteSettings } from '@pxy/core';
+import { useSiteSettings, useProjects } from '@pxy/core';
+
+// Tech stack list
+const TECH_STACK = [
+  'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 
+  'Supabase', 'PostgreSQL', 'Next.js', 'Python', 
+  'Machine Learning', 'AI Agents', 'UI/UX Design', 'Figma'
+];
 
 export const Home: React.FC = () => {
   const { settings } = useSiteSettings();
+  const { projects } = useProjects();
+  
+  // Get featured projects (up to 3)
+  const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
 
   return (
     <div className="w-full">
@@ -40,6 +51,98 @@ export const Home: React.FC = () => {
               Hubungi Saya
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Tech Stack Marquee Section */}
+      <section className="py-12 border-y border-outline-variant/30 bg-white/50 overflow-hidden relative flex flex-col justify-center">
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
+        
+        <div className="flex space-x-8 w-max animate-marquee">
+          {/* Duplicate the list so it scrolls seamlessly without breaking */}
+          {[...TECH_STACK, ...TECH_STACK, ...TECH_STACK].map((tech, idx) => (
+            <div key={idx} className="flex items-center gap-3 px-6 py-3 rounded-full border border-outline-variant/50 bg-white/50 text-black/70 font-code font-semibold tracking-wide text-sm whitespace-nowrap shadow-sm">
+              <Sparkles size={14} className="text-primary/70" />
+              {tech}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Projects Section */}
+      {featuredProjects.length > 0 && (
+        <section className="py-32 px-4 md:px-12 max-w-[1440px] mx-auto">
+          <div className="text-center mb-20">
+            <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-4">
+              Karya Unggulan
+            </span>
+            <h2 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-black">
+              Featured Projects
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProjects.map((project) => (
+              <Link to={`/portfolio`} key={project.id} className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-outline-variant/50 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <div className="aspect-[4/3] w-full overflow-hidden relative">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-xs font-bold rounded-full shadow-sm">
+                      {project.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="font-body font-bold text-2xl text-black mb-3 group-hover:text-primary transition-colors line-clamp-1">{project.title}</h3>
+                  <p className="text-black/70 text-sm leading-relaxed mb-8 line-clamp-3 flex-1">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tags?.slice(0, 3).map((tag, i) => (
+                      <span key={i} className="text-xs font-code font-semibold px-3 py-1.5 bg-primary/5 text-primary rounded-lg border border-primary/10">
+                        {tag}
+                      </span>
+                    ))}
+                    {(project.tags?.length || 0) > 3 && (
+                      <span className="text-xs font-code font-semibold px-3 py-1.5 bg-surface-variant/50 text-black/60 rounded-lg">
+                        +{(project.tags?.length || 0) - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <Link to="/portfolio" className="inline-flex items-center gap-2 font-code text-sm font-bold text-primary hover:text-secondary transition-colors group px-6 py-3 rounded-full hover:bg-primary/5">
+              Lihat Semua Proyek
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-24 px-4 md:px-12 relative overflow-hidden my-12 mx-4 md:mx-12 rounded-[3rem]">
+        <div className="absolute inset-0 bg-primary"></div>
+        
+        {/* Abstract background shapes */}
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-secondary/40 blur-[100px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-[#004a57]/60 blur-[80px] rounded-full -translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
+
+        <div className="max-w-4xl mx-auto relative z-10 text-center py-12">
+          <h2 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-white mb-6">
+            Punya Ide Menarik?
+          </h2>
+          <p className="font-body text-white/90 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+            Mari berkolaborasi dan wujudkan visi Anda menjadi produk digital modern yang memukau dan berkinerja tinggi.
+          </p>
+          <Link to="/contact" className="inline-flex items-center gap-2 px-10 py-4 bg-white text-primary font-body font-bold text-sm rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl">
+            Mulai Percakapan Sekarang
+            <ArrowRight size={18} />
+          </Link>
         </div>
       </section>
 
