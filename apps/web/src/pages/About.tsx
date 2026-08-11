@@ -99,9 +99,6 @@ export const About: React.FC = () => {
           <section className="bg-white p-8 md:p-10 rounded-[2rem] border border-outline-variant/50 shadow-sm relative overflow-hidden">
             <Sparkles className="absolute top-8 right-8 text-primary/10 w-32 h-32" />
             <h2 className="font-body font-bold text-3xl text-black mb-6 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                👋
-              </span>
               Biografi Singkat
             </h2>
             <div className="font-body text-black/80 leading-relaxed text-lg space-y-4 relative z-10 whitespace-pre-line">
