@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Menu, X } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   brandName?: string;
@@ -9,6 +9,23 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  React.useEffect(() => {
+    if (document.documentElement.classList.contains('dark')) {
+      setIsDarkMode(true);
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('dark');
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      setIsDarkMode(true);
+    }
+  };
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -41,6 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
             </button>
             <div className="hidden group-hover:block absolute top-100 left-0 pt-4 w-64 z-10">
               <div className="bg-white/90 backdrop-blur-3xl border border-outline-variant p-4 rounded-xl space-y-3 shadow-lg">
+                <Link to="/portfolio" className="block font-body text-sm font-semibold text-primary hover:text-secondary transition-colors pb-2 border-b border-outline-variant/30">Semua Proyek</Link>
                 <Link to="/portfolio/web-development" className="block font-body text-sm text-black hover:text-primary transition-colors">Web Development</Link>
                 <Link to="/portfolio/machine-learning" className="block font-body text-sm text-black hover:text-primary transition-colors">Machine Learning</Link>
                 <Link to="/portfolio/ai-agent" className="block font-body text-sm text-black hover:text-primary transition-colors">AI Agent</Link>
@@ -73,10 +91,9 @@ export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
         </div>
         
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex gap-4">
-            {/* Always light mode as requested */}
-            <Sun size={20} className="text-primary cursor-default" />
-          </div>
+          <button onClick={toggleDarkMode} className="text-primary hover:text-secondary transition-colors flex items-center" aria-label="Toggle Dark Mode">
+            {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
           <Link to="/contact" className="hidden md:flex px-6 py-2 bg-primary-container text-on-primary-container font-body font-semibold text-sm rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95">
             Hire Me
           </Link>
@@ -113,6 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
             <div className="space-y-4">
               <span className="text-black/50 font-semibold font-body text-sm uppercase tracking-widest">Portofolio</span>
               <div className="flex flex-col gap-4 pl-4 border-l-2 border-outline-variant">
+                <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg font-semibold text-primary hover:text-secondary">Semua Proyek</Link>
                 <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Web Development</Link>
                 <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Machine Learning</Link>
                 <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">AI Agent</Link>

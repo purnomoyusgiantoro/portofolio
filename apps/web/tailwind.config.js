@@ -14,14 +14,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#f7f9fc",
-        primary: "#006574",
-        "primary-container": "#008092",
-        "on-primary-container": "#f8fdff",
-        secondary: "#006875",
-        "outline-variant": "#bcc9cc",
-        surface: "#f7f9fc",
-        "surface-variant": "#e0e3e6",
+        black: "rgb(var(--black) / <alpha-value>)",
+        white: "rgb(var(--white) / <alpha-value>)",
+        background: "rgb(var(--background) / <alpha-value>)",
+        primary: "rgb(var(--primary) / <alpha-value>)",
+        "primary-container": "rgb(var(--primary-container) / <alpha-value>)",
+        "on-primary-container": "rgb(var(--on-primary-container) / <alpha-value>)",
+        secondary: "rgb(var(--secondary) / <alpha-value>)",
+        "outline-variant": "rgb(var(--outline-variant) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        "surface-variant": "rgb(var(--surface-variant) / <alpha-value>)",
       },
       fontFamily: {
         body: ['Hanken Grotesk', 'sans-serif'],

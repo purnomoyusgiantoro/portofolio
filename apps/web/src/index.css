@@ -3,23 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --primary: #006574;
-  --secondary: #006875;
-  --background: #f7f9fc;
-  --surface-variant: #e0e3e6;
-  --outline-variant: #bcc9cc;
+  --black: 0 0 0;
+  --white: 255 255 255;
+  --primary: 0 101 116;
+  --primary-container: 0 128 146;
+  --on-primary-container: 248 253 255;
+  --secondary: 0 104 117;
+  --background: 247 249 252;
+  --surface: 247 249 252;
+  --surface-variant: 224 227 230;
+  --outline-variant: 188 201 204;
+}
+
+.dark {
+  --black: 255 255 255;
+  --white: 30 41 59;
+  --primary: 79 209 197;
+  --primary-container: 49 151 149;
+  --on-primary-container: 230 255 250;
+  --secondary: 56 178 172;
+  --background: 15 23 42;
+  --surface: 15 23 42;
+  --surface-variant: 51 65 85;
+  --outline-variant: 71 85 105;
 }
 
 body {
-  background-color: var(--background);
-  color: #000;
+  background-color: rgb(var(--background));
+  color: rgb(var(--black));
   font-family: 'Hanken Grotesk', sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
-  background-color: rgba(0, 101, 116, 0.3);
-  color: #000;
+  background-color: rgba(var(--primary), 0.3);
+  color: rgb(var(--black));
 }
 
 .glass-pane {
@@ -41,7 +59,7 @@ body {
 }
 
 .glowing-beam {
-  background: linear-gradient(90deg, transparent, #006574, transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--primary)), transparent);
   height: 2px;
   width: 100%;
   position: absolute;
