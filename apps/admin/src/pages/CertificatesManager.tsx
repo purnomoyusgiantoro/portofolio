@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { CertificateRow } from '@pxy/core';
-import { Plus, Trash2, X } from 'lucide-react';
+import { Plus, Trash2, Pencil, X, ArrowUp, ArrowDown } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
 import { ImageUpload } from '../components/ImageUpload';
@@ -13,10 +13,12 @@ export const CertificatesManager: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Form
+  const [editId, setEditId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [issuer, setIssuer] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [imageUrl, setImageUrl] = useState('');
+  const [saving, setSaving] = useState(false);
 
   // Delete state
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -24,7 +26,7 @@ export const CertificatesManager: React.FC = () => {
 
   const fetchItems = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('certificates').select('*').order('date', { ascending: false });
+    const { data, error } = await supabase.from('certificates').select('*').order('sort_order', { ascending: true });
     if (!error && data) setItems(data);
     setLoading(false);
   };
@@ -33,15 +35,48 @@ export const CertificatesManager: React.FC = () => {
     fetchItems();
   }, []);
 
+  const resetForm = () => {
+    setEditId(null);
+    setTitle('');
+    setIssuer('');
+    setDate(new Date().toISOString().split('T')[0]);
+    setImageUrl('');
+  };
+
+  const openAddModal = () => {
+    resetForm();
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (item: CertificateRow) => {
+    setEditId(item.id);
+    setTitle(item.title);
+    setIssuer(item.issuer);
+    setDate(item.date);
+    setImageUrl(item.image_url);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    resetForm();
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageUrl) return alert('Silakan upload gambar terlebih dahulu');
 
-    await supabase.from('certificates').insert([{ title, issuer, date, image_url: imageUrl }]);
-    setIsModalOpen(false);
-    setTitle('');
-    setIssuer('');
-    setImageUrl('');
+    setSaving(true);
+
+    if (editId) {
+      await supabase.from('certificates').update({ title, issuer, date, image_url: imageUrl }).eq('id', editId);
+    } else {
+      const maxOrder = items.length > 0 ? Math.max(...items.map(i => i.sort_order ?? 0)) : 0;
+      await supabase.from('certificates').insert([{ title, issuer, date, image_url: imageUrl, sort_order: maxOrder + 1 }]);
+    }
+
+    setSaving(false);
+    closeModal();
     fetchItems();
   };
 
@@ -60,14 +95,38 @@ export const CertificatesManager: React.FC = () => {
     fetchItems();
   };
 
+  const handleMoveUp = async (index: number) => {
+    if (index === 0) return;
+    const current = items[index];
+    const above = items[index - 1];
+    await Promise.all([
+      supabase.from('certificates').update({ sort_order: above.sort_order }).eq('id', current.id),
+      supabase.from('certificates').update({ sort_order: current.sort_order }).eq('id', above.id),
+    ]);
+    fetchItems();
+  };
+
+  const handleMoveDown = async (index: number) => {
+    if (index >= items.length - 1) return;
+    const current = items[index];
+    const below = items[index + 1];
+    await Promise.all([
+      supabase.from('certificates').update({ sort_order: below.sort_order }).eq('id', current.id),
+      supabase.from('certificates').update({ sort_order: current.sort_order }).eq('id', below.id),
+    ]);
+    fetchItems();
+  };
+
+  const isEditing = !!editId;
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-admin-text mb-1">Certificates</h1>
-          <p className="text-sm text-admin-text-muted">Kelola sertifikat dan penghargaan</p>
+          <p className="text-sm text-admin-text-muted">Kelola sertifikat dan penghargaan. Gunakan tombol panah untuk mengatur urutan.</p>
         </div>
-        <button onClick={() => setIsModalOpen(true)} className="bg-admin-primary hover:bg-admin-primary-light text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors">
+        <button onClick={openAddModal} className="bg-admin-primary hover:bg-admin-primary-light text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors">
           <Plus size={18} /> Add Certificate
         </button>
       </div>
@@ -77,6 +136,7 @@ export const CertificatesManager: React.FC = () => {
           <table className="w-full text-left text-sm">
             <thead className="bg-admin-bg/50 text-admin-text-muted text-xs uppercase font-semibold">
               <tr>
+                <th className="px-4 py-4 w-20">Order</th>
                 <th className="px-6 py-4">Certificate</th>
                 <th className="px-6 py-4">Issuer</th>
                 <th className="px-6 py-4">Date</th>
@@ -85,12 +145,32 @@ export const CertificatesManager: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-admin-border">
               {loading ? (
-                <tr><td colSpan={4} className="px-6 py-8 text-center text-admin-text-muted">Memuat...</td></tr>
+                <tr><td colSpan={5} className="px-6 py-8 text-center text-admin-text-muted">Memuat...</td></tr>
               ) : items.length === 0 ? (
-                <tr><td colSpan={4} className="px-6 py-8 text-center text-admin-text-muted">Belum ada sertifikat</td></tr>
+                <tr><td colSpan={5} className="px-6 py-8 text-center text-admin-text-muted">Belum ada sertifikat</td></tr>
               ) : (
-                items.map((item) => (
+                items.map((item, index) => (
                   <tr key={item.id} className="hover:bg-admin-surface-hover transition-colors">
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-0.5">
+                        <button
+                          onClick={() => handleMoveUp(index)}
+                          disabled={index === 0}
+                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Pindah ke atas"
+                        >
+                          <ArrowUp size={14} />
+                        </button>
+                        <button
+                          onClick={() => handleMoveDown(index)}
+                          disabled={index === items.length - 1}
+                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Pindah ke bawah"
+                        >
+                          <ArrowDown size={14} />
+                        </button>
+                      </div>
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
                         <img src={item.image_url} alt={item.title} className="w-16 h-12 rounded object-cover border border-admin-border" />
@@ -100,9 +180,14 @@ export const CertificatesManager: React.FC = () => {
                     <td className="px-6 py-4 text-admin-text-muted">{item.issuer}</td>
                     <td className="px-6 py-4 text-admin-text-muted">{item.date}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setDeleteId(item.id)} className="p-1.5 text-admin-text-muted hover:text-admin-danger hover:bg-admin-danger/10 rounded transition-colors">
-                        <Trash2 size={16} />
-                      </button>
+                      <div className="flex items-center justify-end gap-1">
+                        <button onClick={() => openEditModal(item)} className="p-1.5 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors" title="Edit">
+                          <Pencil size={16} />
+                        </button>
+                        <button onClick={() => setDeleteId(item.id)} className="p-1.5 text-admin-text-muted hover:text-admin-danger hover:bg-admin-danger/10 rounded transition-colors" title="Delete">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -116,8 +201,8 @@ export const CertificatesManager: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-admin-surface border border-admin-border rounded-2xl w-full max-w-md overflow-hidden shadow-2xl my-8">
             <div className="px-6 py-4 border-b border-admin-border flex justify-between items-center bg-admin-bg/50">
-              <h2 className="text-lg font-bold text-admin-text">Add Certificate</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-admin-text-muted hover:text-admin-text transition-colors">
+              <h2 className="text-lg font-bold text-admin-text">{isEditing ? 'Edit Certificate' : 'Add Certificate'}</h2>
+              <button onClick={closeModal} className="text-admin-text-muted hover:text-admin-text transition-colors">
                 <X size={20} />
               </button>
             </div>
@@ -132,8 +217,10 @@ export const CertificatesManager: React.FC = () => {
               <FormField label="Date" type="date" value={date} onChange={e => setDate(e.target.value)} required />
               
               <div className="flex justify-end gap-3 pt-4 border-t border-admin-border">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 rounded-lg text-sm font-medium text-admin-text hover:bg-admin-surface-hover transition-colors">Batal</button>
-                <button type="submit" className="px-4 py-2 rounded-lg text-sm font-medium bg-admin-primary text-white hover:bg-admin-primary-light transition-colors">Simpan</button>
+                <button type="button" onClick={closeModal} className="px-4 py-2 rounded-lg text-sm font-medium text-admin-text hover:bg-admin-surface-hover transition-colors">Batal</button>
+                <button type="submit" disabled={saving} className="px-4 py-2 rounded-lg text-sm font-medium bg-admin-primary text-white hover:bg-admin-primary-light transition-colors disabled:opacity-50">
+                  {saving ? 'Menyimpan...' : isEditing ? 'Update' : 'Simpan'}
+                </button>
               </div>
             </form>
           </div>

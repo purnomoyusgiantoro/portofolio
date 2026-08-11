@@ -40,7 +40,7 @@ export function useCertificates(): UseCertificatesResult {
       const { data, error: supaError } = await supabase
         .from('certificates')
         .select('*')
-        .order('date', { ascending: false });
+        .order('sort_order', { ascending: true });
 
       if (supaError) throw supaError;
 

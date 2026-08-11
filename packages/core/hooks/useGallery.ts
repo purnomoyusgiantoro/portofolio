@@ -35,7 +35,7 @@ export function useGallery(): UseGalleryResult {
       const { data, error: supaError } = await supabase
         .from('gallery')
         .select('*')
-        .order('date', { ascending: false });
+        .order('sort_order', { ascending: true });
 
       if (supaError) throw supaError;
 

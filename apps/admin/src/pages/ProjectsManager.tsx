@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ProjectRow } from '@pxy/core';
-import { Plus, Edit2, Trash2, X, ExternalLink } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, ExternalLink, ArrowUp, ArrowDown } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
 import { ImageUpload } from '../components/ImageUpload';
@@ -34,7 +34,7 @@ export const ProjectsManager: React.FC = () => {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('sort_order', { ascending: true });
     
     if (!error && data) setProjects(data);
     setLoading(false);
@@ -88,7 +88,8 @@ export const ProjectsManager: React.FC = () => {
     if (editingId) {
       await supabase.from('projects').update(projectData).eq('id', editingId);
     } else {
-      await supabase.from('projects').insert([projectData]);
+      const maxOrder = projects.length > 0 ? Math.max(...projects.map(p => p.sort_order ?? 0)) : 0;
+      await supabase.from('projects').insert([{ ...projectData, sort_order: maxOrder + 1 }]);
     }
 
     setIsModalOpen(false);
@@ -112,12 +113,34 @@ export const ProjectsManager: React.FC = () => {
     fetchProjects();
   };
 
+  const handleMoveUp = async (index: number) => {
+    if (index === 0) return;
+    const current = projects[index];
+    const above = projects[index - 1];
+    await Promise.all([
+      supabase.from('projects').update({ sort_order: above.sort_order }).eq('id', current.id),
+      supabase.from('projects').update({ sort_order: current.sort_order }).eq('id', above.id),
+    ]);
+    fetchProjects();
+  };
+
+  const handleMoveDown = async (index: number) => {
+    if (index >= projects.length - 1) return;
+    const current = projects[index];
+    const below = projects[index + 1];
+    await Promise.all([
+      supabase.from('projects').update({ sort_order: below.sort_order }).eq('id', current.id),
+      supabase.from('projects').update({ sort_order: current.sort_order }).eq('id', below.id),
+    ]);
+    fetchProjects();
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-admin-text mb-1">Projects</h1>
-          <p className="text-sm text-admin-text-muted">Kelola portofolio proyek Anda</p>
+          <p className="text-sm text-admin-text-muted">Kelola portofolio proyek Anda. Gunakan tombol panah untuk mengatur urutan.</p>
         </div>
         <button 
           onClick={() => { resetForm(); setIsModalOpen(true); }}
@@ -133,6 +156,7 @@ export const ProjectsManager: React.FC = () => {
           <table className="w-full text-left text-sm">
             <thead className="bg-admin-bg/50 text-admin-text-muted text-xs uppercase font-semibold">
               <tr>
+                <th className="px-4 py-4 w-20">Order</th>
                 <th className="px-6 py-4">Project</th>
                 <th className="px-6 py-4">Category</th>
                 <th className="px-6 py-4">Featured</th>
@@ -142,15 +166,35 @@ export const ProjectsManager: React.FC = () => {
             <tbody className="divide-y divide-admin-border">
               {loading ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-admin-text-muted">Memuat...</td>
+                  <td colSpan={5} className="px-6 py-8 text-center text-admin-text-muted">Memuat...</td>
                 </tr>
               ) : projects.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-admin-text-muted">Belum ada proyek</td>
+                  <td colSpan={5} className="px-6 py-8 text-center text-admin-text-muted">Belum ada proyek</td>
                 </tr>
               ) : (
-                projects.map((p) => (
+                projects.map((p, index) => (
                   <tr key={p.id} className="hover:bg-admin-surface-hover transition-colors">
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-0.5">
+                        <button
+                          onClick={() => handleMoveUp(index)}
+                          disabled={index === 0}
+                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Pindah ke atas"
+                        >
+                          <ArrowUp size={14} />
+                        </button>
+                        <button
+                          onClick={() => handleMoveDown(index)}
+                          disabled={index === projects.length - 1}
+                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Pindah ke bawah"
+                        >
+                          <ArrowDown size={14} />
+                        </button>
+                      </div>
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
                         <img src={p.image_url} alt={p.title} className="w-12 h-12 rounded object-cover border border-admin-border" />

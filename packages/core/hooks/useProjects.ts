@@ -40,7 +40,7 @@ export function useProjects(category?: string): UseProjectsResult {
       let query = supabase
         .from('projects')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('sort_order', { ascending: true });
 
       if (category) {
         query = query.eq('category', category);

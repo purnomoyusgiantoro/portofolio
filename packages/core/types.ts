@@ -30,6 +30,7 @@ export interface ProjectRow {
   github_url: string | null;
   demo_url: string | null;
   featured: boolean;
+  sort_order: number;
   created_at: string;
 }
 
@@ -51,6 +52,7 @@ export interface GalleryRow {
   date: string;
   image_url: string;
   description: string | null;
+  sort_order: number;
   created_at: string;
 }
 
@@ -72,6 +74,7 @@ export interface CertificateRow {
   image_url: string;
   date: string;
   issuer: string;
+  sort_order: number;
   created_at: string;
 }
 
