@@ -10,7 +10,7 @@ export const Home: React.FC = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 px-4 md:px-12 overflow-hidden">
+      <section className="relative min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center pt-20 pb-12 px-4 md:px-12 overflow-hidden">
         <div className="hero-glow absolute inset-0"></div>
 
         {/* Background Atmospheric Element */}
