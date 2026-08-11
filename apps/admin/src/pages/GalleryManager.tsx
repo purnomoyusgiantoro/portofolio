@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { GalleryRow } from '@pxy/core';
-import { Plus, Trash2, Pencil, X, ArrowUp, ArrowDown } from 'lucide-react';
+import { Plus, Trash2, Pencil, X, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
 import { ImageUpload } from '../components/ImageUpload';
@@ -23,6 +23,12 @@ export const GalleryManager: React.FC = () => {
   // Delete state
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  // Drag state
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -95,25 +101,38 @@ export const GalleryManager: React.FC = () => {
     fetchItems();
   };
 
-  const handleMoveUp = async (index: number) => {
-    if (index === 0) return;
-    const current = items[index];
-    const above = items[index - 1];
-    await Promise.all([
-      supabase.from('gallery').update({ sort_order: above.sort_order }).eq('id', current.id),
-      supabase.from('gallery').update({ sort_order: current.sort_order }).eq('id', above.id),
-    ]);
-    fetchItems();
+  // Drag & Drop handlers
+  const handleDragStart = (index: number) => {
+    dragItem.current = index;
+    setDragIndex(index);
   };
 
-  const handleMoveDown = async (index: number) => {
-    if (index >= items.length - 1) return;
-    const current = items[index];
-    const below = items[index + 1];
-    await Promise.all([
-      supabase.from('gallery').update({ sort_order: below.sort_order }).eq('id', current.id),
-      supabase.from('gallery').update({ sort_order: current.sort_order }).eq('id', below.id),
-    ]);
+  const handleDragEnter = (index: number) => {
+    dragOverItem.current = index;
+    setDragOverIndex(index);
+  };
+
+  const handleDragEnd = async () => {
+    const from = dragItem.current;
+    const to = dragOverItem.current;
+    setDragIndex(null);
+    setDragOverIndex(null);
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    if (from === null || to === null || from === to) return;
+
+    // Reorder locally first for instant feedback
+    const reordered = [...items];
+    const [movedItem] = reordered.splice(from, 1);
+    reordered.splice(to, 0, movedItem);
+    setItems(reordered);
+
+    // Update all sort_order values in DB
+    const updates = reordered.map((item, idx) =>
+      supabase.from('gallery').update({ sort_order: idx + 1 }).eq('id', item.id)
+    );
+    await Promise.all(updates);
     fetchItems();
   };
 
@@ -124,7 +143,7 @@ export const GalleryManager: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-admin-text mb-1">Gallery</h1>
-          <p className="text-sm text-admin-text-muted">Kelola foto kegiatan. Gunakan tombol panah untuk mengatur urutan tampil.</p>
+          <p className="text-sm text-admin-text-muted">Kelola foto kegiatan. Drag ⠿ untuk mengatur urutan tampil.</p>
         </div>
         <button onClick={openAddModal} className="bg-admin-primary hover:bg-admin-primary-light text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors">
           <Plus size={18} /> Add Photo
@@ -139,25 +158,24 @@ export const GalleryManager: React.FC = () => {
         <div className="bg-admin-surface border border-admin-border rounded-xl overflow-hidden shadow-sm">
           <div className="divide-y divide-admin-border">
             {items.map((item, index) => (
-              <div key={item.id} className="flex items-center gap-4 p-4 hover:bg-admin-surface-hover transition-colors">
-                {/* Reorder Buttons */}
-                <div className="flex flex-col items-center gap-0.5 shrink-0">
-                  <button
-                    onClick={() => handleMoveUp(index)}
-                    disabled={index === 0}
-                    className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                    title="Pindah ke atas"
-                  >
-                    <ArrowUp size={14} />
-                  </button>
-                  <button
-                    onClick={() => handleMoveDown(index)}
-                    disabled={index === items.length - 1}
-                    className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                    title="Pindah ke bawah"
-                  >
-                    <ArrowDown size={14} />
-                  </button>
+              <div
+                key={item.id}
+                draggable
+                onDragStart={() => handleDragStart(index)}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragOver={(e) => e.preventDefault()}
+                onDragEnd={handleDragEnd}
+                className={`flex items-center gap-4 p-4 transition-all ${
+                  dragIndex === index
+                    ? 'opacity-40 bg-admin-primary/5'
+                    : dragOverIndex === index
+                    ? 'border-t-2 !border-t-admin-primary bg-admin-primary/5'
+                    : 'hover:bg-admin-surface-hover'
+                }`}
+              >
+                {/* Drag Handle */}
+                <div className="cursor-grab active:cursor-grabbing text-admin-text-muted hover:text-admin-primary transition-colors shrink-0">
+                  <GripVertical size={16} />
                 </div>
 
                 {/* Image */}

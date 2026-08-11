@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ProjectRow } from '@pxy/core';
-import { Plus, Edit2, Trash2, X, ExternalLink, ArrowUp, ArrowDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, ExternalLink, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
 import { ImageUpload } from '../components/ImageUpload';
@@ -28,6 +28,12 @@ export const ProjectsManager: React.FC = () => {
   // Delete state
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  // Drag state
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const fetchProjects = async () => {
     setLoading(true);
@@ -113,25 +119,36 @@ export const ProjectsManager: React.FC = () => {
     fetchProjects();
   };
 
-  const handleMoveUp = async (index: number) => {
-    if (index === 0) return;
-    const current = projects[index];
-    const above = projects[index - 1];
-    await Promise.all([
-      supabase.from('projects').update({ sort_order: above.sort_order }).eq('id', current.id),
-      supabase.from('projects').update({ sort_order: current.sort_order }).eq('id', above.id),
-    ]);
-    fetchProjects();
+  // Drag & Drop handlers
+  const handleDragStart = (index: number) => {
+    dragItem.current = index;
+    setDragIndex(index);
   };
 
-  const handleMoveDown = async (index: number) => {
-    if (index >= projects.length - 1) return;
-    const current = projects[index];
-    const below = projects[index + 1];
-    await Promise.all([
-      supabase.from('projects').update({ sort_order: below.sort_order }).eq('id', current.id),
-      supabase.from('projects').update({ sort_order: current.sort_order }).eq('id', below.id),
-    ]);
+  const handleDragEnter = (index: number) => {
+    dragOverItem.current = index;
+    setDragOverIndex(index);
+  };
+
+  const handleDragEnd = async () => {
+    const from = dragItem.current;
+    const to = dragOverItem.current;
+    setDragIndex(null);
+    setDragOverIndex(null);
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    if (from === null || to === null || from === to) return;
+
+    const reordered = [...projects];
+    const [movedItem] = reordered.splice(from, 1);
+    reordered.splice(to, 0, movedItem);
+    setProjects(reordered);
+
+    const updates = reordered.map((item, idx) =>
+      supabase.from('projects').update({ sort_order: idx + 1 }).eq('id', item.id)
+    );
+    await Promise.all(updates);
     fetchProjects();
   };
 
@@ -140,7 +157,7 @@ export const ProjectsManager: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-admin-text mb-1">Projects</h1>
-          <p className="text-sm text-admin-text-muted">Kelola portofolio proyek Anda. Gunakan tombol panah untuk mengatur urutan.</p>
+          <p className="text-sm text-admin-text-muted">Kelola portofolio proyek Anda. Drag ⠿ untuk mengatur urutan.</p>
         </div>
         <button 
           onClick={() => { resetForm(); setIsModalOpen(true); }}
@@ -156,7 +173,7 @@ export const ProjectsManager: React.FC = () => {
           <table className="w-full text-left text-sm">
             <thead className="bg-admin-bg/50 text-admin-text-muted text-xs uppercase font-semibold">
               <tr>
-                <th className="px-4 py-4 w-20">Order</th>
+                <th className="px-3 py-4 w-10"></th>
                 <th className="px-6 py-4">Project</th>
                 <th className="px-6 py-4">Category</th>
                 <th className="px-6 py-4">Featured</th>
@@ -174,25 +191,24 @@ export const ProjectsManager: React.FC = () => {
                 </tr>
               ) : (
                 projects.map((p, index) => (
-                  <tr key={p.id} className="hover:bg-admin-surface-hover transition-colors">
-                    <td className="px-4 py-4">
-                      <div className="flex items-center gap-0.5">
-                        <button
-                          onClick={() => handleMoveUp(index)}
-                          disabled={index === 0}
-                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                          title="Pindah ke atas"
-                        >
-                          <ArrowUp size={14} />
-                        </button>
-                        <button
-                          onClick={() => handleMoveDown(index)}
-                          disabled={index === projects.length - 1}
-                          className="p-1 text-admin-text-muted hover:text-admin-primary hover:bg-admin-primary/10 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                          title="Pindah ke bawah"
-                        >
-                          <ArrowDown size={14} />
-                        </button>
+                  <tr
+                    key={p.id}
+                    draggable
+                    onDragStart={() => handleDragStart(index)}
+                    onDragEnter={() => handleDragEnter(index)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDragEnd={handleDragEnd}
+                    className={`transition-all ${
+                      dragIndex === index
+                        ? 'opacity-40 bg-admin-primary/5'
+                        : dragOverIndex === index
+                        ? 'border-t-2 !border-t-admin-primary bg-admin-primary/5'
+                        : 'hover:bg-admin-surface-hover'
+                    }`}
+                  >
+                    <td className="px-3 py-4">
+                      <div className="cursor-grab active:cursor-grabbing text-admin-text-muted hover:text-admin-primary transition-colors">
+                        <GripVertical size={16} />
                       </div>
                     </td>
                     <td className="px-6 py-4">
