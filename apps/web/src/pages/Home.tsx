@@ -112,14 +112,23 @@ export const Home: React.FC = () => {
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
         
-        <div className="flex space-x-8 w-max animate-marquee">
-          {/* Duplicate the list so it scrolls seamlessly without breaking */}
-          {[...TECH_STACK, ...TECH_STACK, ...TECH_STACK].map((tech, idx) => (
-            <div key={idx} className="flex items-center gap-3 px-6 py-3 rounded-full border border-outline-variant/50 bg-white/50 text-black/70 font-code font-semibold tracking-wide text-sm whitespace-nowrap shadow-sm">
-              <Sparkles size={14} className="text-primary/70" />
-              {tech}
-            </div>
-          ))}
+        <div className="flex w-max">
+          <div className="flex space-x-8 animate-marquee pr-8">
+            {[...TECH_STACK, ...TECH_STACK].map((tech, idx) => (
+              <div key={`marquee-1-${idx}`} className="flex items-center gap-3 px-6 py-3 rounded-full border border-outline-variant/50 bg-white/50 text-black/70 font-code font-semibold tracking-wide text-sm whitespace-nowrap shadow-sm">
+                <Sparkles size={14} className="text-primary/70" />
+                {tech}
+              </div>
+            ))}
+          </div>
+          <div className="flex space-x-8 animate-marquee pr-8" aria-hidden="true">
+            {[...TECH_STACK, ...TECH_STACK].map((tech, idx) => (
+              <div key={`marquee-2-${idx}`} className="flex items-center gap-3 px-6 py-3 rounded-full border border-outline-variant/50 bg-white/50 text-black/70 font-code font-semibold tracking-wide text-sm whitespace-nowrap shadow-sm">
+                <Sparkles size={14} className="text-primary/70" />
+                {tech}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
