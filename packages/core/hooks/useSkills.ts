@@ -43,7 +43,7 @@ export function useSkills(): UseSkillsResult {
       if (supaError) throw supaError;
 
       const mapped = (data as SkillRow[]).map(mapSkillRow);
-      setSkills(mapped.length > 0 ? mapped : fallbackSkills);
+      setSkills(mapped);
     } catch (err: any) {
       console.error('[useSkills] Error:', err);
       setError(err.message ?? 'Failed to fetch skills');

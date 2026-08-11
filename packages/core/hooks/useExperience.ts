@@ -52,7 +52,7 @@ export function useExperience(): UseExperienceResult {
       if (supaError) throw supaError;
 
       const mapped = (data as ExperienceRow[]).map(mapExperienceRow);
-      setExperience(mapped.length > 0 ? mapped : fallbackExperience);
+      setExperience(mapped);
     } catch (err: any) {
       console.error('[useExperience] Error:', err);
       setError(err.message ?? 'Failed to fetch experience');
