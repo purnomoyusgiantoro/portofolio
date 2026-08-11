@@ -54,6 +54,59 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* About Section Snippet */}
+      <section className="py-24 px-4 md:px-12 max-w-[1440px] mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          {/* Image/Visual Side */}
+          <div className="w-full lg:w-5/12 relative">
+            <div className="aspect-[4/5] max-h-[500px] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 border border-outline-variant/30 bg-white/50 backdrop-blur-sm p-2">
+              <div className="w-full h-full rounded-3xl overflow-hidden relative">
+                {settings.profileImageUrl ? (
+                  <img src={settings.profileImageUrl} alt={settings.profileName} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-primary/5 flex items-center justify-center">
+                    <span className="text-8xl font-bold text-primary">{settings.profileName.charAt(0).toUpperCase()}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Decorative elements */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary/20 rounded-full blur-2xl"></div>
+            <div className="absolute -top-6 -left-6 w-40 h-40 bg-primary/10 rounded-full blur-2xl"></div>
+            <div className="absolute top-1/2 -right-12 w-24 h-24 border border-primary/20 rounded-full animate-[spin_15s_linear_infinite] pointer-events-none"></div>
+          </div>
+          
+          {/* Text/Content Side */}
+          <div className="w-full lg:w-7/12 space-y-6">
+            <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-2">
+              Tentang Saya
+            </span>
+            <h2 className="font-body font-bold text-[36px] md:text-[48px] leading-[1.1] text-black">
+              Hello, I'm {settings.profileName}
+            </h2>
+            <p className="font-code text-lg text-primary font-medium">
+              {settings.profileTitle}
+            </p>
+            <div className="w-16 h-1 bg-gradient-to-r from-secondary to-primary rounded-full"></div>
+            
+            <p className="font-body text-black/70 text-lg leading-relaxed line-clamp-4">
+              {settings.profileBio}
+            </p>
+            
+            <div className="pt-6 flex flex-wrap gap-4">
+              <Link to="/about" className="px-8 py-3 bg-primary text-white font-body font-bold text-sm rounded-full hover:bg-secondary transition-colors shadow-lg shadow-primary/20">
+                Lebih Lanjut
+              </Link>
+              {settings.cvUrl && (
+                <a href={settings.cvUrl} target="_blank" rel="noreferrer" className="px-8 py-3 bg-white text-black font-body font-bold text-sm rounded-full hover:bg-surface-variant transition-colors border border-outline-variant shadow-sm flex items-center gap-2">
+                  Download CV
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Tech Stack Marquee Section */}
       <section className="py-12 border-y border-outline-variant/30 bg-white/50 overflow-hidden relative flex flex-col justify-center">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10"></div>

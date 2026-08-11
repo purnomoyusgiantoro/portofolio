@@ -18,14 +18,19 @@ export const PortfolioCategory: React.FC = () => {
   const currentCategory = categoryId ? categoryMap[categoryId] : '';
   const { projects, loading, error } = useProjects(currentCategory);
 
+  const displayTitle = currentCategory ? currentCategory : (categoryId ? 'Kategori Tidak Ditemukan' : 'Semua Proyek');
+  const displayDescription = currentCategory 
+    ? `Eksplorasi proyek-proyek terbaru dalam ranah ${currentCategory}.`
+    : (categoryId ? 'Kategori yang Anda cari tidak tersedia.' : 'Eksplorasi seluruh karya dan proyek inovatif terbaru.');
+
   return (
     <div className="w-full pt-32 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       <div className="mb-16 text-center">
         <h1 className="font-body font-bold text-[40px] md:text-[56px] leading-[1.1] text-black">
-          {currentCategory || 'Kategori Tidak Ditemukan'}
+          {displayTitle}
         </h1>
         <p className="mt-4 font-body text-black/70 max-w-2xl mx-auto">
-          Eksplorasi proyek-proyek terbaru dalam ranah {currentCategory}.
+          {displayDescription}
         </p>
       </div>
 

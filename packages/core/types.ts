@@ -99,6 +99,44 @@ export interface MessageRow {
   created_at: string;
 }
 
+/**
+ * Skill / Keahlian
+ */
+export interface Skill {
+  id: string;
+  name: string;
+  percentage: number;
+}
+
+export interface SkillRow {
+  id: string;
+  name: string;
+  percentage: number;
+  sort_order: number;
+  created_at: string;
+}
+
+/**
+ * Experience / Pengalaman Kerja
+ */
+export interface Experience {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  description?: string;
+}
+
+export interface ExperienceRow {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  description: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
 // ============================================
 // Row → Frontend mappers
 // ============================================
@@ -135,5 +173,23 @@ export function mapCertificateRow(row: CertificateRow): Certificate {
     image: row.image_url,
     date: row.date,
     issuer: row.issuer,
+  };
+}
+
+export function mapSkillRow(row: SkillRow): Skill {
+  return {
+    id: row.id,
+    name: row.name,
+    percentage: row.percentage,
+  };
+}
+
+export function mapExperienceRow(row: ExperienceRow): Experience {
+  return {
+    id: row.id,
+    title: row.title,
+    company: row.company,
+    period: row.period,
+    description: row.description ?? undefined,
   };
 }

@@ -15,3 +15,5 @@ export { useCertificates } from './hooks/useCertificates';
 export { useContactForm } from './hooks/useContactForm';
 export { useSiteSettings } from './hooks/useSiteSettings';
 export type { SiteSettings } from './hooks/useSiteSettings';
+export { useSkills } from './hooks/useSkills';
+export { useExperience } from './hooks/useExperience';

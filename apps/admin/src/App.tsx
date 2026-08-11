@@ -8,6 +8,8 @@ import { GalleryManager } from './pages/GalleryManager';
 import { CertificatesManager } from './pages/CertificatesManager';
 import { MessagesInbox } from './pages/MessagesInbox';
 import { SiteSettingsPage } from './pages/SiteSettings';
+import { SkillsManager } from './pages/SkillsManager';
+import { ExperienceManager } from './pages/ExperienceManager';
 
 export function App() {
   return (
@@ -18,6 +20,8 @@ export function App() {
         <Route element={<AuthGuard><AdminLayout /></AuthGuard>}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/projects" element={<ProjectsManager />} />
+          <Route path="/skills" element={<SkillsManager />} />
+          <Route path="/experience" element={<ExperienceManager />} />
           <Route path="/gallery" element={<GalleryManager />} />
           <Route path="/certificates" element={<CertificatesManager />} />
           <Route path="/messages" element={<MessagesInbox />} />
