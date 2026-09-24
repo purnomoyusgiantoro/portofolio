@@ -17,8 +17,6 @@ interface SiteSettings {
   linkedin_url: string | null;
   twitter_url: string | null;
   instagram_url: string | null;
-  hero_title: string | null;
-  hero_subtitle: string | null;
   tech_stack: string[];
 }
 
@@ -36,8 +34,6 @@ const defaultSettings: SiteSettings = {
   linkedin_url: null,
   twitter_url: null,
   instagram_url: null,
-  hero_title: 'ENGINEERING THE FUTURE OF THE WEB',
-  hero_subtitle: '',
   tech_stack: [],
 };
 
@@ -312,36 +308,6 @@ export const SiteSettingsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Hero Section */}
-      <section className="bg-admin-surface border border-admin-border rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Globe size={20} className="text-admin-primary" />
-          <h2 className="text-lg font-semibold text-admin-text">Hero Section (Halaman Depan)</h2>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-admin-text-muted uppercase tracking-wider mb-2">Judul Hero</label>
-            <input
-              type="text"
-              value={settings.hero_title || ''}
-              onChange={e => updateField('hero_title', e.target.value)}
-              className="w-full bg-admin-bg border border-admin-border rounded-lg px-4 py-2.5 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors"
-              placeholder="ENGINEERING THE FUTURE OF THE WEB"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-semibold text-admin-text-muted uppercase tracking-wider mb-2">Sub-judul Hero</label>
-            <textarea
-              value={settings.hero_subtitle || ''}
-              onChange={e => updateField('hero_subtitle', e.target.value)}
-              rows={2}
-              className="w-full bg-admin-bg border border-admin-border rounded-lg px-4 py-2.5 text-sm text-admin-text focus:outline-none focus:border-admin-primary transition-colors resize-none"
-              placeholder="Deskripsi singkat di bawah judul hero..."
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Tech Stack */}
       <section className="bg-admin-surface border border-admin-border rounded-xl p-6">

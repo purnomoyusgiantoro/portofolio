@@ -13,8 +13,6 @@ export interface SiteSettings {
   linkedinUrl: string | null;
   twitterUrl: string | null;
   instagramUrl: string | null;
-  heroTitle: string;
-  heroSubtitle: string;
   techStack: string[];
 }
 
@@ -30,8 +28,6 @@ const defaultSettings: SiteSettings = {
   linkedinUrl: null,
   twitterUrl: null,
   instagramUrl: null,
-  heroTitle: 'ENGINEERING THE FUTURE OF THE WEB',
-  heroSubtitle: 'Membangun pengalaman digital masa depan melalui perpaduan teknologi AI, Web3, dan antarmuka web modern yang premium.',
   techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Python', 'TensorFlow', 'Solidity', 'Vite'],
 };
 
@@ -76,8 +72,6 @@ export function useSiteSettings(): UseSiteSettingsResult {
             linkedinUrl: data.linkedin_url || null,
             twitterUrl: data.twitter_url || null,
             instagramUrl: data.instagram_url || null,
-            heroTitle: data.hero_title || defaultSettings.heroTitle,
-            heroSubtitle: data.hero_subtitle || defaultSettings.heroSubtitle,
             techStack: data.tech_stack || defaultSettings.techStack,
           });
         }

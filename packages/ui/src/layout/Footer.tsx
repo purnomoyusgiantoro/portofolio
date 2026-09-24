@@ -12,7 +12,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({
   brandName = 'pxy portofolio',
-  description = 'Membangun pengalaman digital masa depan melalui perpaduan teknologi AI, Web3, dan antarmuka web modern yang premium.',
+  description = 'Portofolio profesional dan eksplorasi karya digital modern.',
   githubUrl,
   linkedinUrl,
   instagramUrl,
@@ -63,7 +63,7 @@ export const Footer: React.FC<FooterProps> = ({
         
         <div className="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="font-code text-xs text-black/60">
-            © {new Date().getFullYear()} {brandName} — ENGINEERED FOR THE FUTURE
+            © {new Date().getFullYear()} {brandName}
           </div>
         </div>
       </div>

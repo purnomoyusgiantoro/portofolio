@@ -29,7 +29,7 @@ export const App: React.FC = () => {
         </main>
         <Footer 
           brandName={settings.profileName + ' portofolio'}
-          description={settings.heroSubtitle || undefined}
+          description={settings.profileBio || undefined}
           githubUrl={settings.githubUrl}
           linkedinUrl={settings.linkedinUrl}
           instagramUrl={settings.instagramUrl}

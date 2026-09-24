@@ -23,9 +23,6 @@ CREATE TABLE IF NOT EXISTS site_settings (
   linkedin_url TEXT,
   twitter_url TEXT,
   instagram_url TEXT,
-  -- Hero section
-  hero_title TEXT DEFAULT 'ENGINEERING THE FUTURE OF THE WEB',
-  hero_subtitle TEXT DEFAULT '',
   -- Tech stack (stored as text array)
   tech_stack TEXT[] DEFAULT '{}',
   -- Timestamps

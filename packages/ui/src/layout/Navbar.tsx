@@ -6,7 +6,7 @@ interface NavbarProps {
   brandName?: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({ brandName = 'pxy' }) => {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 border-b border-outline-variant bg-surface/80 backdrop-blur-xl">
       <div className="flex justify-between items-center px-4 md:px-12 py-4 max-w-[1440px] mx-auto">
-        <Link to="/" className="font-body font-bold text-2xl tracking-tighter text-black">{brandName}</Link>
+        <Link to="/" className="inline-block" aria-label="Home"></Link>
         
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
