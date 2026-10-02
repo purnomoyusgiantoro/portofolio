@@ -16,199 +16,9 @@ import { useActivities, type ActivityItem } from '@pxy/core';
 
 type MaterialItem = ActivityItem;
 
-const fallbackMaterials: MaterialItem[] = [
-  {
-    id: '1',
-    slug: 'gsa-google-ai-gemini',
-    title: 'Google AI & Gemini Developer Ecosystem Deck',
-    category: 'design-ppt',
-    categoryLabel: 'Design PPT',
-    badgeColor: 'bg-blue-50 text-blue-600 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-900',
-    format: 'PPTX & PDF (16:9 4K)',
-    slidesCount: 24,
-    description: 'Slide presentasi resmi Google Student Ambassador membedah model Gemini 1.5, multimodal prompting, function calling, dan integrasi Google Antigravity SDK.',
-    imageBanner: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Gemini 1.5 Pro Architecture', 'Multimodal Tool Use', 'Antigravity Agentic Loops'],
-    slideList: [
-      'Cover & GSA Welcome',
-      'The Evolution of Google AI Models',
-      'Gemini Multimodal Reasoning',
-      'Hands-on API & Tool Calling',
-      'Live Demo: Agent Swarms',
-      'Closing & Community Resources'
-    ],
-    fileSize: '14.2 MB'
-  },
-  {
-    id: '2',
-    slug: 'modern-web-architecture',
-    title: 'Modern Web Architecture & Cloud Slide Kit',
-    category: 'web',
-    categoryLabel: 'Website',
-    badgeColor: 'bg-indigo-50 text-indigo-600 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-400 dark:border-indigo-900',
-    format: 'Web HTML5 Deck & PPTX',
-    slidesCount: 18,
-    description: 'Desain presentasi web interaktif berbasis komponen glassmorphism: membahas React 19, monorepo workspaces, edge deployment, dan Supabase backend.',
-    imageBanner: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-    highlights: ['React 19 Server Components', 'Monorepo Architecture', 'Zero-Bundle Overhead'],
-    slideList: [
-      'State of Modern Web Engineering',
-      'Monorepo Architecture Pattern',
-      'Glassmorphism & Design Tokens',
-      'Cloud Scalability & Edge Functions',
-      'Q&A & Source Code Download'
-    ],
-    fileSize: '9.8 MB'
-  },
-  {
-    id: '3',
-    slug: 'gsa-campus-onboarding',
-    title: 'Google Student Ambassador Campus Onboarding Deck',
-    category: 'design-ppt',
-    categoryLabel: 'Design PPT',
-    badgeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-900',
-    format: 'PPTX & Google Slides',
-    slidesCount: 20,
-    description: 'Format presentasi orientasi duta kampus Google: strategi pembentukan komunitas developer, penyelenggaraan hackathon, dan program sertifikasi Google Cloud.',
-    imageBanner: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Developer Community', 'Google Cloud Badging', 'Mentorship Program'],
-    slideList: [
-      'Student Developer Ecosystem',
-      'Campus Tech Events',
-      'Google Cloud Resources',
-      'Mentorship Opportunities',
-      'Next Steps & Call to Action'
-    ],
-    fileSize: '11.5 MB'
-  },
-  {
-    id: '4',
-    slug: 'interactive-web-presentation',
-    title: 'Interactive Web Presentation UI Template',
-    category: 'web',
-    categoryLabel: 'Website',
-    badgeColor: 'bg-sky-50 text-sky-600 border-sky-200 dark:bg-sky-950/60 dark:text-sky-400 dark:border-sky-900',
-    format: 'Interactive Web UI & Tailwind',
-    slidesCount: 16,
-    description: 'Template web presentasi mandiri berbasis browser: navigasi keyboard halus, visual slide responsive, mode presentasi layar penuh, dan transisi fluid.',
-    imageBanner: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Fullscreen Keyboard Controls', 'Fluid Slide Transitions', 'Mobile Responsive Grid'],
-    slideList: [
-      'Hero Slide & Brand Monogram',
-      'Keynote Grid Cards',
-      'Live Code Sandbox Preview',
-      'Interactive Chart Demonstration',
-      'Export to PDF Feature'
-    ],
-    fileSize: '6.4 MB'
-  },
-  {
-    id: '5',
-    slug: 'gsa-ml-cloud-handout',
-    title: 'GSA Hands-on Lab Guide & ML Workshop Handout',
-    category: 'workshop',
-    categoryLabel: 'GSA Workshop',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800',
-    format: 'PDF Slide Deck & Lab Guide',
-    slidesCount: 22,
-    description: 'Panduan workshop teknis langkah demi langkah (lab guide) implementasi machine learning di Google Cloud Platform dan integrasi Python SDK.',
-    imageBanner: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Step-by-Step Lab Instructions', 'Cloud Console Setup', 'Python Code Snippets'],
-    slideList: [
-      'GCP Account & Cloud Shell Setup',
-      'Deploying Your First ML Endpoint',
-      'Connecting React Frontend to Cloud',
-      'Troubleshooting Common Errors',
-      'Certificate of Completion'
-    ],
-    fileSize: '8.3 MB'
-  },
-  {
-    id: '9',
-    slug: 'gsa-ai-developer-workshop-ppt',
-    title: 'GSA AI Developer Workshop Master Slide Deck',
-    category: 'workshop',
-    categoryLabel: 'GSA Workshop',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800',
-    format: 'PPTX & Keynote Deck (16:9 4K)',
-    slidesCount: 32,
-    description: 'Slide deck presentasi master untuk rangkaian workshop GSA: pengenalan kecerdasan buatan, arsitektur deep learning dasar, hingga hands-on coding praktis.',
-    imageBanner: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Interactive Workshop Flow', 'Live Coding Slides', 'Participant Exercise Prompts'],
-    slideList: [
-      'Welcome to GSA Campus Workshop',
-      'Foundations of Modern AI',
-      'Hands-on Code Laboratory',
-      'Challenge & Hack Session',
-      'Wrap-up & Community Showcase'
-    ],
-    fileSize: '18.4 MB'
-  },
-  {
-    id: '6',
-    slug: 'autonomous-agents-deck',
-    title: 'Autonomous AI Agents & System Design Deck',
-    category: 'design-ppt',
-    categoryLabel: 'Design PPT',
-    badgeColor: 'bg-purple-50 text-purple-600 border-purple-200 dark:bg-purple-950/60 dark:text-purple-400 dark:border-purple-900',
-    format: 'PPTX & Keynote (16:9)',
-    slidesCount: 26,
-    description: 'Desain slide teknis tingkat lanjut mengenai arsitektur sistem multi-agent: memori persisten, context compaction, cognitive routing, dan evaluasi pre-commit.',
-    imageBanner: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Multi-Agent Swarm Topology', 'Persistent Memory Protocols', 'Cognitive Model Routing'],
-    slideList: [
-      'From LLMs to Autonomous Agents',
-      'Cognitive Loop Architecture',
-      'Persistent Memory & Spec Gates',
-      'Live Case Study: GEMINI-X-HERMES',
-      'Summary & Architecture Blueprint'
-    ],
-    fileSize: '16.8 MB'
-  },
-  {
-    id: '7',
-    slug: 'gsa-tech-summit-poster',
-    title: 'Google Student Ambassador Tech Summit Poster',
-    category: 'design-poster',
-    categoryLabel: 'Design Poster',
-    badgeColor: 'bg-rose-50 text-rose-600 border-rose-200 dark:bg-rose-950/60 dark:text-rose-400 dark:border-rose-900',
-    format: 'Print PDF & SVG Vector (A3 / A4)',
-    slidesCount: 1,
-    description: 'Desain poster promosi acara kampus Google Student Ambassador dengan estetika Swiss-style minimalist, tipografi modern, dan palet warna resmi Google.',
-    imageBanner: 'https://images.unsplash.com/photo-1572945753563-804956783604?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Minimalist Swiss Layout', 'Vector Print-Ready (300 DPI)', 'Google Color Accents'],
-    slideList: [
-      'Main Event Headline & Date',
-      'Keynote Speakers Showcase',
-      'Workshop Schedule & Track',
-      'QR Code Registration Badge'
-    ],
-    fileSize: '5.2 MB'
-  },
-  {
-    id: '8',
-    slug: 'ai-developer-hackathon-poster',
-    title: 'AI Developer Hackathon & Workshop Poster',
-    category: 'design-poster',
-    categoryLabel: 'Design Poster',
-    badgeColor: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200 dark:bg-fuchsia-950/60 dark:text-fuchsia-400 dark:border-fuchsia-900',
-    format: 'Figma & High-Res PNG (A3)',
-    slidesCount: 1,
-    description: 'Poster kreatif kompetisi AI developer dan seminar teknologi kampus, menampilkan grafis visual bertema neural networks dan tata letak informatif.',
-    imageBanner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
-    highlights: ['Cyberpunk Modern Grid', 'Figma Vector Components', 'Social Media & Print Ratio'],
-    slideList: [
-      'Hero Illustration & Title',
-      'Prize Pool & Challenges',
-      'Timeline & Registration Info'
-    ],
-    fileSize: '7.8 MB'
-  }
-];
-
 export const Activity: React.FC = () => {
-  const { activities: dynamicMaterials } = useActivities();
-  const MATERIALS = dynamicMaterials && dynamicMaterials.length > 0 ? dynamicMaterials : fallbackMaterials;
+  const { activities: dynamicMaterials, loading } = useActivities();
+  const MATERIALS = dynamicMaterials || [];
   const [activeCategory, setActiveCategory] = useState<'all' | 'design-ppt' | 'web' | 'workshop' | 'design-poster'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPreview, setSelectedPreview] = useState<MaterialItem | null>(null);
@@ -379,21 +189,37 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
             </div>
           </div>
 
-          {filteredMaterials.length === 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="apple-glass-card rounded-[2rem] overflow-hidden p-6 animate-pulse space-y-4 border border-slate-200/80 dark:border-white/10">
+                  <div className="aspect-[16/10] bg-slate-200 dark:bg-slate-700 rounded-2xl"></div>
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4"></div>
+                  <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : filteredMaterials.length === 0 ? (
             <div className="apple-glass-card rounded-[2rem] p-12 text-center border border-slate-200/80 dark:border-white/10 my-4">
               <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3">
                 <Search size={20} />
               </div>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Materi tidak ditemukan</h4>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">
+                {searchQuery || activeCategory !== 'all' ? 'Materi tidak ditemukan' : 'Belum ada materi atau aktivitas'}
+              </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-4">
-                Tidak ada materi yang sesuai dengan "{searchQuery}". Coba gunakan kata kunci lain atau reset filter.
+                {searchQuery || activeCategory !== 'all'
+                  ? `Tidak ada materi yang sesuai dengan filter atau kata kunci "${searchQuery}". Coba gunakan kata kunci lain atau reset filter.`
+                  : 'Materi dan aktivitas akan segera ditambahkan melalui panel admin.'}
               </p>
-              <button
-                onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors"
-              >
-                Reset Filter & Pencarian
-              </button>
+              {(searchQuery || activeCategory !== 'all') && (
+                <button
+                  onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors"
+                >
+                  Reset Filter & Pencarian
+                </button>
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
