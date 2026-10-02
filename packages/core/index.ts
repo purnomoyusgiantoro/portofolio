@@ -1,6 +1,7 @@
 // Static data (kept as fallback)
 export * from './portfolioData';
 export * from './galleryData';
+export * from './activityData';
 
 // Centralized types
 export * from './types';
@@ -17,3 +18,4 @@ export { useSiteSettings } from './hooks/useSiteSettings';
 export type { SiteSettings } from './hooks/useSiteSettings';
 export { useSkills } from './hooks/useSkills';
 export { useExperience } from './hooks/useExperience';
+export { useActivities } from './hooks/useActivities';

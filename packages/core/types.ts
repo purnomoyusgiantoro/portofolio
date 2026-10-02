@@ -137,6 +137,47 @@ export interface ExperienceRow {
   created_at: string;
 }
 
+/**
+ * Activity & Materials (GSA Workshop, Design PPT, Website, Design Poster)
+ */
+export interface ActivityItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: 'workshop' | 'design-ppt' | 'web' | 'design-poster';
+  categoryLabel: string;
+  badgeColor: string;
+  format: string;
+  slidesCount: number;
+  description: string;
+  imageBanner: string;
+  highlights: string[];
+  slideList: string[];
+  fileSize: string;
+  downloadUrl?: string;
+  sortOrder?: number;
+  createdAt?: string;
+}
+
+export interface ActivityRow {
+  id: string;
+  title: string;
+  slug: string | null;
+  category: string;
+  category_label: string;
+  badge_color: string | null;
+  format: string;
+  slides_count: number;
+  description: string;
+  image_banner: string;
+  file_size: string;
+  download_url?: string | null;
+  highlights: string[] | null;
+  slide_list: string[] | null;
+  sort_order: number;
+  created_at: string;
+}
+
 // ============================================
 // Row → Frontend mappers
 // ============================================
@@ -193,3 +234,25 @@ export function mapExperienceRow(row: ExperienceRow): Experience {
     description: row.description ?? undefined,
   };
 }
+
+export function mapActivityRow(row: ActivityRow): ActivityItem {
+  return {
+    id: row.id,
+    slug: row.slug || row.id,
+    title: row.title,
+    category: row.category as ActivityItem['category'],
+    categoryLabel: row.category_label,
+    badgeColor: row.badge_color || 'bg-blue-50 text-blue-600 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-900',
+    format: row.format,
+    slidesCount: row.slides_count ?? 1,
+    description: row.description,
+    imageBanner: row.image_banner,
+    highlights: row.highlights || [],
+    slideList: row.slide_list || [],
+    fileSize: row.file_size,
+    downloadUrl: row.download_url || undefined,
+    sortOrder: row.sort_order,
+    createdAt: row.created_at,
+  };
+}
+

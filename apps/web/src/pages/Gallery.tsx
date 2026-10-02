@@ -38,15 +38,19 @@ export const Gallery: React.FC = () => {
     <div className="w-full pt-32 pb-20 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       {/* Header */}
       <div className="mb-16">
-        <span className="inline-block font-code text-xs text-primary tracking-widest uppercase font-semibold mb-4">
-          Dokumentasi
-        </span>
-        <h1 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-black">
+        <div className="flex items-center gap-1.5 mb-3">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#EA4335]"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FBBC05]"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
+          <span className="text-xs font-bold text-[#5F6368] uppercase tracking-wider ml-1">Dokumentasi & Kegiatan</span>
+        </div>
+        <h1 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-[#202124]">
           Galeri Kegiatan
         </h1>
-        <div className="w-24 h-1 bg-gradient-to-r from-secondary to-primary mt-6 rounded-full"></div>
-        <p className="mt-6 font-body text-black/60 max-w-2xl text-lg">
-          Dokumentasi perjalanan, workshop, kompetisi, dan momen penting lainnya.
+        <div className="w-24 h-1 google-gradient-bar mt-5 rounded-full"></div>
+        <p className="mt-4 font-body text-[#5F6368] max-w-2xl text-base">
+          Dokumentasi perjalanan, workshop teknologi, kompetisi, dan momen penting lainnya.
         </p>
       </div>
 
@@ -67,7 +71,7 @@ export const Gallery: React.FC = () => {
           ))}
         </div>
       ) : gallery.length === 0 ? (
-        <div className="text-center py-20 text-black/40 font-body text-lg">
+        <div className="text-center py-20 text-[#5F6368] font-body text-lg">
           Belum ada foto di galeri.
         </div>
       ) : (
@@ -76,7 +80,7 @@ export const Gallery: React.FC = () => {
           {gallery.map((item, index) => (
             <div
               key={item.id}
-              className="break-inside-avoid group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-500"
+              className="break-inside-avoid group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-[0_12px_32px_rgba(66,133,244,0.15)] border border-[#DADCE0] bg-white transition-all duration-300"
               onClick={() => openLightbox(index)}
             >
               <img
@@ -87,18 +91,18 @@ export const Gallery: React.FC = () => {
               />
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                <span className="text-white/60 font-code text-xs mb-1">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                <span className="text-white/80 font-code text-xs mb-1 font-medium">
                   {new Date(item.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </span>
                 <h3 className="text-white font-body font-bold text-lg leading-tight">{item.title}</h3>
                 {item.description && (
-                  <p className="text-white/70 font-body text-sm mt-1 line-clamp-2">{item.description}</p>
+                  <p className="text-white/80 font-body text-sm mt-1 line-clamp-2">{item.description}</p>
                 )}
               </div>
 
               {/* Glow border on hover */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/40 rounded-2xl pointer-events-none transition-colors duration-300" />
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#4285F4]/40 rounded-2xl pointer-events-none transition-colors duration-300" />
             </div>
           ))}
         </div>

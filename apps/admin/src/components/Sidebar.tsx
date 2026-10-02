@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, Image as ImageIcon, Award, Mail, LogOut, Settings, Star, Clock } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Image as ImageIcon, Award, Mail, LogOut, Settings, Star, Clock, Layers } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export const Sidebar: React.FC = () => {
@@ -10,6 +10,7 @@ export const Sidebar: React.FC = () => {
   const navItems = [
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Projects', path: '/projects', icon: Briefcase },
+    { name: 'Activity', path: '/activity', icon: Layers },
     { name: 'Skills', path: '/skills', icon: Star },
     { name: 'Experience', path: '/experience', icon: Clock },
     { name: 'Gallery', path: '/gallery', icon: ImageIcon },

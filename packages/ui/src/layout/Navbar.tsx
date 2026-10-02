@@ -1,148 +1,257 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { 
+  Menu, 
+  X,
+  ChevronDown
+} from 'lucide-react';
 
-interface NavbarProps {
+export interface NavbarProps {
   brandName?: string;
+  imageUrl?: string | null;
+  profileImageUrl?: string | null;
+  logoUrl?: string | null;
 }
 
-export const Navbar: React.FC<NavbarProps> = () => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  brandName = 'PXY',
+  imageUrl,
+  profileImageUrl,
+  logoUrl
+}) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  const avatarImage = imageUrl || profileImageUrl || logoUrl || '/profile.png';
 
   React.useEffect(() => {
-    if (document.documentElement.classList.contains('dark')) {
-      setIsDarkMode(true);
-    }
+    // Enforce light theme
+    document.documentElement.classList.remove('dark');
   }, []);
-
-  const toggleDarkMode = () => {
-    if (isDarkMode) {
-      document.documentElement.classList.remove('dark');
-      setIsDarkMode(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      setIsDarkMode(true);
-    }
-  };
 
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 border-b border-outline-variant bg-surface/80 backdrop-blur-xl">
-      <div className="flex justify-between items-center px-4 md:px-12 py-4 max-w-[1440px] mx-auto">
-        <Link to="/" className="inline-block" aria-label="Home"></Link>
+    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-300">
+      <div className="relative group/nav">
+        {/* Google 4-Color Ambient Glowing Aura surrounding the floating navbar */}
+        <div className="absolute -inset-[3px] rounded-full google-navbar-aura pointer-events-none -z-10"></div>
+
+        <div className="relative bg-white/95 backdrop-blur-2xl border border-[#DADCE0] shadow-[0_4px_24px_rgba(60,64,67,0.08)] rounded-full px-4 md:px-6 py-2.5 flex items-center justify-between">
+          
+          {/* Brand Emblem */}
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Home">
+          <div className="w-8 h-8 rounded-full overflow-hidden bg-slate-100 border border-[#DADCE0] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform flex-shrink-0 ring-2 ring-[#4285F4]/30">
+            {avatarImage ? (
+              <img 
+                src={avatarImage} 
+                alt={brandName || 'Avatar'} 
+                className="w-full h-full object-cover rounded-full"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#4285F4] via-[#EA4335] to-[#FBBC05] text-white flex items-center justify-center font-bold text-xs">
+                {brandName ? brandName.charAt(0).toUpperCase() : 'P'}
+              </div>
+            )}
+          </div>
+          <span className="font-semibold text-sm tracking-tight text-[#202124] hidden sm:inline-block">
+            {brandName || 'PXY'}
+          </span>
+        </Link>
         
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-1 lg:gap-2">
           <Link 
             to="/" 
-            className={`text-black font-semibold font-body text-sm transition-all ${isActive('/') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
+            className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all ${
+              isActive('/') 
+                ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm' 
+                : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+            }`}
           >
             Home
           </Link>
           <Link 
             to="/about" 
-            className={`text-black font-semibold font-body text-sm transition-all ${isActive('/about') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
+            className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all ${
+              isActive('/about') 
+                ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm' 
+                : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+            }`}
           >
-            About Me
+            About
           </Link>
           
           {/* Portfolio Dropdown */}
           <div className="relative group">
-            <button className="flex items-center gap-1 text-black font-semibold hover:text-primary transition-colors duration-300 font-body text-sm">
-              Portofolio
-            </button>
-            <div className="hidden group-hover:block absolute top-100 left-0 pt-4 w-64 z-10">
-              <div className="bg-white/90 backdrop-blur-3xl border border-outline-variant p-4 rounded-xl space-y-3 shadow-lg">
-                <Link to="/portfolio" className="block font-body text-sm font-semibold text-primary hover:text-secondary transition-colors pb-2 border-b border-outline-variant/30">Semua Proyek</Link>
-                <Link to="/portfolio/web-development" className="block font-body text-sm text-black hover:text-primary transition-colors">Web Development</Link>
-                <Link to="/portfolio/machine-learning" className="block font-body text-sm text-black hover:text-primary transition-colors">Machine Learning</Link>
-                <Link to="/portfolio/ai-agent" className="block font-body text-sm text-black hover:text-primary transition-colors">AI Agent</Link>
-                <Link to="/portfolio/web3" className="block font-body text-sm text-black hover:text-primary transition-colors">Web3 / Smart Contracts</Link>
-                <Link to="/portfolio/others" className="block font-body text-sm text-black hover:text-primary transition-colors">Others</Link>
+            <Link
+              to="/portfolio"
+              className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1 ${
+                location.pathname.startsWith('/portfolio')
+                  ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm'
+                  : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+              }`}
+            >
+              <span>Portofolio</span>
+              <ChevronDown size={13} className="opacity-60 group-hover:rotate-180 transition-transform duration-200" />
+            </Link>
+            <div className="hidden group-hover:block absolute top-full left-0 pt-3 w-56 z-50">
+              <div className="bg-white border border-[#DADCE0] p-3 rounded-2xl space-y-1.5 shadow-[0_12px_36px_rgba(60,64,67,0.2),0_4px_12px_rgba(60,64,67,0.08)]">
+                <Link to="/portfolio" className="block text-xs font-semibold text-[#1A73E8] bg-[#E8F0FE] hover:bg-blue-100/70 px-3 py-2 rounded-xl transition-colors">Semua Proyek</Link>
+                <Link to="/portfolio/web-development" className="block text-xs text-[#3C4043] hover:text-[#1A73E8] hover:bg-[#F1F3F4] px-3 py-1.5 rounded-xl transition-colors">Web Development</Link>
+                <Link to="/portfolio/machine-learning" className="block text-xs text-[#3C4043] hover:text-[#1A73E8] hover:bg-[#F1F3F4] px-3 py-1.5 rounded-xl transition-colors">Machine Learning</Link>
+                <Link to="/portfolio/ai-agent" className="block text-xs text-[#3C4043] hover:text-[#1A73E8] hover:bg-[#F1F3F4] px-3 py-1.5 rounded-xl transition-colors">AI Agent</Link>
+                <Link to="/portfolio/web3" className="block text-xs text-[#3C4043] hover:text-[#1A73E8] hover:bg-[#F1F3F4] px-3 py-1.5 rounded-xl transition-colors">Web3 / Blockchain</Link>
+                <Link to="/portfolio/others" className="block text-xs text-[#3C4043] hover:text-[#1A73E8] hover:bg-[#F1F3F4] px-3 py-1.5 rounded-xl transition-colors">Others</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Activity Dropdown */}
+          <div className="relative group">
+            <Link
+              to="/activity"
+              className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1 ${
+                location.pathname.startsWith('/activity')
+                  ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm'
+                  : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+              }`}
+            >
+              <span>Activity</span>
+              <ChevronDown size={13} className="opacity-60 group-hover:rotate-180 transition-transform duration-200" />
+            </Link>
+            <div className="hidden group-hover:block absolute top-full left-1/2 -translate-x-1/2 pt-3 w-72 z-50">
+              <div className="bg-white border border-[#DADCE0] p-3 rounded-2xl shadow-[0_12px_36px_rgba(60,64,67,0.2),0_4px_12px_rgba(60,64,67,0.08)]">
+                
+                {/* Google Student Ambassador (GSA) Highlight Item */}
+                <Link 
+                  to="/activity"
+                  className="block p-3 rounded-xl bg-[#E8F0FE]/60 border border-[#4285F4]/30 hover:border-[#4285F4] hover:bg-[#E8F0FE] transition-all group/item"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-[#4285F4]"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#EA4335]"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#FBBC05]"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#34A853]"></span>
+                      <span className="text-[10px] font-bold text-[#3C4043] uppercase tracking-wider ml-1">GSA</span>
+                    </div>
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#1A73E8] text-white">Ambassador</span>
+                  </div>
+                  <div className="text-xs font-bold text-[#202124] group-hover/item:text-[#1A73E8] transition-colors">
+                    Google Student Ambassador
+                  </div>
+                </Link>
+
               </div>
             </div>
           </div>
           
           <Link 
             to="/gallery" 
-            className={`text-black font-semibold font-body text-sm transition-all ${isActive('/gallery') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
+            className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all ${
+              isActive('/gallery') 
+                ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm' 
+                : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+            }`}
           >
             Galeri
           </Link>
           
           <Link 
             to="/sertifikat" 
-            className={`text-black font-semibold font-body text-sm transition-all ${isActive('/sertifikat') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
+            className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all ${
+              isActive('/sertifikat') 
+                ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm' 
+                : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+            }`}
           >
             Sertifikat
           </Link>
           
           <Link 
             to="/contact" 
-            className={`text-black font-semibold font-body text-sm transition-all ${isActive('/contact') ? 'border-b-2 border-primary pb-1' : 'hover:text-primary'}`}
+            className={`font-medium text-xs lg:text-sm px-3.5 py-1.5 rounded-full transition-all ${
+              isActive('/contact') 
+                ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold shadow-sm' 
+                : 'text-[#5F6368] hover:text-[#1A73E8] hover:bg-[#F1F3F4]'
+            }`}
           >
             Contact
           </Link>
         </div>
         
-        <div className="flex items-center gap-6">
-          <button onClick={toggleDarkMode} className="text-primary hover:text-secondary transition-colors flex items-center" aria-label="Toggle Dark Mode">
-            {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
-          <Link to="/contact" className="hidden md:flex px-6 py-2 bg-primary-container text-on-primary-container font-body font-semibold text-sm rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95">
+        {/* Right Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link 
+            to="/contact" 
+            className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 bg-[#1A73E8] hover:bg-[#1557B0] text-white font-medium text-xs lg:text-sm rounded-full shadow-sm shadow-blue-500/25 transition-all hover:scale-[1.02] active:scale-95"
+          >
             Hire Me
           </Link>
           
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden flex items-center text-black"
+            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center text-[#3C4043] hover:bg-[#F1F3F4] transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
+      </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu Sheet */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-[73px] left-0 w-full h-[calc(100vh-73px)] bg-white/95 backdrop-blur-xl border-t border-outline-variant overflow-y-auto">
-          <div className="flex flex-col py-8 px-6 gap-6">
+        <div className="md:hidden mt-2 bg-white border border-[#DADCE0] rounded-3xl p-5 shadow-[0_12px_36px_rgba(60,64,67,0.2),0_4px_12px_rgba(60,64,67,0.08)] transition-all animate-in fade-in slide-in-from-top-2">
+          <div className="flex flex-col gap-2">
             <Link 
               to="/" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-black font-semibold font-body text-xl ${isActive('/') ? 'text-primary' : ''}`}
+              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Home
             </Link>
             <Link 
               to="/about" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-black font-semibold font-body text-xl ${isActive('/about') ? 'text-primary' : ''}`}
+              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/about') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               About Me
             </Link>
             
-            <div className="space-y-4">
-              <span className="text-black/50 font-semibold font-body text-sm uppercase tracking-widest">Portofolio</span>
-              <div className="flex flex-col gap-4 pl-4 border-l-2 border-outline-variant">
-                <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg font-semibold text-primary hover:text-secondary">Semua Proyek</Link>
-                <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Web Development</Link>
-                <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Machine Learning</Link>
-                <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">AI Agent</Link>
-                <Link to="/portfolio/web3" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Web3 / Smart Contracts</Link>
-                <Link to="/portfolio/others" onClick={() => setIsMobileMenuOpen(false)} className="font-body text-lg text-black hover:text-primary">Others</Link>
+            {/* Mobile Portfolio Section */}
+            <div className="px-4 py-2">
+              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-2">Portofolio</span>
+              <div className="flex flex-col gap-1.5 pl-2 border-l border-[#DADCE0]">
+                <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-1">Semua Proyek</Link>
+                <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Web Development</Link>
+                <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Machine Learning</Link>
+                <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">AI Agent</Link>
+                <Link to="/portfolio/web3" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Web3 / Blockchain</Link>
+              </div>
+            </div>
+
+            {/* Mobile Activity Section */}
+            <div className="px-4 py-2">
+              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-2">Activity</span>
+              <div className="flex flex-col gap-1.5 pl-2 border-l border-[#DADCE0]">
+                <Link to="/activity" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-1 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4]"></span> Google Student Ambassador (GSA)
+                </Link>
               </div>
             </div>
             
             <Link 
               to="/gallery" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-black font-semibold font-body text-xl ${isActive('/gallery') ? 'text-primary' : ''}`}
+              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/gallery') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Galeri
             </Link>
@@ -150,7 +259,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
             <Link 
               to="/sertifikat" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-black font-semibold font-body text-xl ${isActive('/sertifikat') ? 'text-primary' : ''}`}
+              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/sertifikat') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Sertifikat
             </Link>
@@ -158,7 +267,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
             <Link 
               to="/contact" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-black font-semibold font-body text-xl ${isActive('/contact') ? 'text-primary' : ''}`}
+              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/contact') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Contact
             </Link>
@@ -166,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
             <Link 
               to="/contact" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-6 text-center px-6 py-4 bg-primary text-white font-body font-semibold text-lg rounded-full hover:shadow-[0_0_15px_rgba(0,101,116,0.5)] transition-all active:scale-95"
+              className="mt-3 text-center py-2.5 bg-[#1A73E8] hover:bg-[#1557B0] text-white font-medium text-sm rounded-full shadow-sm shadow-blue-500/25 active:scale-95"
             >
               Hire Me
             </Link>

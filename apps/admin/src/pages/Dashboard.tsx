@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatsCard } from '../components/StatsCard';
-import { Briefcase, Image as ImageIcon, Award, Mail, Database, CheckCircle, XCircle } from 'lucide-react';
+import { Briefcase, Image as ImageIcon, Award, Mail, Database, CheckCircle, XCircle, Layers } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../hooks/useAuth';
 
@@ -8,6 +8,7 @@ export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState({
     projects: 0,
+    activities: 0,
     gallery: 0,
     certificates: 0,
     unreadMessages: 0
@@ -20,17 +21,19 @@ export const Dashboard: React.FC = () => {
       try {
         const [
           { count: projectsCount, error: e1 },
+          { count: activitiesCount },
           { count: galleryCount, error: e2 },
           { count: certsCount, error: e3 },
           { count: msgsCount, error: e4 }
         ] = await Promise.all([
           supabase.from('projects').select('*', { count: 'exact', head: true }),
+          supabase.from('activities').select('*', { count: 'exact', head: true }),
           supabase.from('gallery').select('*', { count: 'exact', head: true }),
           supabase.from('certificates').select('*', { count: 'exact', head: true }),
           supabase.from('messages').select('*', { count: 'exact', head: true }).eq('is_read', false)
         ]);
 
-        // Check if any query had an error
+        // Check if primary queries had an error
         if (e1 || e2 || e3 || e4) {
           console.warn('Some queries failed:', { e1, e2, e3, e4 });
           setDbConnected(false);
@@ -40,6 +43,7 @@ export const Dashboard: React.FC = () => {
 
         setStats({
           projects: projectsCount || 0,
+          activities: activitiesCount || 0,
           gallery: galleryCount || 0,
           certificates: certsCount || 0,
           unreadMessages: msgsCount || 0
@@ -120,8 +124,9 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
         <StatsCard title="Total Projects" value={stats.projects} icon={Briefcase} loading={loading} />
+        <StatsCard title="Activity & Materi" value={stats.activities} icon={Layers} loading={loading} />
         <StatsCard title="Gallery Items" value={stats.gallery} icon={ImageIcon} loading={loading} />
         <StatsCard title="Certificates" value={stats.certificates} icon={Award} loading={loading} />
         <StatsCard title="Unread Messages" value={stats.unreadMessages} icon={Mail} loading={loading} />
@@ -131,25 +136,33 @@ export const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-admin-surface border border-admin-border rounded-xl p-6">
           <h3 className="text-lg font-semibold text-admin-text mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <a href="/projects" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <a href="/projects" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <Briefcase size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-admin-text">Manage Projects</div>
+              <div className="text-xs font-medium text-admin-text">Manage Projects</div>
             </a>
-            <a href="/gallery" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
+            <a href="/activity" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
+              <Layers size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
+              <div className="text-xs font-medium text-admin-text">Manage Activity</div>
+            </a>
+            <a href="/gallery" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <ImageIcon size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-admin-text">Upload Gallery</div>
+              <div className="text-xs font-medium text-admin-text">Upload Gallery</div>
             </a>
-            <a href="/certificates" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
+            <a href="/certificates" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
               <Award size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-admin-text">Add Certificate</div>
+              <div className="text-xs font-medium text-admin-text">Add Certificate</div>
             </a>
-            <a href="/messages" className="p-4 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group relative">
+            <a href="/settings" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group">
+              <Database size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
+              <div className="text-xs font-medium text-admin-text">Site Settings</div>
+            </a>
+            <a href="/messages" className="p-3.5 border border-admin-border rounded-lg bg-admin-bg hover:border-admin-primary transition-colors group relative">
               {stats.unreadMessages > 0 && (
                 <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-admin-danger rounded-full animate-pulse" />
               )}
               <Mail size={20} className="text-admin-text-muted group-hover:text-admin-primary mb-2" />
-              <div className="text-sm font-medium text-admin-text">Check Inbox</div>
+              <div className="text-xs font-medium text-admin-text">Check Inbox</div>
             </a>
           </div>
         </div>
