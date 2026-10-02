@@ -22,7 +22,7 @@ export const Home: React.FC = () => {
   return (
     <div className="w-full">
       {/* Profile Section */}
-      <section className="pt-32 pb-20 px-4 md:px-12 max-w-[1440px] mx-auto relative z-10">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Image/Visual Side */}
           <div className="w-full lg:w-5/12 relative">
@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
             <span className="inline-block font-code text-xs text-[#1A73E8] tracking-widest uppercase font-semibold mb-2">
               Tentang Saya
             </span>
-            <h2 className="font-body font-bold text-3xl md:text-[48px] leading-[1.1] text-[#202124]">
+            <h2 className="font-body font-bold text-3xl sm:text-4xl md:text-[48px] leading-[1.1] text-[#202124]">
               Hello, I'm {settings.profileName}
             </h2>
             <p className="font-code text-lg text-[#1A73E8] font-medium">
@@ -61,12 +61,12 @@ export const Home: React.FC = () => {
               {settings.profileBio}
             </p>
             
-            <div className="pt-6 flex flex-wrap gap-4">
-              <Link to="/about" className="px-8 py-3 bg-[#1A73E8] text-white font-body font-bold text-sm rounded-full hover:bg-[#1557B0] transition-colors shadow-lg shadow-blue-500/25">
+            <div className="pt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+              <Link to="/about" className="w-full sm:w-auto text-center justify-center px-8 py-3 bg-[#1A73E8] text-white font-body font-bold text-sm rounded-full hover:bg-[#1557B0] transition-colors shadow-lg shadow-blue-500/25">
                 Lebih Lanjut
               </Link>
               {settings.cvUrl && (
-                <a href={settings.cvUrl} target="_blank" rel="noreferrer" className="px-8 py-3 bg-white text-[#202124] font-body font-bold text-sm rounded-full hover:bg-[#F1F3F4] transition-colors border border-[#DADCE0] shadow-sm flex items-center gap-2">
+                <a href={settings.cvUrl} target="_blank" rel="noreferrer" className="w-full sm:w-auto text-center justify-center px-8 py-3 bg-white text-[#202124] font-body font-bold text-sm rounded-full hover:bg-[#F1F3F4] transition-colors border border-[#DADCE0] shadow-sm flex items-center gap-2">
                   Download CV
                 </a>
               )}
@@ -102,7 +102,7 @@ export const Home: React.FC = () => {
 
       {/* Featured Projects Section */}
       {featuredProjects.length > 0 && (
-        <section className="py-32 px-4 md:px-12 max-w-[1440px] mx-auto">
+        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto">
           <div className="text-center mb-20">
             <span className="inline-block font-code text-xs text-[#1A73E8] tracking-widest uppercase font-semibold mb-4">
               Karya Unggulan
@@ -155,7 +155,7 @@ export const Home: React.FC = () => {
       )}
 
       {/* CTA Section with Interactive 3D Particle & Wave Mesh Canvas on Deep Black Background */}
-      <section className="py-24 px-4 md:px-12 relative overflow-hidden my-12 mx-4 md:mx-12 rounded-[3rem] shadow-2xl border border-white/10 bg-[#0B0D13]">
+      <section className="relative overflow-hidden my-8 sm:my-12 mx-3 sm:mx-6 md:mx-12 rounded-3xl md:rounded-[3rem] py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 shadow-2xl border border-white/10 bg-[#0B0D13]">
         {/* Deep Black Gradient Base */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#111318] via-[#0B0D13] to-[#08090D]"></div>
 
@@ -172,13 +172,13 @@ export const Home: React.FC = () => {
         <Interactive3DCanvas className="z-[1]" />
 
         <div className="max-w-4xl mx-auto relative z-10 text-center py-12 pointer-events-auto">
-          <h2 className="font-body font-bold text-3xl md:text-[56px] leading-[1.1] text-white mb-6 drop-shadow-md">
+          <h2 className="font-body font-bold text-2xl sm:text-3xl md:text-[56px] leading-[1.1] text-white mb-6 drop-shadow-md">
             Punya Ide Menarik?
           </h2>
           <p className="font-body text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 drop-shadow-sm font-normal">
             Mari berkolaborasi dan wujudkan visi Anda menjadi produk digital modern yang memukau dan berkinerja tinggi.
           </p>
-          <Link to="/contact" className="inline-flex items-center gap-2.5 px-10 py-4 bg-white text-[#202124] font-body font-bold text-sm md:text-base rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl hover:bg-slate-100 group">
+          <Link to="/contact" className="inline-flex items-center gap-2.5 w-full sm:w-auto justify-center px-6 sm:px-10 py-3.5 sm:py-4 text-center bg-white text-[#202124] font-body font-bold text-sm md:text-base rounded-full transition-all hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl hover:bg-slate-100 group">
             <span>Mulai Percakapan Sekarang</span>
             <ArrowRight size={18} className="text-[#1A73E8] transition-transform group-hover:translate-x-1" />
           </Link>

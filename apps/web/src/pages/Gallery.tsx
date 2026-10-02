@@ -35,7 +35,7 @@ export const Gallery: React.FC = () => {
   }, [lightboxIndex]);
 
   return (
-    <div className="w-full pt-32 pb-20 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
+    <div className="w-full pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       {/* Header */}
       <div className="mb-16">
         <div className="flex items-center gap-1.5 mb-3">
@@ -45,7 +45,7 @@ export const Gallery: React.FC = () => {
           <span className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
           <span className="text-xs font-bold text-[#5F6368] uppercase tracking-wider ml-1">Dokumentasi & Kegiatan</span>
         </div>
-        <h1 className="font-body font-bold text-[36px] md:text-[56px] leading-[1.1] text-[#202124]">
+        <h1 className="font-body font-bold text-3xl sm:text-4xl md:text-[56px] leading-[1.1] text-[#202124]">
           Galeri Kegiatan
         </h1>
         <div className="w-24 h-1 google-gradient-bar mt-5 rounded-full"></div>
@@ -125,9 +125,9 @@ export const Gallery: React.FC = () => {
           {/* Previous Button */}
           <button
             onClick={(e) => { e.stopPropagation(); goPrev(); }}
-            className="absolute left-4 md:left-8 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            className="absolute left-2 sm:left-4 md:left-8 p-2 sm:p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
           >
-            <ChevronLeft size={28} />
+            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
           </button>
 
           {/* Image Container */}
@@ -161,9 +161,9 @@ export const Gallery: React.FC = () => {
           {/* Next Button */}
           <button
             onClick={(e) => { e.stopPropagation(); goNext(); }}
-            className="absolute right-4 md:right-8 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            className="absolute right-2 sm:right-4 md:right-8 p-2 sm:p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
           >
-            <ChevronRight size={28} />
+            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
           </button>
         </div>
       )}

@@ -20,7 +20,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
       
       {/* Content */}
-      <div className="p-6 flex-1 flex flex-col">
+      <div className="p-5 sm:p-6 flex-1 flex flex-col">
         <div className="mb-2 flex justify-between items-start">
           <span className="text-[10px] font-code font-bold tracking-widest uppercase px-2.5 py-1 bg-[#E8F0FE] text-[#1A73E8] rounded-full border border-[#D2E3FC]">
             {project.category}
@@ -40,14 +40,24 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
         
         {/* Actions */}
-        <div className="flex items-center gap-4 pt-4 border-t border-[#DADCE0]/70">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 pt-3 sm:pt-4 border-t border-[#DADCE0]/70">
           {project.demoUrl && (
-            <a href={project.demoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-semibold text-[#1A73E8] hover:text-[#1557B0] transition-colors">
+            <a 
+              href={project.demoUrl} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="inline-flex items-center gap-1.5 min-h-[44px] py-2 px-3 rounded-xl text-sm font-semibold text-[#1A73E8] hover:text-[#1557B0] hover:bg-[#E8F0FE]/50 active:bg-[#E8F0FE] transition-colors"
+            >
               <ExternalLink size={16} /> Live Demo
             </a>
           )}
           {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-semibold text-[#5F6368] hover:text-[#202124] transition-colors">
+            <a 
+              href={project.githubUrl} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="inline-flex items-center gap-1.5 min-h-[44px] py-2 px-3 rounded-xl text-sm font-semibold text-[#5F6368] hover:text-[#202124] hover:bg-slate-100/70 active:bg-slate-100 transition-colors"
+            >
               <GitFork size={16} /> Repository
             </a>
           )}

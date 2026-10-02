@@ -23,7 +23,7 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="w-full pt-32 px-4 md:px-12 max-w-[1440px] mx-auto min-h-[80vh] pb-24">
+    <div className="w-full pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto min-h-[80vh]">
       <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-5">
         <div className="flex items-center justify-center gap-1.5 mb-3">
           <span className="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></span>
@@ -32,7 +32,7 @@ export const Contact: React.FC = () => {
           <span className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
           <span className="text-xs font-bold text-[#5F6368] uppercase tracking-wider ml-1">Terhubung Langsung</span>
         </div>
-        <h1 className="font-body font-bold text-[40px] md:text-[56px] leading-[1.1] text-[#202124] mb-4">
+        <h1 className="font-body font-bold text-3xl sm:text-4xl md:text-[56px] leading-[1.1] text-[#202124] mb-4">
           Mari Berkolaborasi
         </h1>
         <div className="w-24 h-1 google-gradient-bar mx-auto mb-5 rounded-full"></div>
@@ -43,7 +43,7 @@ export const Contact: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-5xl mx-auto">
         {/* Contact Form */}
-        <div className="bg-white border border-[#DADCE0] p-8 md:p-10 rounded-[2rem] shadow-[0_4px_24px_rgba(60,64,67,0.06)]">
+        <div className="bg-white border border-[#DADCE0] p-5 sm:p-8 md:p-10 rounded-3xl md:rounded-[2rem] shadow-[0_4px_24px_rgba(60,64,67,0.06)]">
           <h2 className="font-body font-bold text-2xl text-[#202124] mb-6">Kirim Pesan</h2>
           
           {success ? (
@@ -138,7 +138,7 @@ export const Contact: React.FC = () => {
           {settings.contactEmail && (
             <a 
               href={`mailto:${settings.contactEmail}`}
-              className="group bg-white border border-[#DADCE0] p-8 rounded-[2rem] shadow-sm hover:shadow-[0_12px_32px_rgba(66,133,244,0.15)] hover:border-[#4285F4]/50 transition-all duration-300 hover:-translate-y-1 block text-center"
+              className="group bg-white border border-[#DADCE0] p-5 sm:p-8 md:p-10 rounded-3xl md:rounded-[2rem] shadow-sm hover:shadow-[0_12px_32px_rgba(66,133,244,0.15)] hover:border-[#4285F4]/50 transition-all duration-300 hover:-translate-y-1 block text-center"
             >
               <div className="w-16 h-16 bg-[#E8F0FE] border border-[#D2E3FC] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#1A73E8] transition-colors">
                 <Mail size={28} className="text-[#1A73E8] group-hover:text-white transition-colors" />
@@ -148,7 +148,7 @@ export const Contact: React.FC = () => {
             </a>
           )}
 
-          <div className="bg-white border border-[#DADCE0] p-8 rounded-[2rem] shadow-sm grid grid-cols-2 gap-4">
+          <div className="bg-white border border-[#DADCE0] p-5 sm:p-8 md:p-10 rounded-3xl md:rounded-[2rem] shadow-sm grid grid-cols-2 gap-4">
             {settings.githubUrl && (
               <a href={settings.githubUrl} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2.5 p-4 rounded-2xl hover:bg-[#F8F9FA] border border-transparent hover:border-[#DADCE0] transition-all">
                 <FaGithub size={28} className="text-[#202124]" />

@@ -70,15 +70,34 @@ export const Interactive3DCanvas: React.FC<Interactive3DCanvasProps> = ({ classN
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const mouseNormX = (x / rect.width) * 2 - 1;
-      const mouseNormY = (y / rect.height) * 2 - 1;
-      targetRotY = mouseNormX * 0.35;
-      targetRotX = 0.15 + mouseNormY * 0.25;
+      if (rect.width > 0 && rect.height > 0) {
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const mouseNormX = Math.max(-1, Math.min(1, (x / rect.width) * 2 - 1));
+        const mouseNormY = Math.max(-1, Math.min(1, (y / rect.height) * 2 - 1));
+        targetRotY = mouseNormX * 0.35;
+        targetRotX = 0.15 + mouseNormY * 0.25;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          const x = touch.clientX - rect.left;
+          const y = touch.clientY - rect.top;
+          const touchNormX = Math.max(-1, Math.min(1, (x / rect.width) * 2 - 1));
+          const touchNormY = Math.max(-1, Math.min(1, (y / rect.height) * 2 - 1));
+          targetRotY = touchNormX * 0.35;
+          targetRotX = 0.15 + touchNormY * 0.25;
+        }
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     // Initialize 40 ambient 3D stars spread throughout the volumetric space
     const stars: AmbientStar[] = Array.from({ length: 42 }, (_, i) => ({
@@ -159,10 +178,15 @@ export const Interactive3DCanvas: React.FC<Interactive3DCanvasProps> = ({ classN
         ctx.clearRect(0, 0, clientW, clientH);
 
         // Grid sizing that extends well past boundaries to ensure 100% complete coverage
+        const isMobile = clientW < 640;
         const spanX = clientW * 1.55;
         const spanY = clientH * 1.6;
-        const cols = Math.min(52, Math.max(34, Math.floor(clientW / 26)));
-        const rows = Math.min(36, Math.max(22, Math.floor(clientH / 22)));
+        const cols = isMobile
+          ? Math.min(26, Math.max(16, Math.floor(clientW / 24)))
+          : Math.min(52, Math.max(34, Math.floor(clientW / 26)));
+        const rows = isMobile
+          ? Math.min(20, Math.max(14, Math.floor(clientH / 24)))
+          : Math.min(36, Math.max(22, Math.floor(clientH / 22)));
         const spacingX = spanX / (cols - 1);
         const spacingY = spanY / (rows - 1);
         const startX = -spanX / 2;
@@ -309,7 +333,8 @@ export const Interactive3DCanvas: React.FC<Interactive3DCanvasProps> = ({ classN
             const sScale = fov / sDepth;
             const screenX = clientW / 2 + sx1 * sScale;
             const screenY = clientH / 2 + sy2 * sScale;
-            const projectedRadius = Math.max(6, sphere.radius * sScale);
+            const sphereRadius = isMobile ? sphere.radius * 0.75 : sphere.radius;
+            const projectedRadius = Math.max(isMobile ? 4 : 6, sphereRadius * sScale);
 
             // Outer Soft Halo
             const glowGrad = ctx.createRadialGradient(
@@ -362,6 +387,8 @@ export const Interactive3DCanvas: React.FC<Interactive3DCanvasProps> = ({ classN
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchstart', handleTouchMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };

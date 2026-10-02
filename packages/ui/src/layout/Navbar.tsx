@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-300">
+    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] sm:w-[95%] max-w-5xl transition-all duration-300">
       <div className="relative group/nav">
         {/* Google 4-Color Ambient Glowing Aura surrounding the floating navbar */}
         <div className="absolute -inset-[3px] rounded-full google-navbar-aura pointer-events-none -z-10"></div>
@@ -197,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center text-[#3C4043] hover:bg-[#F1F3F4] transition-colors"
+            className="md:hidden w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center text-[#3C4043] hover:bg-[#F1F3F4] transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Menu"
           >
@@ -209,49 +209,56 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Sheet */}
       {isMobileMenuOpen && (
-        <div className="md:hidden mt-2 bg-white border border-[#DADCE0] rounded-3xl p-5 shadow-[0_12px_36px_rgba(60,64,67,0.2),0_4px_12px_rgba(60,64,67,0.08)] transition-all animate-in fade-in slide-in-from-top-2">
-          <div className="flex flex-col gap-2">
+        <div className="md:hidden mt-2 bg-white border border-[#DADCE0] rounded-3xl p-4 sm:p-5 shadow-[0_12px_36px_rgba(60,64,67,0.2),0_4px_12px_rgba(60,64,67,0.08)] max-h-[80vh] overflow-y-auto transition-all animate-in fade-in slide-in-from-top-2">
+          <div className="flex flex-col gap-1">
             <Link 
               to="/" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
+              className={`px-4 py-3 min-h-[44px] flex items-center rounded-2xl font-medium text-sm transition-colors ${isActive('/') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Home
             </Link>
             <Link 
               to="/about" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/about') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
+              className={`px-4 py-3 min-h-[44px] flex items-center rounded-2xl font-medium text-sm transition-colors ${isActive('/about') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               About Me
             </Link>
             
+            <div className="my-1.5 border-t border-[#DADCE0]/70" />
+
             {/* Mobile Portfolio Section */}
-            <div className="px-4 py-2">
-              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-2">Portofolio</span>
-              <div className="flex flex-col gap-1.5 pl-2 border-l border-[#DADCE0]">
-                <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-1">Semua Proyek</Link>
-                <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Web Development</Link>
-                <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Machine Learning</Link>
-                <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">AI Agent</Link>
-                <Link to="/portfolio/web3" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-1">Web3 / Blockchain</Link>
+            <div className="px-4 py-1.5">
+              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-1.5">Portofolio</span>
+              <div className="flex flex-col pl-3 border-l-2 border-[#DADCE0]/80">
+                <Link to="/portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-2.5 min-h-[44px] flex items-center">Semua Proyek</Link>
+                <Link to="/portfolio/web-development" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-2.5 min-h-[44px] flex items-center transition-colors">Web Development</Link>
+                <Link to="/portfolio/machine-learning" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-2.5 min-h-[44px] flex items-center transition-colors">Machine Learning</Link>
+                <Link to="/portfolio/ai-agent" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-2.5 min-h-[44px] flex items-center transition-colors">AI Agent</Link>
+                <Link to="/portfolio/web3" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-2.5 min-h-[44px] flex items-center transition-colors">Web3 / Blockchain</Link>
+                <Link to="/portfolio/others" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-[#3C4043] hover:text-[#1A73E8] py-2.5 min-h-[44px] flex items-center transition-colors">Others</Link>
               </div>
             </div>
 
+            <div className="my-1.5 border-t border-[#DADCE0]/70" />
+
             {/* Mobile Activity Section */}
-            <div className="px-4 py-2">
-              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-2">Activity</span>
-              <div className="flex flex-col gap-1.5 pl-2 border-l border-[#DADCE0]">
-                <Link to="/activity" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-1 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4]"></span> Google Student Ambassador (GSA)
+            <div className="px-4 py-1.5">
+              <span className="text-[#5F6368] font-semibold text-xs uppercase tracking-wider block mb-1.5">Activity</span>
+              <div className="flex flex-col pl-3 border-l-2 border-[#DADCE0]/80">
+                <Link to="/activity" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-semibold text-[#1A73E8] py-2.5 min-h-[44px] flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#4285F4]"></span> Google Student Ambassador (GSA)
                 </Link>
               </div>
             </div>
+
+            <div className="my-1.5 border-t border-[#DADCE0]/70" />
             
             <Link 
               to="/gallery" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/gallery') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
+              className={`px-4 py-3 min-h-[44px] flex items-center rounded-2xl font-medium text-sm transition-colors ${isActive('/gallery') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Galeri
             </Link>
@@ -259,7 +266,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Link 
               to="/sertifikat" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/sertifikat') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
+              className={`px-4 py-3 min-h-[44px] flex items-center rounded-2xl font-medium text-sm transition-colors ${isActive('/sertifikat') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Sertifikat
             </Link>
@@ -267,7 +274,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Link 
               to="/contact" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-2xl font-medium text-sm transition-colors ${isActive('/contact') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
+              className={`px-4 py-3 min-h-[44px] flex items-center rounded-2xl font-medium text-sm transition-colors ${isActive('/contact') ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043] hover:bg-[#F1F3F4]'}`}
             >
               Contact
             </Link>
@@ -275,7 +282,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Link 
               to="/contact" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-3 text-center py-2.5 bg-[#1A73E8] hover:bg-[#1557B0] text-white font-medium text-sm rounded-full shadow-sm shadow-blue-500/25 active:scale-95"
+              className="mt-3 text-center py-3 min-h-[44px] flex items-center justify-center bg-[#1A73E8] hover:bg-[#1557B0] text-white font-medium text-sm rounded-full shadow-sm shadow-blue-500/25 active:scale-95 transition-all"
             >
               Hire Me
             </Link>

@@ -78,7 +78,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
   };
 
   return (
-    <div className="w-full pt-32 pb-28 px-4 md:px-8 max-w-[1440px] mx-auto relative min-h-screen">
+    <div className="w-full pt-24 sm:pt-32 pb-16 sm:pb-28 px-4 sm:px-6 md:px-8 max-w-[1440px] mx-auto relative min-h-screen">
       
       {/* 1. Header Section */}
       <div className="text-center mb-12 space-y-4 max-w-4xl mx-auto">
@@ -92,7 +92,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
           <span className="ml-1">Google Student Ambassador (GSA) Resource Hub</span>
         </div>
         
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
           GSA Developer & Creative Resource Hub
         </h1>
         
@@ -102,7 +102,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
       </div>
 
       {/* 2. Mobile / Tablet Category Filter Pills (Shown on smaller screens) */}
-      <div className="xl:hidden flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+      <div className="xl:hidden flex items-center justify-start sm:justify-center gap-2 overflow-x-auto px-2 pb-3 mb-6 no-scrollbar">
         <button
           onClick={() => setActiveCategory('all')}
           className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
@@ -164,7 +164,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
 
           {/* Search Bar & Result Summary */}
           <div className="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-            <div className="relative flex-1 max-w-md">
+            <div className="relative w-full sm:max-w-md sm:flex-1">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
               <input
                 type="text"
@@ -413,20 +413,20 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
           onClick={() => setSelectedPreview(null)}
         >
           <div 
-            className="apple-glass-card rounded-[2.5rem] max-w-2xl w-full p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden bg-white/95 dark:bg-slate-900/95"
+            className="apple-glass-card max-h-[90vh] overflow-y-auto rounded-3xl md:rounded-[2.5rem] max-w-2xl w-full p-5 sm:p-8 space-y-5 shadow-2xl relative bg-white/95 dark:bg-slate-900/95"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Close Button */}
             <button 
               onClick={() => setSelectedPreview(null)}
-              className="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors z-10"
             >
               <X size={18} />
             </button>
 
             {/* Modal Header */}
             <div>
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white pr-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pr-8">
                 {selectedPreview.title}
               </h3>
             </div>
@@ -446,21 +446,21 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
             </p>
 
             {/* Modal Footer Actions */}
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+            <div className="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
               {selectedPreview.downloadUrl ? (
-                <div className="inline-flex items-center gap-1.5 text-xs text-[#1A73E8] font-medium">
+                <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-[#1A73E8] font-medium py-1">
                   <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse"></span>
                   Tersedia di Google Drive
                 </div>
               ) : (
-                <span className="text-xs text-slate-400">Resource File</span>
+                <span className="text-xs text-slate-400 text-center sm:text-left py-1">Resource File</span>
               )}
 
               <button
                 onClick={() => {
                   handleDownload(selectedPreview);
                 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
+                className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
               >
                 <Download size={14} />
                 {selectedPreview.downloadUrl ? 'Unduh via Google Drive' : 'Unduh Materi'}

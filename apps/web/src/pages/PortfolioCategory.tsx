@@ -33,7 +33,7 @@ export const PortfolioCategory: React.FC = () => {
   ];
 
   return (
-    <div className="w-full pt-32 pb-24 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
+    <div className="w-full pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       <div className="mb-12 text-center">
         {/* Google 4-color indicator dots */}
         <div className="flex items-center justify-center gap-1.5 mb-4">
@@ -44,7 +44,7 @@ export const PortfolioCategory: React.FC = () => {
           <span className="text-xs font-bold text-[#5F6368] uppercase tracking-wider ml-1">Koleksi Proyek</span>
         </div>
 
-        <h1 className="font-body font-bold text-[40px] md:text-[56px] leading-[1.1] text-[#202124]">
+        <h1 className="font-body font-bold text-3xl sm:text-4xl md:text-[56px] leading-[1.1] text-[#202124]">
           {displayTitle}
         </h1>
         <p className="mt-4 font-body text-[#5F6368] max-w-2xl mx-auto text-base">
@@ -52,14 +52,14 @@ export const PortfolioCategory: React.FC = () => {
         </p>
 
         {/* Category Filter Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-8 px-1">
           {categories.map((cat) => {
             const isSelected = (!categoryId && cat.path === '/portfolio') || (categoryId && cat.path === `/portfolio/${categoryId}`);
             return (
               <a
                 key={cat.path}
                 href={cat.path}
-                className={`px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all ${
+                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all inline-flex items-center justify-center min-h-[38px] touch-manipulation ${
                   isSelected
                     ? 'bg-[#E8F0FE] text-[#1A73E8] font-bold border border-[#D2E3FC] shadow-sm'
                     : 'bg-white text-[#5F6368] border border-[#DADCE0] hover:border-[#4285F4]/40 hover:text-[#1A73E8] hover:bg-[#F8F9FA]'

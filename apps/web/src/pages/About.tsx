@@ -9,7 +9,7 @@ export const About: React.FC = () => {
   const { experience, loading: loadingExperience } = useExperience();
 
   return (
-    <div className="w-full pt-32 pb-24 px-4 md:px-12 max-w-[1440px] mx-auto min-h-screen">
+    <div className="w-full pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 max-w-[1440px] mx-auto min-h-screen">
       {/* Header */}
       <div className="mb-16 text-left">
         <div className="flex items-center gap-1.5 mb-3">
@@ -19,7 +19,7 @@ export const About: React.FC = () => {
           <span className="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
           <span className="text-xs font-bold text-[#5F6368] uppercase tracking-wider ml-1">Profil Profesional</span>
         </div>
-        <h1 className="font-body font-bold text-4xl md:text-[56px] leading-[1.1] text-[#202124]">
+        <h1 className="font-body font-bold text-3xl sm:text-4xl md:text-[56px] leading-[1.1] text-[#202124]">
           About Me
         </h1>
         <div className="w-24 h-1 google-gradient-bar mt-5 rounded-full"></div>
@@ -30,7 +30,7 @@ export const About: React.FC = () => {
         {/* Kolom Kiri: Profil */}
         <div className="lg:col-span-4 space-y-12">
           {/* Card Profil Utama */}
-          <div className="bg-white rounded-[2rem] p-8 border border-[#DADCE0] shadow-[0_4px_24px_rgba(60,64,67,0.06)] relative overflow-hidden">
+          <div className="bg-white rounded-3xl md:rounded-[2rem] p-5 sm:p-8 border border-[#DADCE0] shadow-[0_4px_24px_rgba(60,64,67,0.06)] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#4285F4]/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
             
             <div className="aspect-square rounded-2xl overflow-hidden relative z-10 shadow-md mb-8 border border-[#DADCE0] ring-4 ring-[#E8F0FE]">
@@ -191,7 +191,7 @@ export const About: React.FC = () => {
           </section>
           
           {/* CTA di About */}
-          <div className="mt-20 p-10 bg-gradient-to-br from-[#1A73E8] via-[#1A73E8] to-[#1557B0] rounded-[2rem] text-center relative overflow-hidden shadow-xl shadow-blue-500/20">
+          <div className="mt-20 p-6 sm:p-10 bg-gradient-to-br from-[#1A73E8] via-[#1A73E8] to-[#1557B0] rounded-3xl md:rounded-[2rem] text-center relative overflow-hidden shadow-xl shadow-blue-500/20">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
             
             <h2 className="font-body font-bold text-3xl md:text-4xl text-white mb-4 relative z-10">
