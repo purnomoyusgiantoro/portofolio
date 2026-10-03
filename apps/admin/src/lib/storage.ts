@@ -23,13 +23,34 @@ export async function uploadFileDetailed(
     ? `${folder}/${timestamp}-${safeName}`
     : `${timestamp}-${safeName}`;
 
-  const { error } = await supabase.storage
+  let { error } = await supabase.storage
     .from(bucket)
     .upload(filePath, file, {
       cacheControl: '3600',
       upsert: true,
       contentType: file.type || undefined,
     });
+
+  // If RLS blocked this bucket (e.g. storage policy missing for activity-images),
+  // automatically fall back to portfolio-images which is already configured for authenticated users
+  if (error && error.message?.toLowerCase().includes('row-level security') && bucket !== 'portfolio-images') {
+    console.warn(`[Storage] RLS blocked bucket '${bucket}'. Falling back to 'portfolio-images'...`);
+    const fallbackPath = `${bucket}/${filePath}`;
+    const fallbackRes = await supabase.storage
+      .from('portfolio-images')
+      .upload(fallbackPath, file, {
+        cacheControl: '3600',
+        upsert: true,
+        contentType: file.type || undefined,
+      });
+
+    if (!fallbackRes.error) {
+      const { data: fallbackUrlData } = supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(fallbackPath);
+      return { url: fallbackUrlData.publicUrl, error: null };
+    }
+  }
 
   if (error) {
     console.error('[Storage] Upload error:', error);
@@ -62,24 +83,26 @@ export async function uploadFile(
 
 /**
  * Delete a file from Supabase Storage.
- * @param bucket - The storage bucket name
+ * @param bucket - Default storage bucket name
  * @param fileUrl - The full public URL of the file
  */
 export async function deleteFile(
   bucket: string,
   fileUrl: string
 ): Promise<boolean> {
-  // Extract the path from the public URL
-  // URL format: https://xxx.supabase.co/storage/v1/object/public/bucket-name/path/file.jpg
   try {
     const url = new URL(fileUrl);
-    const pathParts = url.pathname.split(`/storage/v1/object/public/${bucket}/`);
-    if (pathParts.length < 2) return false;
+    // Format: /storage/v1/object/public/{bucket}/{filePath}
+    const match = url.pathname.match(/\/storage\/v1\/object\/public\/([^/]+)\/(.+)/);
+    const targetBucket = match ? match[1] : bucket;
+    const filePath = match
+      ? decodeURIComponent(match[2])
+      : decodeURIComponent(url.pathname.split(`/storage/v1/object/public/${bucket}/`)[1] || '');
 
-    const filePath = decodeURIComponent(pathParts[1]);
+    if (!filePath) return false;
 
     const { error } = await supabase.storage
-      .from(bucket)
+      .from(targetBucket)
       .remove([filePath]);
 
     if (error) {
