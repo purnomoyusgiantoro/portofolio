@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { supabaseBypass as supabase } from './supabase';
 
 export interface UploadResult {
   url: string | null;
