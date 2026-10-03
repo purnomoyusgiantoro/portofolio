@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import { useActivities, type ActivityItem } from '@pxy/core';
+import { PresentationSlideViewer } from '../components/PresentationSlideViewer';
 
 type MaterialItem = ActivityItem;
 
@@ -435,7 +436,13 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
       </div>
 
       {/* 5. Interactive Slide Preview Modal */}
-      {selectedPreview && (
+      {selectedPreview && (selectedPreview.category === 'design-ppt' || selectedPreview.format.toLowerCase().includes('presentation')) ? (
+        <PresentationSlideViewer
+          item={selectedPreview}
+          onClose={() => setSelectedPreview(null)}
+          onDownload={handleDownload}
+        />
+      ) : selectedPreview ? (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in"
           onClick={() => setSelectedPreview(null)}
@@ -497,7 +504,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
 
           </div>
         </div>
-      )}
+      ) : null}
 
     </div>
   );
