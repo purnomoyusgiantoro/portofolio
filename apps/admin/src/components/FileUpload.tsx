@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UploadCloud, FileText, X, Loader2, ExternalLink, Link2 } from 'lucide-react';
-import { uploadFile } from '../lib/storage';
+import { uploadFileDetailed } from '../lib/storage';
 
 interface FileUploadProps {
   bucket: string;
@@ -66,12 +66,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     setError(null);
 
     try {
-      const url = await uploadFile(bucket, file, folder);
+      const { url, error: uploadErr } = await uploadFileDetailed(bucket, file, folder);
       if (url) {
         const formattedSize = formatFileSize(file.size);
         onUploadSuccess(url, { name: file.name, size: formattedSize });
       } else {
-        setError('Gagal mengupload file ke storage');
+        setError(uploadErr || 'Gagal mengupload file ke storage');
       }
     } catch (err: any) {
       console.error('[FileUpload] Error:', err);

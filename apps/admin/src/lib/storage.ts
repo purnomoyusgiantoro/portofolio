@@ -1,5 +1,49 @@
 import { supabase } from './supabase';
 
+export interface UploadResult {
+  url: string | null;
+  error: string | null;
+}
+
+/**
+ * Upload a file to Supabase Storage with detailed result.
+ * @param bucket - The storage bucket name (e.g., 'activity-images')
+ * @param file - The File to upload
+ * @param folder - Optional subfolder path (e.g., 'materials')
+ */
+export async function uploadFileDetailed(
+  bucket: string,
+  file: File,
+  folder?: string
+): Promise<UploadResult> {
+  const timestamp = Date.now();
+  const rawName = file.name || 'image.jpg';
+  const safeName = rawName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const filePath = folder
+    ? `${folder}/${timestamp}-${safeName}`
+    : `${timestamp}-${safeName}`;
+
+  const { error } = await supabase.storage
+    .from(bucket)
+    .upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: true,
+      contentType: file.type || undefined,
+    });
+
+  if (error) {
+    console.error('[Storage] Upload error:', error);
+    return { url: null, error: error.message || 'Gagal mengupload file ke storage' };
+  }
+
+  // Get public URL
+  const { data } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(filePath);
+
+  return { url: data.publicUrl, error: null };
+}
+
 /**
  * Upload a file to Supabase Storage.
  * @param bucket - The storage bucket name (e.g., 'portfolio-images')
@@ -12,31 +56,8 @@ export async function uploadFile(
   file: File,
   folder?: string
 ): Promise<string | null> {
-  // Generate unique filename: timestamp-originalname
-  const timestamp = Date.now();
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const filePath = folder
-    ? `${folder}/${timestamp}-${safeName}`
-    : `${timestamp}-${safeName}`;
-
-  const { error } = await supabase.storage
-    .from(bucket)
-    .upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: false,
-    });
-
-  if (error) {
-    console.error('[Storage] Upload error:', error);
-    return null;
-  }
-
-  // Get public URL
-  const { data } = supabase.storage
-    .from(bucket)
-    .getPublicUrl(filePath);
-
-  return data.publicUrl;
+  const result = await uploadFileDetailed(bucket, file, folder);
+  return result.url;
 }
 
 /**

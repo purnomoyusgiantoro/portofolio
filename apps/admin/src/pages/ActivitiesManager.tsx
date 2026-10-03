@@ -402,16 +402,14 @@ export const ActivitiesManager: React.FC = () => {
               />
 
               {/* Banner Image Upload */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-admin-text-muted uppercase tracking-wider">
-                  Gambar Banner / Thumbnail Materi
-                </label>
-                <ImageUpload
-                  bucket="activity-images"
-                  currentImage={imageUrl}
-                  onUploadSuccess={(url) => setImageUrl(url)}
-                />
-              </div>
+              <ImageUpload
+                label="Gambar Banner / Thumbnail Materi"
+                bucket="activity-images"
+                folder="banners"
+                currentImage={imageUrl}
+                onUploadSuccess={(url) => setImageUrl(url)}
+                onRemove={() => setImageUrl('')}
+              />
 
               {/* File Upload for Materials */}
               <FileUpload
