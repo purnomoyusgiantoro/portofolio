@@ -35,10 +35,38 @@ export const Activity: React.FC = () => {
     return matchesCategory && matchesQuery;
   });
 
-  const handleDownload = (item: MaterialItem) => {
+  const handleDownload = async (item: MaterialItem) => {
     // Jika item memiliki link download (File Supabase / file eksternal)
     if (item.downloadUrl && item.downloadUrl.trim().length > 0) {
-      window.open(item.downloadUrl, '_blank', 'noopener,noreferrer');
+      const url = item.downloadUrl.trim();
+      const lower = url.toLowerCase().split('?')[0];
+
+      // Jika file berupa .md, .markdown, atau .txt, unduh langsung via blob agar browser mengunduh file secara lokal dan tidak membuka tab kosong/teks mentah
+      if (lower.endsWith('.md') || lower.endsWith('.markdown') || lower.endsWith('.txt')) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            const fileName = url.split('/').pop()?.replace(/^\d+-/, '') || `${item.slug || 'materi'}.md`;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+
+            setDownloadSuccess(item.id);
+            setTimeout(() => setDownloadSuccess(null), 3000);
+            return;
+          }
+        } catch (err) {
+          console.warn('[Activity] Fetch download failed, fallback to window.open:', err);
+        }
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer');
       setDownloadSuccess(item.id);
       setTimeout(() => {
         setDownloadSuccess(null);

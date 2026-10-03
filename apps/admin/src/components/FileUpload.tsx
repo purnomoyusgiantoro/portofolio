@@ -21,7 +21,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   onUploadSuccess,
   onRemove,
   label = 'File Unduhan Materi',
-  accept = '.pdf,.ppt,.pptx,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx',
+  accept = '.pdf,.ppt,.pptx,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.md,.markdown,.txt',
   maxSizeMB = 50,
   className = '',
 }) => {
@@ -193,7 +193,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                 Klik untuk upload file materi
               </span>
               <span className="text-[11px] text-admin-text-muted mt-1 text-center">
-                Mendukung PDF, PPT/PPTX, ZIP, DOCX (Maks. {maxSizeMB}MB)
+                Mendukung PDF, PPTX, ZIP, Markdown (.md), DOCX (Maks. {maxSizeMB}MB)
               </span>
               <input
                 type="file"

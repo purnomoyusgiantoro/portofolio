@@ -97,13 +97,24 @@ export const ActivitiesManager: React.FC = () => {
     const catConfig = CATEGORY_OPTIONS.find(c => c.value === category) || CATEGORY_OPTIONS[0];
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
+    // Auto-detect format from file extension
+    let detectedFormat = 'Resource';
+    if (downloadUrl) {
+      const ext = downloadUrl.split('?')[0].split('.').pop()?.toLowerCase();
+      if (ext === 'md' || ext === 'markdown') detectedFormat = 'Markdown (.md)';
+      else if (ext === 'pdf') detectedFormat = 'PDF Document';
+      else if (ext === 'ppt' || ext === 'pptx') detectedFormat = 'Presentation (PPTX)';
+      else if (ext === 'zip' || ext === 'rar' || ext === '7z') detectedFormat = 'Archive (ZIP)';
+      else if (ext === 'doc' || ext === 'docx') detectedFormat = 'Word Document';
+    }
+
     const payload = {
       title,
       slug,
       category,
       category_label: catConfig.label,
       badge_color: catConfig.badgeColor,
-      format: 'Resource',
+      format: detectedFormat,
       slides_count: 1,
       file_size: fileSize || '-',
       description,
@@ -418,7 +429,7 @@ export const ActivitiesManager: React.FC = () => {
                   setDownloadUrl('');
                   setFileSize('-');
                 }}
-                accept=".pdf,.ppt,.pptx,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx"
+                accept=".pdf,.ppt,.pptx,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.md,.markdown,.txt"
                 maxSizeMB={50}
               />
 
