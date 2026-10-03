@@ -5,6 +5,7 @@ import { Plus, Edit2, Trash2, X, GripVertical, Search, FileText } from 'lucide-r
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
 import { ImageUpload } from '../components/ImageUpload';
+import { FileUpload } from '../components/FileUpload';
 import { deleteFile } from '../lib/storage';
 
 const CATEGORY_OPTIONS = [
@@ -30,6 +31,7 @@ export const ActivitiesManager: React.FC = () => {
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [downloadUrl, setDownloadUrl] = useState('');
+  const [fileSize, setFileSize] = useState('-');
   const [saving, setSaving] = useState(false);
 
   // Delete State
@@ -65,6 +67,7 @@ export const ActivitiesManager: React.FC = () => {
     setDescription('');
     setImageUrl('');
     setDownloadUrl('');
+    setFileSize('-');
     setEditingId(null);
   };
 
@@ -80,6 +83,7 @@ export const ActivitiesManager: React.FC = () => {
     setDescription(item.description);
     setImageUrl(item.image_banner);
     setDownloadUrl(item.download_url || '');
+    setFileSize(item.file_size || '-');
     setIsModalOpen(true);
   };
 
@@ -101,7 +105,7 @@ export const ActivitiesManager: React.FC = () => {
       badge_color: catConfig.badgeColor,
       format: 'Resource',
       slides_count: 1,
-      file_size: '-',
+      file_size: fileSize || '-',
       description,
       image_banner: imageUrl,
       download_url: downloadUrl.trim() || null,
@@ -129,6 +133,9 @@ export const ActivitiesManager: React.FC = () => {
     const item = items.find(i => i.id === deleteId);
     if (item?.image_banner && item.image_banner.includes('supabase.co')) {
       await deleteFile('activity-images', item.image_banner);
+    }
+    if (item?.download_url && item.download_url.includes('supabase.co')) {
+      await deleteFile('activity-images', item.download_url);
     }
 
     await supabase.from('activities').delete().eq('id', deleteId);
@@ -395,11 +402,24 @@ export const ActivitiesManager: React.FC = () => {
                 />
               </div>
 
-              <FormField
-                label="Link Download (Google Drive / File URL)"
-                value={downloadUrl}
-                onChange={(e) => setDownloadUrl(e.target.value)}
-                placeholder="https://drive.google.com/..."
+              {/* File Upload for Materials */}
+              <FileUpload
+                label="File Unduhan Materi (Dokumen / Slide / Arsip)"
+                bucket="activity-images"
+                folder="materials"
+                currentUrl={downloadUrl}
+                onUploadSuccess={(url, info) => {
+                  setDownloadUrl(url);
+                  if (info?.size && info.size !== '-') {
+                    setFileSize(info.size);
+                  }
+                }}
+                onRemove={() => {
+                  setDownloadUrl('');
+                  setFileSize('-');
+                }}
+                accept=".pdf,.ppt,.pptx,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx"
+                maxSizeMB={50}
               />
 
               {/* Modal Footer */}

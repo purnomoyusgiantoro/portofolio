@@ -36,7 +36,7 @@ export const Activity: React.FC = () => {
   });
 
   const handleDownload = (item: MaterialItem) => {
-    // Jika item memiliki link download (Google Drive / link eksternal)
+    // Jika item memiliki link download (File Supabase / file eksternal)
     if (item.downloadUrl && item.downloadUrl.trim().length > 0) {
       window.open(item.downloadUrl, '_blank', 'noopener,noreferrer');
       setDownloadSuccess(item.id);
@@ -277,7 +277,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                       {downloadSuccess === item.id ? (
                         <>
                           <CheckCircle size={14} />
-                          {item.downloadUrl ? 'Membuka Drive...' : 'Tersimpan!'}
+                          {item.downloadUrl ? 'Mengunduh...' : 'Tersimpan!'}
                         </>
                       ) : (
                         <>
@@ -450,7 +450,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
               {selectedPreview.downloadUrl ? (
                 <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-[#1A73E8] font-medium py-1">
                   <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse"></span>
-                  Tersedia di Google Drive
+                  File Materi Siap Diunduh
                 </div>
               ) : (
                 <span className="text-xs text-slate-400 text-center sm:text-left py-1">Resource File</span>
@@ -463,7 +463,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                 className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
               >
                 <Download size={14} />
-                {selectedPreview.downloadUrl ? 'Unduh via Google Drive' : 'Unduh Materi'}
+                {selectedPreview.downloadUrl ? 'Unduh File Materi' : 'Unduh Template Materi'}
               </button>
             </div>
 
