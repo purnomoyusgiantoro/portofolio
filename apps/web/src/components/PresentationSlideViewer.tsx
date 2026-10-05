@@ -21,6 +21,7 @@ interface PresentationSlideViewerProps {
 
 interface ParsedSlide {
   id: number;
+  imageUrl?: string;
   categoryTag?: string;
   title: string;
   subtitle?: string;
@@ -72,8 +73,22 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
     };
   }, [item.downloadUrl]);
 
-  // Parse slides dynamically from markdown
+  // Parse slides dynamically: prioritize actual slide images (slideList)
   const slides: ParsedSlide[] = useMemo(() => {
+    // If item has full slide images list, present every visual slide directly
+    if (item.slideList && item.slideList.length > 0) {
+      return item.slideList.map((url, idx) => ({
+        id: idx + 1,
+        imageUrl: url,
+        isCover: idx === 0,
+        title: idx === 0 ? item.title : `Slide ${idx + 1}`,
+        subtitle: idx === 0 ? item.description : undefined,
+        badge: item.categoryLabel || 'Design PPT',
+        bullets: [],
+        cards: [],
+      }));
+    }
+
     // Slide 0 is always the Cover with high-res banner image
     const coverSlide: ParsedSlide = {
       id: 1,
@@ -301,7 +316,7 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
         {/* Top Header Bar */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md z-20">
           <div className="flex items-center gap-3 min-w-0 pr-4">
-            <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold shadow-sm ${item.badgeColor} border text-white whitespace-nowrap`}>
+            <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold shadow-sm ${item.badgeColor} border whitespace-nowrap`}>
               {item.categoryLabel}
             </span>
             <h3 className="text-sm sm:text-base font-bold text-white truncate">
@@ -371,8 +386,25 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
                   : 'radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 45%), radial-gradient(circle at 15% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 45%), #0A0E17',
               }}
             >
-              {/* SLIDE 0: High-Resolution Graphic Cover */}
-              {activeSlideData.isCover ? (
+              {/* SLIDE: High-Resolution Graphic Slide Image */}
+              {activeSlideData.imageUrl ? (
+                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center bg-slate-950 group">
+                  {/* Subtle blurred ambient backdrop */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 scale-110 pointer-events-none"
+                    style={{ backgroundImage: `url(${activeSlideData.imageUrl})` }}
+                  />
+                  <img
+                    src={activeSlideData.imageUrl}
+                    alt={`${item.title} - Slide ${currentSlide + 1}`}
+                    className="relative z-10 max-h-full max-w-full object-contain drop-shadow-2xl select-none"
+                  />
+                  {/* Slide number pill in bottom-right */}
+                  <div className="absolute bottom-3 right-4 z-20 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-mono text-white/90 border border-white/10 shadow-lg">
+                    Slide {currentSlide + 1} / {slides.length}
+                  </div>
+                </div>
+              ) : activeSlideData.isCover ? (
                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center border border-slate-800 group bg-slate-950">
                   {/* Subtle blurred ambient backdrop */}
                   <div 
@@ -538,26 +570,44 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
 
         {/* Bottom Slide Navigation Bar & Thumbnails */}
         <div className="px-5 py-3 border-t border-slate-800 bg-slate-900/95 flex flex-col sm:flex-row items-center justify-between gap-3 z-20">
-          {/* Slide Indicator Dots / Mini Buttons */}
+          {/* Slide Indicator Thumbnails or Dots */}
           <div className="flex items-center gap-1.5 overflow-x-auto max-w-full py-1 scrollbar-none">
             {slides.map((s, idx) => (
-              <button
-                key={idx}
-                onClick={() => goToSlide(idx)}
-                className={`transition-all rounded-full ${
-                  currentSlide === idx
-                    ? 'w-7 sm:w-8 h-2 bg-blue-500'
-                    : 'w-2 h-2 bg-slate-700 hover:bg-slate-500'
-                }`}
-                title={`Menuju Slide ${idx + 1}: ${s.title}`}
-              />
+              s.imageUrl ? (
+                <button
+                  key={idx}
+                  onClick={() => goToSlide(idx)}
+                  className={`relative flex-shrink-0 h-9 w-14 sm:h-10 sm:w-16 rounded-md overflow-hidden border-2 transition-all ${
+                    currentSlide === idx
+                      ? 'border-blue-500 scale-105 shadow-md shadow-blue-500/40 ring-1 ring-blue-400 opacity-100'
+                      : 'border-slate-800 opacity-50 hover:opacity-100 hover:border-slate-600'
+                  }`}
+                  title={`Menuju Slide ${idx + 1}`}
+                >
+                  <img src={s.imageUrl} alt={`Slide ${idx + 1}`} className="w-full h-full object-cover" />
+                  <div className="absolute bottom-0 right-0 px-1 text-[8px] font-mono bg-black/80 text-white rounded-tl">
+                    {idx + 1}
+                  </div>
+                </button>
+              ) : (
+                <button
+                  key={idx}
+                  onClick={() => goToSlide(idx)}
+                  className={`transition-all rounded-full ${
+                    currentSlide === idx
+                      ? 'w-7 sm:w-8 h-2 bg-blue-500'
+                      : 'w-2 h-2 bg-slate-700 hover:bg-slate-500'
+                  }`}
+                  title={`Menuju Slide ${idx + 1}: ${s.title}`}
+                />
+              )
             ))}
           </div>
 
           {/* Actions & Download */}
           <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
             <span className="text-[11px] text-slate-400 hidden md:inline">
-              Gunakan tombol panah keyboard ← → untuk berpindah slide
+              Gunakan panah ← → untuk navigasi slide
             </span>
 
             <button
@@ -565,7 +615,7 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
             >
               <Download size={14} />
-              <span>{item.downloadUrl ? 'Unduh Slide Deck (.md)' : 'Unduh Template'}</span>
+              <span>{item.category === 'design-ppt' ? 'Unduh Skill.md' : (item.downloadUrl ? 'Unduh File' : 'Unduh Template')}</span>
             </button>
           </div>
         </div>

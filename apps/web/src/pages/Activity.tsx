@@ -326,7 +326,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                       ) : (
                         <>
                           <Download size={14} />
-                          Download
+                          {item.category === 'design-ppt' ? 'Unduh Skill.md' : 'Download'}
                         </>
                       )}
                     </button>
@@ -555,7 +555,7 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                   className="inline-flex items-center justify-center gap-2 flex-1 sm:flex-initial px-6 py-2.5 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
                 >
                   <Download size={14} />
-                  {selectedPreview.downloadUrl ? 'Unduh File Materi' : 'Unduh Template Materi'}
+                  {selectedPreview.category === 'design-ppt' ? 'Unduh File Skill.md' : selectedPreview.downloadUrl ? 'Unduh File Materi' : 'Unduh Template Materi'}
                 </button>
               </div>
             </div>
