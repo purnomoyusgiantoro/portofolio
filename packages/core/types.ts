@@ -144,7 +144,7 @@ export interface ActivityItem {
   id: string;
   slug: string;
   title: string;
-  category: 'workshop' | 'design-ppt' | 'web' | 'design-poster';
+  category: 'workshop' | 'design-ppt' | 'web' | 'design-poster' | 'skill-md';
   categoryLabel: string;
   badgeColor: string;
   format: string;

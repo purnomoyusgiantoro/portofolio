@@ -6,6 +6,7 @@ import {
   Presentation, 
   Layout, 
   Palette,
+  FileCode,
   Eye, 
   CheckCircle, 
   Sliders, 
@@ -20,7 +21,7 @@ type MaterialItem = ActivityItem;
 export const Activity: React.FC = () => {
   const { activities: dynamicMaterials, loading } = useActivities();
   const MATERIALS = dynamicMaterials || [];
-  const [activeCategory, setActiveCategory] = useState<'all' | 'design-ppt' | 'web' | 'workshop' | 'design-poster'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'workshop' | 'design-ppt' | 'web' | 'design-poster' | 'skill-md'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPreview, setSelectedPreview] = useState<MaterialItem | null>(null);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
@@ -182,6 +183,17 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
           }`}
         >
           Design Poster ({MATERIALS.filter(m => m.category === 'design-poster').length})
+        </button>
+        <button
+          onClick={() => setActiveCategory('skill-md')}
+          className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+            activeCategory === 'skill-md'
+              ? 'bg-[#9333EA] text-white shadow-md shadow-purple-500/25'
+              : 'apple-glass text-[#5F6368] hover:text-[#9333EA]'
+          }`}
+        >
+          <FileCode size={12} className={activeCategory === 'skill-md' ? 'text-white' : 'text-purple-600'} />
+          <span>Skill.md ({MATERIALS.filter(m => m.category === 'skill-md').length})</span>
         </button>
       </div>
 
@@ -430,6 +442,27 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                 </div>
                 <span className="text-[10px] opacity-80">
                   {MATERIALS.filter(m => m.category === 'design-poster').length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setActiveCategory('skill-md')}
+                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${
+                  activeCategory === 'skill-md'
+                    ? 'bg-[#9333EA] text-white shadow-md shadow-purple-500/25'
+                    : 'text-[#5F6368] hover:bg-[#F1F3F4] hover:text-[#9333EA]'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <FileCode size={14} className={activeCategory === 'skill-md' ? 'text-white' : 'text-purple-600'} />
+                  <span>Skill.md</span>
+                </div>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  activeCategory === 'skill-md' 
+                    ? 'bg-white/20 text-white' 
+                    : 'bg-purple-100 text-purple-700'
+                }`}>
+                  {MATERIALS.filter(m => m.category === 'skill-md').length}
                 </span>
               </button>
             </div>

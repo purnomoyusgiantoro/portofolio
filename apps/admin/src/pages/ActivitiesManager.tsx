@@ -13,6 +13,7 @@ const CATEGORY_OPTIONS = [
   { value: 'design-ppt', label: 'Design PPT', badgeColor: 'bg-blue-50 text-blue-600 border-blue-200 dark:bg-blue-950/60 dark:text-blue-400 dark:border-blue-900' },
   { value: 'web', label: 'Website', badgeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-900' },
   { value: 'design-poster', label: 'Design Poster', badgeColor: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200 dark:bg-fuchsia-950/60 dark:text-fuchsia-400 dark:border-fuchsia-900' },
+  { value: 'skill-md', label: 'Skill.md', badgeColor: 'bg-purple-50 text-purple-600 border-purple-200 dark:bg-purple-950/60 dark:text-purple-400 dark:border-purple-900' },
 ];
 
 export const ActivitiesManager: React.FC = () => {
@@ -125,10 +126,20 @@ export const ActivitiesManager: React.FC = () => {
     };
 
     if (editingId) {
-      await supabase.from('activities').update(payload).eq('id', editingId);
+      const { error } = await supabase.from('activities').update(payload).eq('id', editingId);
+      if (error) {
+        alert(`Gagal memperbarui materi: ${error.message}${error.message.includes('check constraint') ? '\n\nSilakan jalankan script migrasi supabase/add_skill_category.sql di SQL Editor Supabase untuk mengizinkan kategori baru ini.' : ''}`);
+        setSaving(false);
+        return;
+      }
     } else {
       const maxOrder = items.length > 0 ? Math.max(...items.map(i => i.sort_order ?? 0)) : 0;
-      await supabase.from('activities').insert([{ ...payload, sort_order: maxOrder + 1 }]);
+      const { error } = await supabase.from('activities').insert([{ ...payload, sort_order: maxOrder + 1 }]);
+      if (error) {
+        alert(`Gagal menambah materi: ${error.message}${error.message.includes('check constraint') ? '\n\nSilakan jalankan script migrasi supabase/add_skill_category.sql di SQL Editor Supabase untuk mengizinkan kategori baru ini.' : ''}`);
+        setSaving(false);
+        return;
+      }
     }
 
     setSaving(false);

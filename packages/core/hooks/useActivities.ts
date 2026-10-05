@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../supabaseClient';
 import type { ActivityItem, ActivityRow } from '../types';
 import { mapActivityRow } from '../types';
-import { defaultActivities } from '../activityData';
+import { defaultActivities, defaultSkillItem } from '../activityData';
 
 interface UseActivitiesResult {
   activities: ActivityItem[];
@@ -41,7 +41,12 @@ export function useActivities(): UseActivitiesResult {
 
       if (data && data.length > 0) {
         const mapped = (data as ActivityRow[]).map(mapActivityRow);
-        setActivities(mapped);
+        const hasSkillCategory = mapped.some(item => item.category === 'skill-md');
+        if (!hasSkillCategory && defaultSkillItem) {
+          setActivities([...mapped, defaultSkillItem]);
+        } else {
+          setActivities(mapped);
+        }
       } else {
         // If table exists but empty, fall back to default curated activities
         setActivities(defaultActivities);
