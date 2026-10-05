@@ -31,4 +31,3 @@ export const defaultSkillItem: ActivityItem = {
  * Static fallback data for when Supabase is not configured or table is empty.
  */
 export const defaultActivities: ActivityItem[] = [defaultSkillItem];
-
