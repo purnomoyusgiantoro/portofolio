@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../supabaseClient';
 import type { ActivityItem, ActivityRow } from '../types';
 import { mapActivityRow } from '../types';
-import { defaultActivities, defaultSkillItem } from '../activityData';
+import { defaultActivities } from '../activityData';
 
 interface UseActivitiesResult {
   activities: ActivityItem[];
@@ -13,7 +13,7 @@ interface UseActivitiesResult {
 
 /**
  * Hook to fetch activities & materials from Supabase.
- * Falls back to defaultActivities if Supabase is not configured or error occurs.
+ * Reflects purely database contents, falling back to empty array if unconfigured or error occurs.
  */
 export function useActivities(): UseActivitiesResult {
   const [activities, setActivities] = useState<ActivityItem[]>(defaultActivities);
@@ -39,20 +39,14 @@ export function useActivities(): UseActivitiesResult {
 
       if (supaError) throw supaError;
 
-      if (data && data.length > 0) {
+      if (data) {
         const mapped = (data as ActivityRow[]).map(mapActivityRow);
-        const hasSkillCategory = mapped.some(item => item.category === 'skill-md');
-        if (!hasSkillCategory && defaultSkillItem) {
-          setActivities([...mapped, defaultSkillItem]);
-        } else {
-          setActivities(mapped);
-        }
+        setActivities(mapped);
       } else {
-        // If table exists but empty, fall back to default curated activities
-        setActivities(defaultActivities);
+        setActivities([]);
       }
     } catch (err: any) {
-      console.warn('[useActivities] Falling back to default data:', err);
+      console.warn('[useActivities] Error fetching activities:', err);
       setError(err.message ?? 'Failed to fetch activities');
       setActivities(defaultActivities);
     } finally {
