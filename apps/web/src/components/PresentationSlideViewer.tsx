@@ -9,7 +9,8 @@ import {
   Download, 
   Play, 
   Pause,
-  Loader2
+  Loader2,
+  CheckCircle
 } from 'lucide-react';
 import type { ActivityItem } from '@pxy/core';
 
@@ -46,6 +47,13 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
   const [isPlaying, setIsPlaying] = useState(false);
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+
+  const handleDownloadClick = () => {
+    onDownload(item);
+    setDownloadSuccess(true);
+    setTimeout(() => setDownloadSuccess(false), 3000);
+  };
 
   // Fetch markdown slide deck from downloadUrl if available
   useEffect(() => {
@@ -611,11 +619,20 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
             </span>
 
             <button
-              onClick={() => onDownload(item)}
+              onClick={handleDownloadClick}
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
             >
-              <Download size={14} />
-              <span>{item.category === 'design-ppt' ? 'Unduh Skill.md' : (item.downloadUrl ? 'Unduh File' : 'Unduh Template')}</span>
+              {downloadSuccess ? (
+                <>
+                  <CheckCircle size={14} className="text-white" />
+                  <span>Mengunduh...</span>
+                </>
+              ) : (
+                <>
+                  <Download size={14} />
+                  <span>{item.downloadUrl ? 'Unduh File Materi' : 'Unduh Template'}</span>
+                </>
+              )}
             </button>
           </div>
         </div>
