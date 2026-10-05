@@ -373,14 +373,19 @@ export const PresentationSlideViewer: React.FC<PresentationSlideViewerProps> = (
             >
               {/* SLIDE 0: High-Resolution Graphic Cover */}
               {activeSlideData.isCover ? (
-                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center border border-slate-800 group">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center border border-slate-800 group bg-slate-950">
+                  {/* Subtle blurred ambient backdrop */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center blur-2xl opacity-25 scale-110 pointer-events-none"
+                    style={{ backgroundImage: `url(${item.imageBanner})` }}
+                  />
                   <img
                     src={item.imageBanner}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="relative z-10 max-h-full max-w-full object-contain"
                   />
                   {/* Subtle Gradient Overlay for High Contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 flex flex-col justify-end p-6 sm:p-10">
+                  <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/85 via-black/30 to-black/20 flex flex-col justify-end p-6 sm:p-10">
                     <div className="max-w-2xl space-y-2">
                       <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/30 border border-blue-400 text-blue-300 backdrop-blur-md inline-block">
                         ★ {item.categoryLabel} Widescreen Deck ★

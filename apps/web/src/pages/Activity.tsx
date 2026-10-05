@@ -258,7 +258,11 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
                 className="apple-glass-card rounded-[2rem] overflow-hidden flex flex-col group transition-all duration-300 border border-slate-200/80 dark:border-white/10"
               >
                 {/* Visual Image Basis Banner */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <div 
+                  onClick={() => setSelectedPreview(item)}
+                  className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800 cursor-pointer"
+                  title="Klik untuk melihat preview penuh"
+                >
                   <img 
                     src={item.imageBanner} 
                     alt={item.title} 
@@ -444,62 +448,88 @@ Dokumentasi dan template materi ini disiapkan untuk komunitas mahasiswa develope
         />
       ) : selectedPreview ? (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in"
           onClick={() => setSelectedPreview(null)}
         >
           <div 
-            className="apple-glass-card max-h-[90vh] overflow-y-auto rounded-3xl md:rounded-[2.5rem] max-w-2xl w-full p-5 sm:p-8 space-y-5 shadow-2xl relative bg-white/95 dark:bg-slate-900/95"
+            className="apple-glass-card max-h-[92vh] flex flex-col rounded-3xl md:rounded-[2.5rem] max-w-4xl w-full p-4 sm:p-6 md:p-8 shadow-2xl relative bg-white/95 dark:bg-slate-900/95 border border-slate-200/80 dark:border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Close Button */}
             <button 
               onClick={() => setSelectedPreview(null)}
-              className="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors z-10"
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors z-20"
+              aria-label="Tutup"
             >
               <X size={18} />
             </button>
 
             {/* Modal Header */}
-            <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pr-8">
+            <div className="pr-10">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm ${selectedPreview.badgeColor} border text-white`}>
+                  {selectedPreview.categoryLabel}
+                </span>
+                <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 font-mono">
+                  {selectedPreview.format}
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white leading-tight">
                 {selectedPreview.title}
               </h3>
             </div>
 
-            {/* Banner Preview */}
-            <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 relative">
+            {/* Banner Preview - Full Adaptive Container (No Cropping) */}
+            <div className="relative flex-1 min-h-0 my-3 rounded-2xl overflow-hidden bg-slate-950/5 dark:bg-slate-950/60 border border-slate-200/60 dark:border-white/10 flex items-center justify-center p-2 sm:p-3">
+              {/* Soft Ambient Blurred Backlight for Visual Depth */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 dark:opacity-30 scale-110 pointer-events-none"
+                style={{ backgroundImage: `url(${selectedPreview.imageBanner})` }}
+              />
+              {/* Full Image Display - 100% Uncropped */}
               <img 
                 src={selectedPreview.imageBanner} 
                 alt={selectedPreview.title} 
-                className="w-full h-full object-cover" 
+                className="relative z-10 max-h-[55vh] sm:max-h-[62vh] w-auto max-w-full h-auto object-contain rounded-xl shadow-lg transition-transform" 
               />
             </div>
 
             {/* Description */}
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
               {selectedPreview.description}
             </p>
 
             {/* Modal Footer Actions */}
-            <div className="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
               {selectedPreview.downloadUrl ? (
-                <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-[#1A73E8] font-medium py-1">
+                <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-[#1A73E8] dark:text-blue-400 font-medium py-1">
                   <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse"></span>
-                  File Materi Siap Diunduh
+                  File Materi Siap Diunduh {selectedPreview.fileSize ? `(${selectedPreview.fileSize})` : ''}
                 </div>
               ) : (
                 <span className="text-xs text-slate-400 text-center sm:text-left py-1">Resource File</span>
               )}
 
-              <button
-                onClick={() => {
-                  handleDownload(selectedPreview);
-                }}
-                className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
-              >
-                <Download size={14} />
-                {selectedPreview.downloadUrl ? 'Unduh File Materi' : 'Unduh Template Materi'}
-              </button>
+              <div className="flex items-center gap-2">
+                <a
+                  href={selectedPreview.imageBanner}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-xs transition-colors"
+                >
+                  <Eye size={14} />
+                  Buka Gambar Asli
+                </a>
+                <button
+                  onClick={() => {
+                    handleDownload(selectedPreview);
+                  }}
+                  className="inline-flex items-center justify-center gap-2 flex-1 sm:flex-initial px-6 py-2.5 rounded-full bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
+                >
+                  <Download size={14} />
+                  {selectedPreview.downloadUrl ? 'Unduh File Materi' : 'Unduh Template Materi'}
+                </button>
+              </div>
             </div>
 
           </div>
