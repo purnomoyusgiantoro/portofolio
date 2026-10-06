@@ -23,3 +23,7 @@ export { useActivities } from './hooks/useActivities';
 // Client-side cache system
 export { clientCache } from './cache';
 
+// Gemini AI Assistant service
+export { askGeminiAssistant } from './gemini';
+export type { ChatMessage } from './gemini';
+
