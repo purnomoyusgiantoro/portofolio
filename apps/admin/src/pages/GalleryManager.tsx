@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { GalleryRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Trash2, Pencil, X, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -81,6 +82,7 @@ export const GalleryManager: React.FC = () => {
       await supabase.from('gallery').insert([{ title, date, description, image_url: imageUrl, sort_order: maxOrder + 1 }]);
     }
 
+    clientCache.invalidate('gallery');
     setSaving(false);
     closeModal();
     fetchItems();
@@ -96,6 +98,7 @@ export const GalleryManager: React.FC = () => {
     }
 
     await supabase.from('gallery').delete().eq('id', deleteId);
+    clientCache.invalidate('gallery');
     setDeleteLoading(false);
     setDeleteId(null);
     fetchItems();
@@ -132,7 +135,8 @@ export const GalleryManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('gallery').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    Promise.all(updates);
+    await Promise.all(updates);
+    clientCache.invalidate('gallery');
   };
 
   const isEditing = !!editId;

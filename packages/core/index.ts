@@ -19,3 +19,7 @@ export type { SiteSettings } from './hooks/useSiteSettings';
 export { useSkills } from './hooks/useSkills';
 export { useExperience } from './hooks/useExperience';
 export { useActivities } from './hooks/useActivities';
+
+// Client-side cache system
+export { clientCache } from './cache';
+

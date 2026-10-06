@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { CertificateRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Trash2, Pencil, X, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -81,6 +82,7 @@ export const CertificatesManager: React.FC = () => {
       await supabase.from('certificates').insert([{ title, issuer, date, image_url: imageUrl, sort_order: maxOrder + 1 }]);
     }
 
+    clientCache.invalidate('certificates');
     setSaving(false);
     closeModal();
     fetchItems();
@@ -96,6 +98,7 @@ export const CertificatesManager: React.FC = () => {
     }
 
     await supabase.from('certificates').delete().eq('id', deleteId);
+    clientCache.invalidate('certificates');
     setDeleteLoading(false);
     setDeleteId(null);
     fetchItems();
@@ -132,7 +135,8 @@ export const CertificatesManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('certificates').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    Promise.all(updates);
+    await Promise.all(updates);
+    clientCache.invalidate('certificates');
   };
 
   const isEditing = !!editId;

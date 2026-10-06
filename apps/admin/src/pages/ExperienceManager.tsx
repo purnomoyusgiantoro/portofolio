@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ExperienceRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Trash2, Pencil, X, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -77,6 +78,7 @@ export const ExperienceManager: React.FC = () => {
       await supabase.from('experience').insert([{ title, company, period, description, sort_order: maxOrder + 1 }]);
     }
 
+    clientCache.invalidate('experience');
     setSaving(false);
     closeModal();
     fetchItems();
@@ -86,6 +88,7 @@ export const ExperienceManager: React.FC = () => {
     if (!deleteId) return;
     setDeleteLoading(true);
     await supabase.from('experience').delete().eq('id', deleteId);
+    clientCache.invalidate('experience');
     setDeleteLoading(false);
     setDeleteId(null);
     fetchItems();
@@ -122,7 +125,8 @@ export const ExperienceManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('experience').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    Promise.all(updates);
+    await Promise.all(updates);
+    clientCache.invalidate('experience');
   };
 
   const isEditing = !!editId;

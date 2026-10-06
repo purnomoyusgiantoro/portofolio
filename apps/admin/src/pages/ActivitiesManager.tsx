@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ActivityRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Edit2, Trash2, X, GripVertical, Search, FileText } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -142,6 +143,7 @@ export const ActivitiesManager: React.FC = () => {
       }
     }
 
+    clientCache.invalidate('activities');
     setSaving(false);
     setIsModalOpen(false);
     resetForm();
@@ -161,6 +163,7 @@ export const ActivitiesManager: React.FC = () => {
     }
 
     await supabase.from('activities').delete().eq('id', deleteId);
+    clientCache.invalidate('activities');
 
     setDeleteLoading(false);
     setDeleteId(null);
@@ -202,6 +205,7 @@ export const ActivitiesManager: React.FC = () => {
       supabase.from('activities').update({ sort_order: item.sort_order }).eq('id', item.id)
     );
     await Promise.all(promises);
+    clientCache.invalidate('activities');
   };
 
   // Filtered Items

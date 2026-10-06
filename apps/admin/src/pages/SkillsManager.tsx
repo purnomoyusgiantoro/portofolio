@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { SkillRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Trash2, Pencil, X, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -73,6 +74,7 @@ export const SkillsManager: React.FC = () => {
       await supabase.from('skills').insert([{ name, percentage, sort_order: maxOrder + 1 }]);
     }
 
+    clientCache.invalidate('skills');
     setSaving(false);
     closeModal();
     fetchItems();
@@ -82,6 +84,7 @@ export const SkillsManager: React.FC = () => {
     if (!deleteId) return;
     setDeleteLoading(true);
     await supabase.from('skills').delete().eq('id', deleteId);
+    clientCache.invalidate('skills');
     setDeleteLoading(false);
     setDeleteId(null);
     fetchItems();
@@ -118,7 +121,8 @@ export const SkillsManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('skills').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    Promise.all(updates);
+    await Promise.all(updates);
+    clientCache.invalidate('skills');
   };
 
   const isEditing = !!editId;

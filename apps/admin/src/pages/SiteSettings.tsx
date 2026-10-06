@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { User, FileText, Globe, Save, Loader2, CheckCircle, AlertCircle, Plus, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { clientCache } from '@pxy/core';
 import { ImageUpload } from '../components/ImageUpload';
 
 interface SiteSettings {
@@ -81,6 +82,7 @@ export const SiteSettingsPage: React.FC = () => {
         .eq('id', id);
 
       if (updateError) throw updateError;
+      clientCache.invalidate('settings');
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (err: any) {

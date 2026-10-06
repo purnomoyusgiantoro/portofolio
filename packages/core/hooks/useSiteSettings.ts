@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../supabaseClient';
+import { clientCache } from '../cache';
 
 export interface SiteSettings {
   profileName: string;
@@ -35,58 +36,83 @@ interface UseSiteSettingsResult {
   settings: SiteSettings;
   loading: boolean;
   error: string | null;
+  refetch?: () => void;
 }
 
+const CACHE_KEY = 'settings:site';
+
 export function useSiteSettings(): UseSiteSettingsResult {
-  const [settings, setSettings] = useState<SiteSettings>(defaultSettings);
-  const [loading, setLoading] = useState(true);
+  // Synchronously initialize from cache for instant 0ms rendering
+  const [settings, setSettings] = useState<SiteSettings>(() => {
+    const cached = clientCache.get<SiteSettings>(CACHE_KEY);
+    return cached ? cached.data : defaultSettings;
+  });
+  const [loading, setLoading] = useState<boolean>(() => {
+    const cached = clientCache.get<SiteSettings>(CACHE_KEY);
+    return !cached;
+  });
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      if (!isSupabaseConfigured()) {
-        setSettings(defaultSettings);
-        setLoading(false);
-        return;
+  const fetchSettings = useCallback(async (isSilent = false) => {
+    if (!isSupabaseConfigured()) {
+      setSettings(defaultSettings);
+      setLoading(false);
+      return;
+    }
+
+    if (!isSilent) {
+      setLoading(true);
+    }
+    setError(null);
+
+    try {
+      const { data, error: fetchError } = await supabase
+        .from('site_settings')
+        .select('*')
+        .limit(1)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      if (data) {
+        const mapped: SiteSettings = {
+          profileName: data.profile_name || defaultSettings.profileName,
+          profileTitle: data.profile_title || defaultSettings.profileTitle,
+          profileBio: data.profile_bio || defaultSettings.profileBio,
+          profileImageUrl: data.profile_image_url || null,
+          cvUrl: data.cv_url || null,
+          logoUrl: data.logo_url || null,
+          contactEmail: data.contact_email || null,
+          githubUrl: data.github_url || null,
+          linkedinUrl: data.linkedin_url || null,
+          twitterUrl: data.twitter_url || null,
+          instagramUrl: data.instagram_url || null,
+          techStack: data.tech_stack || defaultSettings.techStack,
+        };
+        clientCache.set(CACHE_KEY, mapped);
+        setSettings(mapped);
       }
-
-      try {
-        const { data, error: fetchError } = await supabase
-          .from('site_settings')
-          .select('*')
-          .limit(1)
-          .single();
-
-        if (fetchError) throw fetchError;
-
-        if (data) {
-          setSettings({
-            profileName: data.profile_name || defaultSettings.profileName,
-            profileTitle: data.profile_title || defaultSettings.profileTitle,
-            profileBio: data.profile_bio || defaultSettings.profileBio,
-            profileImageUrl: data.profile_image_url || null,
-            cvUrl: data.cv_url || null,
-            logoUrl: data.logo_url || null,
-            contactEmail: data.contact_email || null,
-            githubUrl: data.github_url || null,
-            linkedinUrl: data.linkedin_url || null,
-            twitterUrl: data.twitter_url || null,
-            instagramUrl: data.instagram_url || null,
-            techStack: data.tech_stack || defaultSettings.techStack,
-          });
-        }
-      } catch (err: any) {
-        console.error('[useSiteSettings] Error:', err);
-        setError(err.message ?? 'Failed to fetch site settings');
-        // Fallback to defaults
-        setSettings(defaultSettings);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSettings();
+    } catch (err: any) {
+      console.error('[useSiteSettings] Error:', err);
+      setError(err.message ?? 'Failed to fetch site settings');
+      setSettings(defaultSettings);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { settings, loading, error };
+  useEffect(() => {
+    const cached = clientCache.get<SiteSettings>(CACHE_KEY);
+    if (cached) {
+      setSettings(cached.data);
+      setLoading(false);
+      if (cached.isStale) {
+        fetchSettings(true);
+      }
+    } else {
+      fetchSettings(false);
+    }
+  }, [fetchSettings]);
+
+  return { settings, loading, error, refetch: () => fetchSettings(false) };
 }

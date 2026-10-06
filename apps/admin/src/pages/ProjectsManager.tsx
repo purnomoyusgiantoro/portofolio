@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ProjectRow } from '@pxy/core';
+import { clientCache } from '@pxy/core';
 import { Plus, Edit2, Trash2, X, ExternalLink, GripVertical } from 'lucide-react';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { FormField } from '../components/FormField';
@@ -98,6 +99,7 @@ export const ProjectsManager: React.FC = () => {
       await supabase.from('projects').insert([{ ...projectData, sort_order: maxOrder + 1 }]);
     }
 
+    clientCache.invalidate('projects');
     setIsModalOpen(false);
     resetForm();
     fetchProjects();
@@ -113,6 +115,7 @@ export const ProjectsManager: React.FC = () => {
     }
 
     await supabase.from('projects').delete().eq('id', deleteId);
+    clientCache.invalidate('projects');
     
     setDeleteLoading(false);
     setDeleteId(null);
@@ -148,7 +151,8 @@ export const ProjectsManager: React.FC = () => {
     const updates = reordered.map((item, idx) =>
       supabase.from('projects').update({ sort_order: idx + 1 }).eq('id', item.id)
     );
-    Promise.all(updates);
+    await Promise.all(updates);
+    clientCache.invalidate('projects');
   };
 
   return (
