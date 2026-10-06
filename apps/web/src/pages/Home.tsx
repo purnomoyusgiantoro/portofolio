@@ -29,11 +29,23 @@ export const Home: React.FC = () => {
             <div className="aspect-[4/5] max-h-[500px] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 border border-outline-variant/30 bg-white/50 backdrop-blur-sm p-2">
               <div className="w-full h-full rounded-3xl overflow-hidden relative">
                 {settings.profileImageUrl ? (
-                  <img src={settings.profileImageUrl} alt={settings.profileName} className="w-full h-full object-cover" />
+                  <img 
+                    src={settings.profileImageUrl} 
+                    alt={settings.profileName || 'Purnomo Yusgiantoro'} 
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-cover" 
+                  />
                 ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-primary/5 flex items-center justify-center">
-                    <span className="text-8xl font-bold text-primary">{settings.profileName.charAt(0).toUpperCase()}</span>
-                  </div>
+                  <img 
+                    src="/profile.png" 
+                    alt={settings.profileName || 'Purnomo Yusgiantoro'} 
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-cover" 
+                  />
                 )}
               </div>
             </div>
@@ -49,9 +61,9 @@ export const Home: React.FC = () => {
             <span className="inline-block font-code text-xs text-[#1A73E8] tracking-widest uppercase font-semibold mb-2">
               Tentang Saya
             </span>
-            <h2 className="font-body font-bold text-3xl sm:text-4xl md:text-[48px] leading-[1.1] text-[#202124]">
-              Hello, I'm {settings.profileName}
-            </h2>
+            <h1 className="font-body font-bold text-3xl sm:text-4xl md:text-[48px] leading-[1.1] text-[#202124]">
+              Hello, I'm {settings.profileName || 'Purnomo Yusgiantoro'}
+            </h1>
             <p className="font-code text-lg text-[#1A73E8] font-medium">
               {settings.profileTitle}
             </p>
@@ -118,7 +130,7 @@ export const Home: React.FC = () => {
               <Link to={`/portfolio`} key={project.id} className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-[#DADCE0] shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                 <div className="aspect-[4/3] w-full overflow-hidden relative">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={project.image} alt={project.title} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-white/95 backdrop-blur-sm text-[#1A73E8] text-xs font-bold rounded-full shadow-sm">
                       {project.category}

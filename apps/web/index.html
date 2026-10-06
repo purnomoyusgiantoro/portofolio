@@ -24,10 +24,22 @@
     <meta name="twitter:description" content="Portofolio resmi Purnomo Yusgiantoro - Fullstack Developer & AI Engineer." />
     <meta name="twitter:image" content="/profile.png" />
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/geist-mono" rel="stylesheet">
+    <!-- Preload LCP Hero Image -->
+    <link rel="preload" as="image" href="/profile.png" fetchpriority="high" />
+
+    <!-- Non-blocking optimized web fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" />
+    </noscript>
+    
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/geist-mono" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/geist-mono" />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
