@@ -3,10 +3,10 @@ import { Send, X, Bot, Sparkles, Loader2, ArrowRight } from 'lucide-react';
 import { askGeminiAssistant, type ChatMessage } from '@pxy/core';
 
 const QUICK_PROMPTS = [
-  'Siapa Purnomo (pxy)?',
+  'Siapa Purnomo?',
   'Apa saja proyek unggulan?',
   'Materi apa yang ada di menu Activity?',
-  'Bagaimana cara menghubungi pxy?',
+  'Bagaimana cara menghubungi Purnomo?',
 ];
 
 export const AIAssistant: React.FC = () => {
@@ -14,7 +14,7 @@ export const AIAssistant: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      text: 'Halo! Saya asisten AI portofolio Purnomo (pxy) yang ditenagai oleh Google Gemini Flash-Lite. Ada yang bisa saya bantu jelaskan tentang profil, proyek, atau materi kegiatan?',
+      text: 'Halo! Saya asisten AI portofolio Purnomo Yusgiantoro yang ditenagai oleh Google Gemini Flash-Lite. Ada yang bisa saya bantu jelaskan tentang profil, proyek, atau materi kegiatan?',
     },
   ]);
   const [input, setInput] = useState('');
@@ -88,7 +88,7 @@ export const AIAssistant: React.FC = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-slate-800 text-sm">pxy AI Assistant</span>
+                  <span className="font-bold text-slate-800 text-sm">Purnomo AI Assistant</span>
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-[#1A73E8]">
                     Gemini Flash-Lite
                   </span>
@@ -162,7 +162,7 @@ export const AIAssistant: React.FC = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
-              placeholder="Tanyakan tentang pxy, proyek, atau keahlian..."
+              placeholder="Tanyakan tentang Purnomo, proyek, atau keahlian..."
               disabled={isLoading}
               className="flex-1 bg-slate-100/80 border border-slate-200/80 rounded-full px-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-[#1A73E8] focus:bg-white transition-all disabled:opacity-60"
             />

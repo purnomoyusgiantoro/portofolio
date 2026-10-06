@@ -18,7 +18,7 @@ export interface SiteSettings {
 }
 
 const defaultSettings: SiteSettings = {
-  profileName: 'pxy',
+  profileName: 'purnomoyusgiantoro',
   profileTitle: 'Fullstack Developer & AI Engineer',
   profileBio: 'Saya adalah seorang developer yang berfokus pada pembangunan antarmuka web masa depan, mengintegrasikan teknologi modern seperti Machine Learning, AI Agents, dan Web3. Dengan pendekatan desain yang bersih dan performa tinggi, saya percaya bahwa teknologi harus terasa magis namun tetap fungsional.',
   profileImageUrl: null,

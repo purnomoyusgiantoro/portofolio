@@ -14,7 +14,7 @@ export interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
-  brandName = 'PXY',
+  brandName = 'purnomoyusgiantoro',
   imageUrl,
   profileImageUrl,
   logoUrl
@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
           <span className="font-semibold text-sm tracking-tight text-[#202124] hidden sm:inline-block">
-            {brandName || 'PXY'}
+            {brandName || 'purnomoyusgiantoro'}
           </span>
         </Link>
         

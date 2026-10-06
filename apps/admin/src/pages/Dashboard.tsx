@@ -63,7 +63,7 @@ export const Dashboard: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold text-admin-text mb-2">Dashboard</h1>
-        <p className="text-admin-text-muted">Selamat datang di panel admin pxy portofolio.</p>
+        <p className="text-admin-text-muted">Selamat datang di panel admin portofolio Purnomo Yusgiantoro.</p>
       </div>
 
       {/* Connection Status & Admin Info */}

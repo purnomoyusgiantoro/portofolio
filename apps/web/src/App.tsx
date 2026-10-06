@@ -16,7 +16,10 @@ export const App: React.FC = () => {
   React.useEffect(() => {
     // Enforce light theme
     document.documentElement.classList.remove('dark');
-  }, []);
+    if (settings.profileName) {
+      document.title = settings.profileName;
+    }
+  }, [settings.profileName]);
 
   return (
     <Router>
@@ -39,7 +42,7 @@ export const App: React.FC = () => {
           </Routes>
         </main>
         <Footer 
-          brandName={settings.profileName + ' portofolio'}
+          brandName={settings.profileName || 'purnomoyusgiantoro'}
           description={settings.profileBio || undefined}
           githubUrl={settings.githubUrl}
           linkedinUrl={settings.linkedinUrl}

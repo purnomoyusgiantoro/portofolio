@@ -23,7 +23,7 @@ interface SiteSettings {
 
 const defaultSettings: SiteSettings = {
   id: '',
-  profile_name: 'pxy',
+  profile_name: 'purnomo yusgiantoro',
   profile_title: 'Fullstack Developer & AI Engineer',
   profile_bio: '',
   profile_image_url: null,

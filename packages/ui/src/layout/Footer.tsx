@@ -15,7 +15,7 @@ export interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({
-  brandName = 'pxy portofolio',
+  brandName = 'purnomoyusgiantoro',
   description = 'Portofolio profesional dan eksplorasi karya digital modern.',
   githubUrl,
   linkedinUrl,
